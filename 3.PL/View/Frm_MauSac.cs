@@ -61,6 +61,7 @@ namespace _3.PL.View
                 LoadMau();
             }
             if (dialogResult == DialogResult.No) return;
+            //thay doi
         }
 
         private void btn_Update_Click(object sender, EventArgs e)
