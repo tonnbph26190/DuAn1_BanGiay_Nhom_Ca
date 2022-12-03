@@ -112,7 +112,7 @@ namespace _2.BUS.Services
                  }).ToList();
             return lstNvView;
         }
-        public string GetNameByID(Guid? guid)
+        public string? GetNameByID(Guid? guid)
         {
 
             return GetAll().Where(c => c.Id == guid).Select(c => c.MaNhanVien + "_" + c.TenNhanVien).FirstOrDefault();
