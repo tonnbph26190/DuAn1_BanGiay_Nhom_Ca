@@ -1,6 +1,8 @@
-﻿using _2.BUS.IServices;
+﻿
+using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
+using _3.PL.Utilities;
 using QRCoder;
 using System;
 using System.Collections.Generic;
@@ -13,6 +15,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
+
 
 namespace _3.PL.View
 {
@@ -28,6 +32,8 @@ namespace _3.PL.View
         private ISizeService _ISizeService;
         private IChatLieuService _IChatLieuService;
         Guid _idWhenclick;
+        Guid _idWhenclick2;
+        List<ChiTIetSpView> _ChiTIetSpViews;
         public FrmChiTietSp_demo()
         {
             InitializeComponent();
@@ -39,7 +45,9 @@ namespace _3.PL.View
             _iSanPhamService = new SanPhamService();
             _ISizeService = new SizeService();
             _IChatLieuService = new ChatLieuService();
+            _ChiTIetSpViews = new List<ChiTIetSpView>();
             LoadCmb();
+            loadFlSp();
 
         }
         public void LoadCmb()
@@ -110,13 +118,14 @@ namespace _3.PL.View
             dgrid_sanpham.Columns[13].Name = "Chất Liệu";
             dgrid_sanpham.Columns[14].Name = "Size";
             dgrid_sanpham.Columns[15].Name = "Màu Sắc";
+            dgrid_sanpham.Columns[16].Name = "Trang Thái";
 
             dgrid_sanpham.Columns[1].Visible = false;
             dgrid_sanpham.Rows.Clear();
 
             foreach (var x in _iQLSanPhamView.GetAll())
             {
-                dgrid_sanpham.Rows.Add(stt++, x.Id, x.Ma, x.TenSp, x.TenMauSac, x.TenNsx, x.TenDongSp, x.SoLuong, x.DonGiaNhap, x.DonGiaBan, x.MoTa,x.TenNsx,x.TenDongSp,x.TenChatLieu,x.LoaiSize,x.TenMauSac);
+                dgrid_sanpham.Rows.Add(stt++, x.Id, x.Ma, x.TenSp, x.TenMauSac, x.TenNsx, x.TenDongSp, x.SoLuong, x.DonGiaNhap, x.DonGiaBan, x.MoTa,x.TenNsx,x.TenDongSp,x.TenChatLieu,x.LoaiSize,x.TenMauSac,x.TrangThai==1?"Hoạt Động":"Không hoạt động");
             }
         }
         private ChiTIetSpView GetDataFromGui()
@@ -124,7 +133,7 @@ namespace _3.PL.View
 
             ChiTIetSpView spv = new ChiTIetSpView()
             {
-                Id = Guid.Empty,
+                Id = Guid.NewGuid(),
                 IdSp = _iSanPhamService.GetById(_iSanPhamService.GetIdByName(cmb_tensp.Text)).Id,
                 IdMauSac = _iMauSacService.GetById(_iMauSacService.GetIdFromTen(cmb_mausac.Text)).Id,
                 IdNsx = _iNsxService.GetById(_iNsxService.GetIdFromTen(cmb_nhasanxuat.Text)).Id,
@@ -175,34 +184,37 @@ namespace _3.PL.View
 
         private void cmb_tensp_SelectedIndexChanged(object sender, EventArgs e)
         {
-           txt_Ma.Text=_iSanPhamService.GetMaByName(cmb_tensp.Text);
+            if(!(_idWhenclick == Guid.Empty))
+            {
+                var temp = _iQLSanPhamView.GetAll().FirstOrDefault(c=>c.Id==_idWhenclick);
+
+                txt_Ma.Text = temp.Ma;
+                _idWhenclick = Guid.Empty;
+
+            }
+            else
+            {
+                string ma = txt_Ma.Text;
+                do
+                {
+                    ma ="SP"+ Utility.GetNumber(3);
+                } while (_iQLSanPhamView.GetAll().Any(c => c.Ma.Equals(ma)));
+                txt_Ma.Text = ma;
+            }
         }
 
         private void txt_Ma_TextChanged(object sender, EventArgs e)
         {
+
             QRCodeGenerator qr = new QRCodeGenerator();
             QRCodeData data = qr.CreateQrCode(txt_Ma.Text, QRCodeGenerator.ECCLevel.Q);
             QRCode code = new QRCode(data);
             pic_Qrcode.Image = code.GetGraphic(5);
             OpenFileDialog op = new OpenFileDialog();
 
-
         }
 
-        private void btn_Save_Click(object sender, EventArgs e)
-        {
-            string path = @"C:\Users\nguye\OneDrive\Máy tính\Git\DuAn1_BanGiay_Nhom_Ca1\3.PL\Qrcode\";
-            var dialog = new SaveFileDialog();
-            dialog.InitialDirectory = path;
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                pic_Qrcode.Image.Save(dialog.FileName);
-                pic_Qrcode.SizeMode= PictureBoxSizeMode.StretchImage;
-                linkQR=dialog.FileName;
-
-            }
-           
-        }
+      
 
         private void dgrid_sanpham_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -219,7 +231,8 @@ namespace _3.PL.View
             cmb_Size.SelectedIndex = _ISizeService.GetAll().FindIndex(c => c.Id == ctspv.IdSize);
             txt_soluong.Text = ctspv.SoLuong.ToString();
             txt_gianhap.Text = ctspv.DonGiaNhap.ToString();
-            txt_giaban.Text = ctspv.DonGiaBan.ToString();           
+            txt_giaban.Text = ctspv.DonGiaBan.ToString();
+            txt_Ma.Text = ctspv.Ma;
             richtxt_mota.Text = ctspv.MoTa;
             if (ctspv.anh != null && File.Exists(ctspv.anh))
             {
@@ -259,29 +272,180 @@ namespace _3.PL.View
 
         private void btn_themsp_Click(object sender, EventArgs e)
         {
+
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm sản phẩn này?", "Xác nhận", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                MessageBox.Show(_iQLSanPhamView.ADD(GetDataFromGui()));
+                string path = @"C:\Users\nguye\Source\Repos\DuAn1_BanGiay_Nhom_Ca\3.PL\Qrcode\";
+                var dialog = new SaveFileDialog();
+                dialog.InitialDirectory = path;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    pic_Qrcode.Image.Save(dialog.FileName);
+                    pic_Qrcode.SizeMode = PictureBoxSizeMode.StretchImage;
+                    linkQR = dialog.FileName;
+
+                }
+                _ChiTIetSpViews.Add(GetDataFromGui());
+                
+                loadFlSp();
+            }
+            if (dialogResult == DialogResult.No) return;
+        }
+        public void loadFlSp()
+        {
+            Fl_SanPham.Controls.Clear();
+
+            foreach (var x in  _ChiTIetSpViews)
+            {
+                System.Windows.Forms.Button btn = new System.Windows.Forms.Button() { Width = 80, Height = 80 };
+                btn.Text = x.Ma;
+                btn.Tag = x;
+                btn.BackColor = Color.Red;
+                btn.Click += Btn_Click;
+                btn.ForeColor = Color.Black;
+                Fl_SanPham.Controls.Add(btn);
+            }
+            
+        }
+
+        private void Btn_Click(object? sender, EventArgs e)
+        {
+           
+            
+            _idWhenclick2 = ((sender as System.Windows.Forms.Button).Tag as ChiTIetSpView).Id;
+            var ctspv = _ChiTIetSpViews.FirstOrDefault(c => c.Id == _idWhenclick2);
+            cmb_tensp.SelectedIndex = _iSanPhamService.GetAll().FindIndex(c => c.Id == ctspv.IdSp);
+            cmb_dongsanpham.SelectedIndex = _iDongSpService.GetAll().FindIndex(c => c.Id == ctspv.IdDongSP);
+            cmb_mausac.SelectedIndex = _iMauSacService.GetAll().FindIndex(c => c.Id == ctspv.IdMauSac);
+            cmb_nhasanxuat.SelectedIndex = _iNsxService.GetAll().FindIndex(c => c.Id == ctspv.IdNsx);
+            cmb_ChatLieu.SelectedIndex = _IChatLieuService.GetAll().FindIndex(c => c.Id == ctspv.IdchatLieu);
+            cmb_Size.SelectedIndex = _ISizeService.GetAll().FindIndex(c => c.Id == ctspv.IdSize);
+            txt_soluong.Text = ctspv.SoLuong.ToString();
+            txt_gianhap.Text = ctspv.DonGiaNhap.ToString();
+            txt_giaban.Text = ctspv.DonGiaBan.ToString();
+            txt_Ma.Text = ctspv.Ma;
+            richtxt_mota.Text = ctspv.MoTa;
+            if (ctspv.anh != null && File.Exists(ctspv.anh))
+            {
+                pic_SanPham.Image = Image.FromFile(ctspv.anh);
+                Image img = Image.FromFile(ctspv.anh);
+                pic_SanPham.SizeMode = PictureBoxSizeMode.StretchImage;
+                linkavatar = ctspv.anh;
+                pic_SanPham.Image = img;
+
+            }
+            else
+            {
+
+                pic_SanPham.Image = null;
+            }
+            if (ctspv.Mavach != null && File.Exists(ctspv.Mavach))
+            {
+                pic_Qrcode.Image = Image.FromFile(ctspv.Mavach);
+                pic_Qrcode.SizeMode = PictureBoxSizeMode.StretchImage;
+                linkQR = ctspv.Mavach;
+            }
+            else
+            {
+
+                pic_Qrcode.Image = null;
+            }
+            if (ctspv.TrangThai == 1)
+            {
+                rbtn_HoatDong.Checked = true;
+            }
+            else
+            {
+                rbtn_KhongHoatDong.Checked = true;
+            }
+
+
+
+        }
+
+        private void btn_xoasp_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xoa sản phẩn này?", "Xác nhận", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                var temp = GetDataFromGui();
+                temp.Id = _idWhenclick;
+                _ChiTIetSpViews.Remove(temp);
+
+                loadFlSp();
+            }
+            if (dialogResult == DialogResult.No) return;
+        }
+
+        private void btn_suasp_Click(object sender, EventArgs e)
+        {
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa sản phẩn này?", "Xác nhận", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                for (int i = 0; i < _ChiTIetSpViews.Count; i++)
+                {
+                    if (_ChiTIetSpViews[i].Id == _idWhenclick2)
+                    {
+
+
+                        _ChiTIetSpViews[i].IdSp = _iSanPhamService.GetById(_iSanPhamService.GetIdByName(cmb_tensp.Text)).Id;
+                        _ChiTIetSpViews[i].IdMauSac = _iMauSacService.GetById(_iMauSacService.GetIdFromTen(cmb_mausac.Text)).Id;
+                        _ChiTIetSpViews[i].IdNsx = _iNsxService.GetById(_iNsxService.GetIdFromTen(cmb_nhasanxuat.Text)).Id;
+                        _ChiTIetSpViews[i].IdDongSP = _iDongSpService.GetById(_iDongSpService.GetIdByName(cmb_dongsanpham.Text)).Id;
+                        _ChiTIetSpViews[i].IdchatLieu = _IChatLieuService.GetById(_IChatLieuService.GetIdByName(cmb_ChatLieu.Text)).Id;
+                        _ChiTIetSpViews[i].IdSize = _ISizeService.GetById(_ISizeService.GetIdFromTen(cmb_Size.Text)).Id;
+                        _ChiTIetSpViews[i].SoLuong = Convert.ToInt32(txt_soluong.Text);
+                        _ChiTIetSpViews[i].DonGiaNhap = Convert.ToDouble(txt_gianhap.Text);
+                        _ChiTIetSpViews[i].DonGiaBan = Convert.ToDouble(txt_giaban.Text);
+                        _ChiTIetSpViews[i].MoTa = richtxt_mota.Text;
+                        _ChiTIetSpViews[i].TrangThai = rbtn_HoatDong.Checked ? 1 : 0;
+                        _ChiTIetSpViews[i].anh = linkavatar;
+                        _ChiTIetSpViews[i].Mavach = linkQR;
+                        _ChiTIetSpViews[i].Ma = txt_Ma.Text;
+                      
+                        
+                    }
+                }
+
                 LoadDgridSP();
             }
             if (dialogResult == DialogResult.No) return;
         }
 
-        private void btn_xoasp_Click(object sender, EventArgs e)
+        private void txt_Ma_Leave(object sender, EventArgs e)
         {
-            MessageBox.Show(linkavatar);
-            pic_SanPham.ImageLocation = linkavatar;
+            
         }
 
-        private void btn_suasp_Click(object sender, EventArgs e)
+        private void btn_Commit_Click(object sender, EventArgs e)
         {
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm sản phẩn này?", "Xác nhận", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                var temp = GetDataFromGui();
-                temp.Id = _idWhenclick;
-                MessageBox.Show(_iQLSanPhamView.UPDATE(temp));
+
+                foreach (var item in _ChiTIetSpViews)
+                {
+                   
+                    if ((_iQLSanPhamView.ADD(item)))
+                    {
+                        MessageBox.Show("Them Thanh Cong");                        
+
+                    }
+                    else
+                    {
+                        MessageBox.Show("Them that That Bai");
+                        return;
+                    }
+                    _ChiTIetSpViews.Remove(item);
+                    if (_ChiTIetSpViews.Count == 0)
+                    {
+                        break;
+                    }
+
+                }
+                
+                loadFlSp();
                 LoadDgridSP();
             }
             if (dialogResult == DialogResult.No) return;

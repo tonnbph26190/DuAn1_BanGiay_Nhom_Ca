@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmAddSpToGioHang));
             this.pic_SanPham = new System.Windows.Forms.PictureBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -35,7 +36,9 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.lb_Ma = new System.Windows.Forms.Label();
             this.lb_TenSp = new System.Windows.Forms.Label();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pic_SanPham)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // pic_SanPham
@@ -105,11 +108,22 @@
             this.lb_TenSp.TabIndex = 6;
             this.lb_TenSp.Text = "......";
             // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
+            this.pictureBox1.Location = new System.Drawing.Point(456, 2);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(29, 29);
+            this.pictureBox1.TabIndex = 7;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
+            // 
             // FrmAddSpToGioHang
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(487, 161);
+            this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.lb_TenSp);
             this.Controls.Add(this.lb_Ma);
             this.Controls.Add(this.textBox1);
@@ -117,10 +131,12 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pic_SanPham);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "FrmAddSpToGioHang";
             this.Text = "FrmAddSpToGioHang";
             this.Load += new System.EventHandler(this.FrmAddSpToGioHang_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pic_SanPham)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -135,5 +151,6 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label lb_Ma;
         private System.Windows.Forms.Label lb_TenSp;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

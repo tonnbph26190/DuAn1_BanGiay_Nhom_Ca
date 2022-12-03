@@ -31,7 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmChiTietSp_demo));
             this.btn_SanPhamQuanLy = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btn_Commit = new System.Windows.Forms.Button();
             this.btn_xoasp = new System.Windows.Forms.Button();
             this.btn_clear = new System.Windows.Forms.Button();
             this.btn_suasp = new System.Windows.Forms.Button();
@@ -62,13 +62,14 @@
             this.label1 = new System.Windows.Forms.Label();
             this.pic_Qrcode = new System.Windows.Forms.PictureBox();
             this.pic_SanPham = new System.Windows.Forms.PictureBox();
-            this.btn_Save = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.cmb_ChatLieu = new System.Windows.Forms.ComboBox();
             this.label5 = new System.Windows.Forms.Label();
             this.cmb_Size = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.txt_Ma = new System.Windows.Forms.TextBox();
+            this.Fl_SanPham = new System.Windows.Forms.FlowLayoutPanel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_sanpham)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_Qrcode)).BeginInit();
@@ -87,28 +88,29 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.groupBox1.Controls.Add(this.button1);
+            this.groupBox1.Controls.Add(this.btn_Commit);
             this.groupBox1.Controls.Add(this.btn_xoasp);
             this.groupBox1.Controls.Add(this.btn_clear);
             this.groupBox1.Controls.Add(this.btn_suasp);
             this.groupBox1.Controls.Add(this.btn_themsp);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.groupBox1.Location = new System.Drawing.Point(841, 0);
+            this.groupBox1.Location = new System.Drawing.Point(1076, 0);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(387, 528);
             this.groupBox1.TabIndex = 149;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "groupBox1";
             // 
-            // button1
+            // btn_Commit
             // 
-            this.button1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button1.Location = new System.Drawing.Point(3, 263);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(381, 61);
-            this.button1.TabIndex = 119;
-            this.button1.Text = "Xóa";
-            this.button1.UseVisualStyleBackColor = true;
+            this.btn_Commit.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_Commit.Location = new System.Drawing.Point(3, 263);
+            this.btn_Commit.Name = "btn_Commit";
+            this.btn_Commit.Size = new System.Drawing.Size(381, 61);
+            this.btn_Commit.TabIndex = 119;
+            this.btn_Commit.Text = "Commit";
+            this.btn_Commit.UseVisualStyleBackColor = true;
+            this.btn_Commit.Click += new System.EventHandler(this.btn_Commit_Click);
             // 
             // btn_xoasp
             // 
@@ -334,7 +336,7 @@
             this.dgrid_sanpham.Location = new System.Drawing.Point(0, 528);
             this.dgrid_sanpham.Name = "dgrid_sanpham";
             this.dgrid_sanpham.RowTemplate.Height = 25;
-            this.dgrid_sanpham.Size = new System.Drawing.Size(1228, 153);
+            this.dgrid_sanpham.Size = new System.Drawing.Size(1463, 153);
             this.dgrid_sanpham.TabIndex = 123;
             this.dgrid_sanpham.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrid_sanpham_CellClick);
             // 
@@ -386,16 +388,6 @@
             this.pic_SanPham.TabIndex = 155;
             this.pic_SanPham.TabStop = false;
             this.pic_SanPham.Click += new System.EventHandler(this.pic_SanPham_Click);
-            // 
-            // btn_Save
-            // 
-            this.btn_Save.Location = new System.Drawing.Point(552, 310);
-            this.btn_Save.Name = "btn_Save";
-            this.btn_Save.Size = new System.Drawing.Size(75, 23);
-            this.btn_Save.TabIndex = 157;
-            this.btn_Save.Text = "Lưu";
-            this.btn_Save.UseVisualStyleBackColor = true;
-            this.btn_Save.Click += new System.EventHandler(this.btn_Save_Click);
             // 
             // label3
             // 
@@ -449,19 +441,38 @@
             this.txt_Ma.Size = new System.Drawing.Size(223, 23);
             this.txt_Ma.TabIndex = 164;
             this.txt_Ma.TextChanged += new System.EventHandler(this.txt_Ma_TextChanged);
+            this.txt_Ma.Leave += new System.EventHandler(this.txt_Ma_Leave);
+            // 
+            // Fl_SanPham
+            // 
+            this.Fl_SanPham.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.Fl_SanPham.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Fl_SanPham.Location = new System.Drawing.Point(967, 12);
+            this.Fl_SanPham.Name = "Fl_SanPham";
+            this.Fl_SanPham.Size = new System.Drawing.Size(103, 510);
+            this.Fl_SanPham.TabIndex = 165;
+            // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(738, 464);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(223, 23);
+            this.textBox1.TabIndex = 166;
             // 
             // FrmChiTietSp_demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1228, 681);
+            this.ClientSize = new System.Drawing.Size(1463, 681);
+            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.Fl_SanPham);
             this.Controls.Add(this.txt_Ma);
             this.Controls.Add(this.cmb_Size);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.cmb_ChatLieu);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.btn_Save);
             this.Controls.Add(this.pic_SanPham);
             this.Controls.Add(this.pic_Qrcode);
             this.Controls.Add(this.label1);
@@ -505,7 +516,7 @@
 
         private System.Windows.Forms.Button btn_SanPhamQuanLy;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btn_Commit;
         private System.Windows.Forms.Button btn_xoasp;
         private System.Windows.Forms.Button btn_clear;
         private System.Windows.Forms.Button btn_suasp;
@@ -536,12 +547,13 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pic_Qrcode;
         private System.Windows.Forms.PictureBox pic_SanPham;
-        private System.Windows.Forms.Button btn_Save;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cmb_ChatLieu;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmb_Size;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txt_Ma;
+        private System.Windows.Forms.FlowLayoutPanel Fl_SanPham;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

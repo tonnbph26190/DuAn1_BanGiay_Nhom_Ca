@@ -18,6 +18,10 @@ namespace _3.PL.View
     {
         
         private IChiTietSpServices _iQLSanPhamView;
+        bool Flag = false;
+
+        
+
         public FrmAddSpToGioHang(string Ma)
         {
             InitializeComponent();
@@ -28,6 +32,12 @@ namespace _3.PL.View
         }
         private void load(string input)
         {
+           
+            if (check(input)==false)
+            {
+                MessageBox.Show("QR không tồn tại");
+                return;
+            }
             var obj= _iQLSanPhamView.GETMASP(input);
             lb_Ma.Text = obj.Ma;
             lb_TenSp.Text=_iQLSanPhamView.GETNAME(obj.Ma);
@@ -39,20 +49,47 @@ namespace _3.PL.View
             if (e.KeyCode==Keys.Enter)
             {
                 this.Close();
+                Flag = true;
             }
         }
         public string taken()
         {
             return textBox1.Text;
         }
+        public bool check(string input)
+        {
+            if (!_iQLSanPhamView.GetAll().Any(c => c.Ma == input))
+            {
+
+                
+                return false;
+            }
+            return true;
+        }
+       public bool change()
+        {
+            
+            if (Flag==false)
+            {
+                return false;
+            }
+            return true;
+        }
         private void FrmAddSpToGioHang_Load(object sender, EventArgs e)
         {
-
+           
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            change();
+            this.Close();
+            
         }
     }
 }
