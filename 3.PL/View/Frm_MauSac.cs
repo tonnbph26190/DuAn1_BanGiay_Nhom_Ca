@@ -51,90 +51,31 @@ namespace _3.PL.View
                 TrangThai = MS_TTDC.Checked ? 1 : 0
             };
         }
-        public bool check()
-        {
-            if (string.IsNullOrEmpty(MS_Ma.Text))
-            {
-                MessageBox.Show("Không được đê trống Mã", "Thông báo");
-                return false;
-            }
-            if (string.IsNullOrEmpty(MS_Ten.Text))
-            {
-                MessageBox.Show("Không được đê trống màu sắc", "Thông báo");
-                return false;
-            }
-            if (MS_TTDC.Checked == false && MS_TTCC.Checked == false)
-            {
-                MessageBox.Show("Bạn phải chọn trạng thái", "Thông báo");
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+
         private void btn_AddMS_Click(object sender, EventArgs e)
         {
-            if (check() == false)
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                return;
+                MessageBox.Show(_iMauService.Add(GetDataFromGui()));
+                LoadMau();
             }
-            else
-            {
-                foreach (var x in _iMauService.GetAll())
-                {
-                    if (x.Ma == MS_Ma.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == MS_Ten.Text)
-                    {
-                        MessageBox.Show("màu sắc này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                }
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    MessageBox.Show(_iMauService.Add(GetDataFromGui()));
-                    LoadMau();
-                }
-                if (dialogResult == DialogResult.No) return;
-            }
+            if (dialogResult == DialogResult.No) return;
+            //thay doi
         }
 
         private void btn_Update_Click(object sender, EventArgs e)
         {
-            if (check() == false)
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa màu này?", "Xác nhận", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
             {
-                return;
+                var temp = GetDataFromGui();
+                temp.Id = _idWhenclick;
+                MessageBox.Show(_iMauService.Update(temp));
+                LoadMau();
             }
-            else
-            {
-                foreach (var x in _iMauService.GetAll())
-                {
-                    if (x.Ma == MS_Ma.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == MS_Ten.Text)
-                    {
-                        MessageBox.Show("màu sắc này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                }
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa màu này?", "Xác nhận", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    var temp = GetDataFromGui();
-                    temp.Id = _idWhenclick;
-                    MessageBox.Show(_iMauService.Update(temp));
-                    LoadMau();
-                }
-                if (dialogResult == DialogResult.No) return;
-            }
+            if (dialogResult == DialogResult.No) return;
+
         }
 
         private void btn_ClearMS_Click(object sender, EventArgs e)

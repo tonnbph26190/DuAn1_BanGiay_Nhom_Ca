@@ -48,89 +48,73 @@ namespace _3.PL.View
                 TrangThai = rbtn_HoatDong.Checked ? 1 : 0,
             };
         }
-        public bool check()
-        {
-            if (string.IsNullOrEmpty(txt_MaDSP.Text))
-            {
-                MessageBox.Show("Không được đê trống Mã", "Thông báo");
-                return false;
-            }
-            if (string.IsNullOrEmpty(txt_TenDSP.Text))
-            {
-                MessageBox.Show("Không được đê trống Dòng sản phẩm", "Thông báo");
-                return false;
-            }
-            if (rbtn_HoatDong.Checked == false && rbtn_KhongHoatDong.Checked == false)
-            {
-                MessageBox.Show("Bạn phải chọn trạng thái", "Thông báo");
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+
         private void btn_Add_Click(object sender, EventArgs e)
         {
-            if (check() == false)
+            if (txt_MaDSP.Text == "")
             {
-                return;
+                MessageBox.Show("Mã chức vụ không được để trống!", "Thông báo", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question);
+            }
+
+            if (txt_TenDSP.Text == "")
+            {
+                MessageBox.Show("Tên chức vụ không được để trống!", "Thông báo", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question);
             }
             else
             {
-                foreach (var x in _dongSpService.GetAll())
+                DialogResult dg = MessageBox.Show("Bạn có muốn thêm không", "Thông báo", MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Asterisk);
+                if (dg == DialogResult.Yes)
                 {
-                    if (x.Ma == txt_MaDSP.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == txt_TenDSP.Text)
-                    {
-                        MessageBox.Show("chất liệu này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        _dongSpService.Add(GetDataFromGui());
-                        MessageBox.Show("Thêm thành công");
-                        LoadData();
-                    }
-                    if (dialogResult == DialogResult.No) return;
+                    _dongSpService.Add(GetDataFromGui());
+                    MessageBox.Show("Thêm thành công");
+                    LoadData();
+                }
+                else
+                {
+                    MessageBox.Show("Thêm thất bại");
+                }
+
+                if (dg == DialogResult.No)
+                {
+                    return;
                 }
             }
         }
 
         private void btn_Update_Click(object sender, EventArgs e)
         {
-            if (check() == false)
+            if (txt_MaDSP.Text == "")
             {
+                MessageBox.Show("Mã chức vụ không được để trống!", "Thông báo", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question);
                 return;
+            }
+
+            if (txt_TenDSP.Text == "")
+            {
+                MessageBox.Show("Tên chức vụ không được để trống!", "Thông báo", MessageBoxButtons.OKCancel,
+                    MessageBoxIcon.Question);
+                return;
+            }
+            DialogResult dg = MessageBox.Show("Bạn có muốn sửa không", "Thông báo", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Asterisk);
+            if (dg == DialogResult.Yes)
+            {
+                _dongSpService.Update(GetDataFromGui());
+                MessageBox.Show("Sửa chức vụ thành công");
+                LoadData();
             }
             else
             {
-                foreach (var x in _dongSpService.GetAll())
-                {
-                    if (x.Ma == txt_MaDSP.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == txt_TenDSP.Text)
-                    {
-                        MessageBox.Show("chất liệu này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        _dongSpService.Update(GetDataFromGui());
-                        MessageBox.Show("Sửa chức vụ thành công");
-                        LoadData();
-                    }
-                    if (dialogResult == DialogResult.No) return;
-                }
+                MessageBox.Show("Sửa thất bại");
+            }
+
+            if (dg == DialogResult.No)
+            {
+                return;
             }
         }
 
