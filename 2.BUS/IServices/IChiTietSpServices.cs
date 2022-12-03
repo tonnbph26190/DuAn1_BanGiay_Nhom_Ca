@@ -10,11 +10,12 @@ namespace _2.BUS.IServices
 {
     public interface IChiTietSpServices
     {
-        string ADD(ChiTIetSpView obj);
+        bool ADD(ChiTIetSpView obj);
+      
         string UPDATE(ChiTIetSpView obj);
         string DELETE(ChiTIetSpView obj);
-        ChiTietSp GETMASP(string input);
-        string GETNAME(string input);
+        ChiTietSp? GETMASP(string? input);
+        string? GETNAME(string? input);
         List<ChiTIetSpView> GetAll();
     }
 }

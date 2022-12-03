@@ -13,10 +13,10 @@ namespace _2.BUS.IServices
         string Add(KhachHangView obj);
         string Update(KhachHangView obj);
         
-        List<KhachHangView> GetAll();
-        List<string> GetAllTP();
-        List<string> GetAllQG();
-        KhachHang GetById(Guid id);
-        Guid GetIdFromTen(string ten);
+        List<KhachHangView>? GetAll();
+        List<string>? GetAllTP();
+        List<string>? GetAllQG();
+        KhachHang? GetById(Guid? id);
+        Guid? GetIdFromTen(string? ten);
     }
 }

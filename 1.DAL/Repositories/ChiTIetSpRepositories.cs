@@ -20,7 +20,7 @@ namespace _1.DAL.Repositories
         public bool Add(ChiTietSp obj)
         {
             if (obj == null) return false;
-            obj.Id = Guid.NewGuid();
+            
             _dBContext.ChiTietSps.Add(obj);
             _dBContext.SaveChanges();
             return true;

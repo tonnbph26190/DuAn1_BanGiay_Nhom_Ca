@@ -16,6 +16,7 @@ namespace _2.BUS.Services
         private IHoaDonRepository _iHoaDonRepository;
         private IKhachHangReposistories _iKhachhangRepository;
         private INhanVienService _iQlNhanvienSerivce;
+        DateTime? nullDateTime = null;
 
         public HoaDonServices()
         {
@@ -34,9 +35,9 @@ namespace _2.BUS.Services
                 IdKhachHang = obj.IdKhachHang,
                 IdNhanVien = obj.IdNhanVien,
                 NgayLap = obj.NgayLap,
-                NgayThanhToan = DateTime.Now,
-                NgayShipHang = DateTime.Now,
-                NgayNhanHang = DateTime.Now,
+                NgayThanhToan = obj.NgayThanhToan,
+                NgayShipHang = obj.NgayShipHang,
+                NgayNhanHang = obj.NgayNhanHang,
                 TrangThai = obj.TrangThai,
                 NguoiBan = obj.NguoiBan,
                 Sdt = obj.Sdt,
@@ -54,6 +55,10 @@ namespace _2.BUS.Services
             hoaDon.MaHoaDon = obj.MaHoaDon;
             hoaDon.IdKhachHang = obj.IdKhachHang;
             hoaDon.IdNhanVien = obj.IdNhanVien;
+            hoaDon.NgayLap = obj.NgayLap;
+            hoaDon.NgayShipHang = obj.NgayShipHang;
+            hoaDon.NgayNhanHang= obj.NgayNhanHang;
+            obj.NgayThanhToan = obj.NgayThanhToan;
             hoaDon.NgayLap = obj.NgayLap;
             hoaDon.TrangThai = obj.TrangThai;
             hoaDon.NguoiBan = obj.NguoiBan;
@@ -86,9 +91,12 @@ namespace _2.BUS.Services
                     {
                         Id = a.Id,
                         MaHoaDon = a.MaHoaDon,
-                        NgayLap = a.NgayLap,
+                        NgayLap = a.NgayLap==null?nullDateTime.Value:a.NgayLap.Value,
+                        NgayNhanHang=a.NgayNhanHang == null ? nullDateTime.Value : a.NgayNhanHang.Value,
+                        NgayShipHang=a.NgayShipHang == null ? nullDateTime.Value : a.NgayShipHang.Value,
+                        NgayThanhToan=a.NgayThanhToan == null ? nullDateTime.Value : a.NgayThanhToan.Value,
                         IdNhanVien = c.Id,
-                        IdKhachHang = b.Id,
+                        IdKhachHang = b.Id==null?Guid.Empty:b.Id,
                         NguoiBan = c.TenNhanVien,
                         TrangThai = a.TrangThai,
                         TenKH=b.Ten

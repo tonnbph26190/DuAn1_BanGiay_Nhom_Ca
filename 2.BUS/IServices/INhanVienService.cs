@@ -12,11 +12,11 @@ namespace _2.BUS.IServices
         string Add(NhanVienView obj);
         string Update(NhanVienView obj);
         string Delete(NhanVienView obj);
-        List<NhanVienView> GetAll(string input);
+        List<NhanVienView>? GetAll(string? input);
 
-        List<NhanVienView> GetAll();
-        List<NhanVienView> GetAllQuanLi();
-        string GetNameByID(Guid? guid);
+        List<NhanVienView>? GetAll();
+        List<NhanVienView>? GetAllQuanLi();
+        string? GetNameByID(Guid? guid);
 
 
     }

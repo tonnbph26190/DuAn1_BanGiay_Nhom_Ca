@@ -19,7 +19,7 @@ namespace _2.BUS.Services
             _iKhachHangRepositories = new KhachHangReposistories();
         }
 
-        public string Add(KhachHangView obj)
+        public string? Add(KhachHangView obj)
         {
             if (obj == null) return "thêm thất bại";
             var khachHang = new KhachHang()
@@ -39,7 +39,7 @@ namespace _2.BUS.Services
             return "thêm thất bại";
         }
 
-        public string Update(KhachHangView obj)
+        public string? Update(KhachHangView obj)
         {
             if (obj == null) return "sửa thất bại";
             var khachHang = _iKhachHangRepositories.GetAll().FirstOrDefault(c => c.Ma == obj.Ma);
@@ -57,7 +57,7 @@ namespace _2.BUS.Services
 
         
 
-        public List<KhachHangView> GetAll()
+        public List<KhachHangView>? GetAll()
         {
             List<KhachHangView> lst = new List<KhachHangView>();
             lst =
@@ -80,21 +80,21 @@ namespace _2.BUS.Services
             return lst;
         }
 
-        public KhachHang GetById(Guid id)
+        public KhachHang? GetById(Guid? id)
         {
             return _iKhachHangRepositories.GetAll().FirstOrDefault(c => c.Id == id);
         }
-        public Guid GetIdFromTen(string ten)
+        public Guid? GetIdFromTen(string? ten)
         {
             return (Guid)GetAll().FirstOrDefault(c => c.Ten == ten).Id;
         }
 
-        public List<string> GetAllTP()
+        public List<string>? GetAllTP()
         {
             return new List<string>() { "Hà Nội", "Thanh Hóa", "Nghệ An", "Hà Tĩnh", "Huế", "Quảng Trị" };
         }
 
-        public List<string> GetAllQG()
+        public List<string>? GetAllQG()
         {
             return new List<string>() { "Việt Nam", "Thái Lan", "Ấn Độ" };
         }

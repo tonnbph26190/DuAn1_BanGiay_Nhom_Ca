@@ -30,9 +30,9 @@ namespace _2.BUS.Services
             _iSizeRepository = new SizeRepositories();
             _iChatLieuRepository= new ChatLieuRepositories();
         }
-        public string ADD(ChiTIetSpView obj)
+        public bool ADD(ChiTIetSpView obj)
         {
-            if (obj == null) return "thêm thất bại";
+            if (obj == null) return false;
             var chiTietSp = new ChiTietSp()
             {
                 Id = Guid.Empty,
@@ -53,8 +53,8 @@ namespace _2.BUS.Services
 
 
             };
-            if (_iChiTietSpRepository.Add(chiTietSp)) return "thêm thành công";
-            return "thêm thất bại";
+            if (_iChiTietSpRepository.Add(chiTietSp)) return true;
+            return false;
         }
 
         public string UPDATE(ChiTIetSpView obj)
@@ -106,7 +106,7 @@ namespace _2.BUS.Services
                         IdchatLieu=r.Id,
                         IdSize=t.Id,
                         IdNsx = d.Id,
-                        Ma = e.Ma,                    
+                        Ma = a.Ma,                    
                         SoLuong = a.SoLuong,
                         DonGiaNhap = a.DonGiaNhap,
                         DonGiaBan = a.DonGiaBan,                      
@@ -125,14 +125,16 @@ namespace _2.BUS.Services
             return lstSPViews;
         }
 
-        public ChiTietSp GETMASP(string input)
+        public ChiTietSp? GETMASP(string? input)
         {
             return _iChiTietSpRepository.GetAll().FirstOrDefault(c => c.Ma == input);
         }
 
-        public string GETNAME(string input)
+        public string? GETNAME(string? input)
         {
             return GetAll().FirstOrDefault(c=>c.Ma == input).TenSp;
         }
+
+       
     }
 }
