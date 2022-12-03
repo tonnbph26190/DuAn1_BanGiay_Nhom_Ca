@@ -51,94 +51,21 @@ namespace _3.PL.View
             };
             return Sp;
         }
-        public bool check()
-        {
-            if (string.IsNullOrEmpty(txt_Ma.Text))
-            {
-                MessageBox.Show("Không được đê trống Mã", "Thông báo");
-                return false;
-            }
-            if (string.IsNullOrEmpty(txt_Ten.Text))
-            {
-                MessageBox.Show("Không được đê trống Sản phẩm", "Thông báo");
-                return false;
-            }
-            if (rbtn_HoatDong.Checked == false && rbtn_KhongHoatDong.Checked == false)
-            {
-                MessageBox.Show("Bạn phải chọn trạng thái", "Thông báo");
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+
         private void btn_Them_Click(object sender, EventArgs e)
         {
-            if (check() == false)
-            {
-                return;
-            }
-            else
-            {
-                foreach (var x in _iSanPhamService.GetAll())
-                {
-                    if (x.Ma == txt_Ma.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == txt_Ten.Text)
-                    {
-                        MessageBox.Show("sản phẩm này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                }
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm size này?", "Xác nhận", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    MessageBox.Show(_iSanPhamService.Add(GetDataFromGui()));
-
-                    LoadDgridSp(null);
-                }
-                if (dialogResult == DialogResult.No) return;
-            }
+            MessageBox.Show(_iSanPhamService.Add(GetDataFromGui()));
+           
+            LoadDgridSp(null);
         }
 
         private void btn_Sua_Click(object sender, EventArgs e)
         {
-
-            if (check() == false)
-            {
-                return;
-            }
-            else
-            {
-                foreach (var x in _iSanPhamService.GetAll())
-                {
-                    if (x.Ma == txt_Ma.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == txt_Ten.Text)
-                    {
-                        MessageBox.Show("Sản phẩm này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                }
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo);
-                if (dialogResult == DialogResult.Yes)
-                {
-                    var temp = GetDataFromGui();
-                    temp.Id = _idWhenclick;
-                    MessageBox.Show(_iSanPhamService.Update(temp));
-
-                    LoadDgridSp(null);
-                }
-                if (dialogResult == DialogResult.No) return;
-
-            }
+            var temp = GetDataFromGui();
+            temp.Id = _idWhenclick;
+            MessageBox.Show(_iSanPhamService.Update(temp));
+           
+            LoadDgridSp(null);
         }
 
         private void dgrid_Sp_CellClick(object sender, DataGridViewCellEventArgs e)
