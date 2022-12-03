@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -72,47 +73,107 @@ namespace _3.PL
                 DiaChi = txt_diaChi.Text,
             };
         }
-
-        private void btn_Add_Click(object sender, EventArgs e)
+        public bool check()
         {
             if (string.IsNullOrEmpty(txt_Ma.Text))
             {
                 MessageBox.Show("Tên Khách Hàng không được bỏ trống", "Thông báo");
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(txt_Ten.Text))
             {
                 MessageBox.Show("Tên Khách Hàng không được bỏ trống", "Thông báo");
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(txt_Email.Text))
             {
                 MessageBox.Show("Email không được bỏ trống", "Thông báo");
-                return;
+                return false;
+            }
+            if (Regex.IsMatch(txt_Email.Text, @"(@)(.+)$") == false)
+            {
+
+                MessageBox.Show("Email không hợp lệ", "Thông báo");
+                return false;
             }
             if (string.IsNullOrEmpty(txt_SDT.Text))
             {
                 MessageBox.Show("Số điện thoại không được bỏ trống", "Thông báo");
-                return;
+                return false;
+            }
+            if (Regex.IsMatch(txt_SDT.Text, @"[0-9]+") == false)
+            {
+                MessageBox.Show("Số điện thoại Bắt buộc phải chứa số", "ERR");
+                return false;
+            }
+            if (txt_SDT.Text.Length != 10)
+            {
+                MessageBox.Show("Số điện thoại Bắt buộc phải chứa 10 số", "ERR");
+                return false;
+            }
+            if (Regex.IsMatch(txt_SDT.Text, @"(09|03|07|08|05)+[0-9]+") == false)
+            {
+                MessageBox.Show("Số điện thoại này không tồn tại", "ERR");
+                return false;
             }
             if (string.IsNullOrEmpty(cmb_QuoCGia.Text))
             {
                 MessageBox.Show("Quốc Gia Khách Hàng không được bỏ trống", "Thông báo");
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(Cmb_ThanhPho.Text))
             {
                 MessageBox.Show("Thành Phố Khách Hàng không được bỏ trống", "Thông báo");
-                return;
+                return false;
             }
             if (string.IsNullOrEmpty(txt_diaChi.Text))
             {
                 MessageBox.Show("Địa Chỉ Khách Hàng không được bỏ trống", "Thông báo");
-                return;
+                return false;
             }
-
+            if (rdb_On.Checked == false && rdb_Off.Checked == false)
+            {
+                MessageBox.Show("Bạn phải chọn trạng thái", "Thông báo");
+                return false;
+            }
             else
             {
+                return true;
+            }
+        }
+        private void btn_Add_Click(object sender, EventArgs e)
+        {
+            if (check() == false)
+            {
+                return;
+            }
+            else
+            {
+                foreach (var x in _iKhachHangService.GetAll())
+                {
+                    if (x.Ma == txt_Ma.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.Ten == txt_Ten.Text)
+                    {
+                        MessageBox.Show("Tên này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.Email == txt_Email.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.SoDienThoai == txt_SDT.Text)
+                    {
+                        MessageBox.Show("Tên này đã tồn tại", "Thông báo");
+                        return;
+                    }
+
+                }
+
                 DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -120,49 +181,41 @@ namespace _3.PL
                     LoadKhachHang();
                 }
                 if (dialogResult == DialogResult.No) return;
+
             }
         }
 
         private void btn_Update_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txt_Ma.Text))
+            if (check() == false)
             {
-                MessageBox.Show("Tên Khách Hàng không được bỏ trống", "Thông báo");
                 return;
             }
-            if (string.IsNullOrEmpty(txt_Ten.Text))
-            {
-                MessageBox.Show("Tên Khách Hàng không được bỏ trống", "Thông báo");
-                return;
-            }
-            if (string.IsNullOrEmpty(txt_Email.Text))
-            {
-                MessageBox.Show("Email không được bỏ trống", "Thông báo");
-                return;
-            }
-            if (string.IsNullOrEmpty(txt_SDT.Text))
-            {
-                MessageBox.Show("Số điện thoại không được bỏ trống", "Thông báo");
-                return;
-            }
-            if (string.IsNullOrEmpty(cmb_QuoCGia.Text))
-            {
-                MessageBox.Show("Quốc Gia Khách Hàng không được bỏ trống", "Thông báo");
-                return;
-            }
-            if (string.IsNullOrEmpty(Cmb_ThanhPho.Text))
-            {
-                MessageBox.Show("Thành Phố Khách Hàng không được bỏ trống", "Thông báo");
-                return;
-            }
-            if (string.IsNullOrEmpty(txt_diaChi.Text))
-            {
-                MessageBox.Show("Địa Chỉ Khách Hàng không được bỏ trống", "Thông báo");
-                return;
-            }
-
             else
             {
+                foreach (var x in _iKhachHangService.GetAll())
+                {
+                    if (x.Ma == txt_Ma.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.Ten == txt_Ten.Text)
+                    {
+                        MessageBox.Show("Tên này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.Email == txt_Email.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.SoDienThoai == txt_SDT.Text)
+                    {
+                        MessageBox.Show("Tên này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                }
                 DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa khách hàng này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
@@ -172,6 +225,7 @@ namespace _3.PL
                     LoadKhachHang();
                 }
                 if (dialogResult == DialogResult.No) return;
+
             }
         }
 
