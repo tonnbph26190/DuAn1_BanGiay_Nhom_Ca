@@ -89,7 +89,7 @@ namespace _3.PL
                 MessageBox.Show("Số điện thoại này không tồn tại", "ERR");
                 return false;
             }
-            if (rbtn_HoatDong.Checked == false && rbtn_KhongHoatDong.Checked == false)
+            if (cbx_HoatDong.Checked == false && cbx_KoHoatDong.Checked == false)
             {
                 MessageBox.Show("Bạn phải chọn trạng thái", "Thông báo");
                 return false;
@@ -187,7 +187,7 @@ namespace _3.PL
                 QueQuan = txt_QueQuanNV.Text,
                 SoCmnd = txt_CmNV.Text,
                 DienThoai = txt_SdtNV.Text,
-                TrangThai = rbtn_HoatDong.Checked ? 1 : 0,
+                TrangThai = cbx_HoatDong.Checked ? 1 : 0,
                 Email = txt_EmailNV.Text,
                 PassWord = txt_PassNV.Text,
                 IdChucVu = _CvService.GetById(_CvService.GetAll()[cmb_ChucVuNV.SelectedIndex].Id).Id,
@@ -237,9 +237,9 @@ namespace _3.PL
             txt_PassNV.Text = obj.PassWord;
             if (obj.TrangThai == 1)
             {
-                rbtn_HoatDong.Checked = true;
+                cbx_HoatDong.Checked = true;
             }
-            else rbtn_KhongHoatDong.Checked = true;
+            else cbx_KoHoatDong.Checked = true;
 
 
         }
@@ -577,6 +577,22 @@ namespace _3.PL
         private void pb_AnhNV_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void cbx_HoatDong_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbx_HoatDong.Checked == true)
+            {
+                cbx_KoHoatDong.Checked = false;
+            }
+        }
+
+        private void cbx_KoHoatDong_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cbx_KoHoatDong.Checked == true)
+            {
+                cbx_HoatDong.Checked = false;
+            }
         }
     }
 }
