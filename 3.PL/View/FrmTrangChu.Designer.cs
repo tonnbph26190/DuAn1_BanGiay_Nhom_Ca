@@ -242,7 +242,7 @@
             this.User.AutoSize = true;
             this.User.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.User.ForeColor = System.Drawing.Color.Blue;
-            this.User.Location = new System.Drawing.Point(85, 110);
+            this.User.Location = new System.Drawing.Point(46, 108);
             this.User.Name = "User";
             this.User.Size = new System.Drawing.Size(103, 20);
             this.User.TabIndex = 1;
