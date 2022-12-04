@@ -64,6 +64,7 @@ namespace _3.PL.View
                 {
                     smtp.Send(mail);
                     MessageBox.Show("Succes");
+                    this.Close();
                 }
                 catch (Exception)
                 {
