@@ -8,6 +8,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -20,7 +21,7 @@ namespace _3.PL.View
         public Frm_SizeGiay()
         {
             InitializeComponent();
-           _iSizeService= new SizeService();
+            _iSizeService = new SizeService();
             LoadSize();
             Drg_size.Columns[1].Visible = false;
         }
@@ -50,29 +51,96 @@ namespace _3.PL.View
                 TrangThai = SZ_TTDC.Checked ? 1 : 0
             };
         }
+        public bool check()
+        {
+            if (string.IsNullOrEmpty(SZ_Ma.Text))
+            {
+                MessageBox.Show("Không được đê trống Mã", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(SZ_SizeGiay.Text))
+            {
+                MessageBox.Show("Không được đê trống Size", "Thông báo");
+                return false;
+            }
+            if (Regex.IsMatch(SZ_SizeGiay.Text, @"[0-9]+") == false)
+            {
 
+                MessageBox.Show("Size Bắt buộc phải chứa số", "ERR");
+                return false;
+            }
+            if (SZ_TTDC.Checked == false && SZ_TTCC.Checked == false)
+            {
+                MessageBox.Show("Bạn phải chọn trạng thái", "Thông báo");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         private void btn_AddSZ_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm size này?", "Xác nhận", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (check() == false)
             {
-                MessageBox.Show(_iSizeService.Add(GetDataFromGui()));
-                LoadSize();
+                return;
             }
-            if (dialogResult == DialogResult.No) return;
+            else
+            {
+                foreach (var x in _iSizeService.GetAll())
+                {
+                    if (x.Ma == SZ_Ma.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.SizeGiay == SZ_SizeGiay.Text)
+                    {
+                        MessageBox.Show("Size này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                }
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm size này?", "Xác nhận", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    MessageBox.Show(_iSizeService.Add(GetDataFromGui()));
+                    LoadSize();
+                }
+                if (dialogResult == DialogResult.No) return;
+            }
         }
 
         private void btn_UpdateSZ_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xóa màu này?", "Xác nhận", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (check() == false)
             {
-                var temp = GetDataFromGui();
-                temp.Id = _idWhenclick;
-                MessageBox.Show(_iSizeService.Update(temp));
-                LoadSize();
+                return;
             }
-            if (dialogResult == DialogResult.No) return;
+            else
+            {
+                foreach (var x in _iSizeService.GetAll())
+                {
+                    if (x.Ma == SZ_Ma.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.SizeGiay == SZ_SizeGiay.Text)
+                    {
+                        MessageBox.Show("Size này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                }
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa size này?", "Xác nhận", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    var temp = GetDataFromGui();
+                    temp.Id = _idWhenclick;
+                    MessageBox.Show(_iSizeService.Update(temp));
+                    LoadSize();
+                }
+                if (dialogResult == DialogResult.No) return;
+            }
         }
 
         private void btn_ClearSZ_Click(object sender, EventArgs e)
