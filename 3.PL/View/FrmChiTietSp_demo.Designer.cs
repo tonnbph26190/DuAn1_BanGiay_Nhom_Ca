@@ -138,6 +138,7 @@
             this.btn_clear.TabIndex = 118;
             this.btn_clear.Text = "Clear";
             this.btn_clear.UseVisualStyleBackColor = true;
+            this.btn_clear.Click += new System.EventHandler(this.btn_clear_Click);
             // 
             // btn_suasp
             // 
@@ -485,8 +486,7 @@
             // textBox1
             // 
             this.textBox1.Enabled = false;
-            this.textBox1.Location = new System.Drawing.Point(843, 619);
-            this.textBox1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.textBox1.Location = new System.Drawing.Point(738, 499);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(254, 27);
             this.textBox1.TabIndex = 166;

@@ -5,6 +5,7 @@ using _2.BUS.ViewModel;
 using _3.PL.Utilities;
 using QRCoder;
 using System;
+using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -33,6 +34,7 @@ namespace _3.PL.View
         private IChatLieuService _IChatLieuService;
         Guid _idWhenclick;
         Guid _idWhenclick2;
+        int Flag = 1;
         List<ChiTIetSpView> _ChiTIetSpViews;
         public FrmChiTietSp_demo()
         {
@@ -48,6 +50,7 @@ namespace _3.PL.View
             _ChiTIetSpViews = new List<ChiTIetSpView>();
             LoadCmb();
             loadFlSp();
+           
 
         }
         public void LoadCmb()
@@ -245,12 +248,16 @@ namespace _3.PL.View
 
         private void cmb_tensp_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(!(_idWhenclick == Guid.Empty))
+            if (!(_idWhenclick == Guid.Empty))
+            {
+                Flag = 0;
+            }
+            if(Flag==0)
             {
                 var temp = _iQLSanPhamView.GetAll().FirstOrDefault(c=>c.Id==_idWhenclick);
 
                 txt_Ma.Text = temp.Ma;
-                _idWhenclick = Guid.Empty;
+                Flag=1;
 
             }
             else
@@ -457,32 +464,39 @@ namespace _3.PL.View
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa sản phẩn này?", "Xác nhận", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                for (int i = 0; i < _ChiTIetSpViews.Count; i++)
-                {
-                    if (_ChiTIetSpViews[i].Id == _idWhenclick2)
+                if (_idWhenclick2!=Guid.Empty)
+                {                 
+                    for (int i = 0; i < _ChiTIetSpViews.Count; i++)
                     {
-
-
-                        _ChiTIetSpViews[i].IdSp = _iSanPhamService.GetById(_iSanPhamService.GetIdByName(cmb_tensp.Text)).Id;
-                        _ChiTIetSpViews[i].IdMauSac = _iMauSacService.GetById(_iMauSacService.GetIdFromTen(cmb_mausac.Text)).Id;
-                        _ChiTIetSpViews[i].IdNsx = _iNsxService.GetById(_iNsxService.GetIdFromTen(cmb_nhasanxuat.Text)).Id;
-                        _ChiTIetSpViews[i].IdDongSP = _iDongSpService.GetById(_iDongSpService.GetIdByName(cmb_dongsanpham.Text)).Id;
-                        _ChiTIetSpViews[i].IdchatLieu = _IChatLieuService.GetById(_IChatLieuService.GetIdByName(cmb_ChatLieu.Text)).Id;
-                        _ChiTIetSpViews[i].IdSize = _ISizeService.GetById(_ISizeService.GetIdFromTen(cmb_Size.Text)).Id;
-                        _ChiTIetSpViews[i].SoLuong = Convert.ToInt32(txt_soluong.Text);
-                        _ChiTIetSpViews[i].DonGiaNhap = Convert.ToDouble(txt_gianhap.Text);
-                        _ChiTIetSpViews[i].DonGiaBan = Convert.ToDouble(txt_giaban.Text);
-                        _ChiTIetSpViews[i].MoTa = richtxt_mota.Text;
-                        _ChiTIetSpViews[i].TrangThai = rbtn_HoatDong.Checked ? 1 : 0;
-                        _ChiTIetSpViews[i].anh = linkavatar;
-                        _ChiTIetSpViews[i].Mavach = linkQR;
-                        _ChiTIetSpViews[i].Ma = txt_Ma.Text;
-                      
-                        
+                        if (_ChiTIetSpViews[i].Id == _idWhenclick2)
+                        {
+                            _ChiTIetSpViews[i].IdSp = _iSanPhamService.GetById(_iSanPhamService.GetIdByName(cmb_tensp.Text)).Id;
+                            _ChiTIetSpViews[i].IdMauSac = _iMauSacService.GetById(_iMauSacService.GetIdFromTen(cmb_mausac.Text)).Id;
+                            _ChiTIetSpViews[i].IdNsx = _iNsxService.GetById(_iNsxService.GetIdFromTen(cmb_nhasanxuat.Text)).Id;
+                            _ChiTIetSpViews[i].IdDongSP = _iDongSpService.GetById(_iDongSpService.GetIdByName(cmb_dongsanpham.Text)).Id;
+                            _ChiTIetSpViews[i].IdchatLieu = _IChatLieuService.GetById(_IChatLieuService.GetIdByName(cmb_ChatLieu.Text)).Id;
+                            _ChiTIetSpViews[i].IdSize = _ISizeService.GetById(_ISizeService.GetIdFromTen(cmb_Size.Text)).Id;
+                            _ChiTIetSpViews[i].SoLuong = Convert.ToInt32(txt_soluong.Text);
+                            _ChiTIetSpViews[i].DonGiaNhap = Convert.ToDouble(txt_gianhap.Text);
+                            _ChiTIetSpViews[i].DonGiaBan = Convert.ToDouble(txt_giaban.Text);
+                            _ChiTIetSpViews[i].MoTa = richtxt_mota.Text;
+                            _ChiTIetSpViews[i].TrangThai = rbtn_HoatDong.Checked ? 1 : 0;
+                            _ChiTIetSpViews[i].anh = linkavatar;
+                            _ChiTIetSpViews[i].Mavach = linkQR;
+                            _ChiTIetSpViews[i].Ma = txt_Ma.Text;
+                            MessageBox.Show("Sửa Thành Công");
+                            _idWhenclick2 = Guid.Empty;
+                            loadFlSp();
+                        }
                     }
                 }
-
-                LoadDgridSP();
+                else
+                {
+                    var temp = GetDataFromGui();
+                    temp.Id = _idWhenclick;
+                    MessageBox.Show(_iQLSanPhamView.UPDATE(temp));
+                    LoadDgridSP();
+                }               
             }
             if (dialogResult == DialogResult.No) return;
         }
@@ -523,6 +537,11 @@ namespace _3.PL.View
                 LoadDgridSP();
             }
             if (dialogResult == DialogResult.No) return;
+        }
+
+        private void btn_clear_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
