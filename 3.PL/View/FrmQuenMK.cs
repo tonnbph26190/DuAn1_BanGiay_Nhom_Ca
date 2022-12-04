@@ -18,6 +18,8 @@ namespace _3.PL.View
     public partial class FrmQuenMK : Form
     {
         private INhanVienService _NhanVienService;
+        string from, to, pass, content;
+        
         public FrmQuenMK()
         {
             InitializeComponent();
@@ -42,10 +44,10 @@ namespace _3.PL.View
             }
             else
             {
-                string from, to, pass, content;
                 from = "ckuotga1997@gmail.com";
                 pass = "rblzrnngambpsdoe";
                 content = Utility.GetNumber(6);
+
                 to =textBox1.Text.Trim();
                 MailMessage mail = new MailMessage();
                 mail.To.Add(to);
@@ -57,14 +59,18 @@ namespace _3.PL.View
                 smtp.Port = 587;
                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                 smtp.Credentials = new NetworkCredential(from, pass);
-                var obj=   _NhanVienService.GetAll().FirstOrDefault(c=>c.Email== textBox1.Text.Trim());
-                obj.PassWord=content.Trim();
-                _NhanVienService.Update(obj);
+                
                 try
                 {
                     smtp.Send(mail);
                     MessageBox.Show("Succes");
-                    this.Close();
+                    lb_Ma.Enabled= true;
+                    txt_Ma.Enabled= true;
+                    lb_NewPass.Enabled= true;
+                    txt_Pass.Enabled= true;
+                    button2.Visible= true;
+                    button2.Enabled= true;
+                    
                 }
                 catch (Exception)
                 {
@@ -72,6 +78,18 @@ namespace _3.PL.View
                     MessageBox.Show("Fail");
                     
                 }
+                
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (txt_Ma.Text.Trim() == content.Trim())
+            {
+                var obj = _NhanVienService.GetAll().FirstOrDefault(c => c.Email == textBox1.Text.Trim());
+                obj.PassWord = txt_Pass.Text.Trim();
+                MessageBox.Show(_NhanVienService.Update(obj));
+                this.Close();
             }
         }
     }
