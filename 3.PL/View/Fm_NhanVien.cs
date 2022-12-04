@@ -35,7 +35,93 @@ namespace _3.PL
            
             LoadLoc();
         }
+        public bool check()
+        {
+            if (string.IsNullOrEmpty(txt_MaNV.Text))
+            {
+                MessageBox.Show("Mã nhân viên không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txt_TenNV.Text))
+            {
+                MessageBox.Show("Tên nhân viên không được bỏ trống", "Thông báo");
+                return false;
+            }
 
+            if (rbtn_Nam.Checked == false && rbtn_Nu.Checked == false)
+            {
+                MessageBox.Show("Giới tính phải được chọn", "Thông báo");
+                return false;
+            }
+
+            if (dateTimePicker1.Value == null)
+            {
+                MessageBox.Show("Ngày sinh phải được chọn", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txt_QueQuanNV.Text))
+            {
+                MessageBox.Show("Quê quán không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txt_CmNV.Text))
+            {
+                MessageBox.Show("CMND không được bỏ trống!", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txt_SdtNV.Text))
+            {
+                MessageBox.Show("Số điện thoại không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (Regex.IsMatch(txt_SdtNV.Text, @"[0-9]+") == false)
+            {
+                MessageBox.Show("Số điện thoại Bắt buộc phải chứa số", "ERR");
+                return false;
+            }
+            if (txt_SdtNV.Text.Length != 10)
+            {
+                MessageBox.Show("Số điện thoại Bắt buộc phải chứa 10 số", "ERR");
+                return false;
+            }
+            if (Regex.IsMatch(txt_SdtNV.Text, @"(09|03|07|08|05)+[0-9]+") == false)
+            {
+                MessageBox.Show("Số điện thoại này không tồn tại", "ERR");
+                return false;
+            }
+            if (rbtn_HoatDong.Checked == false && rbtn_KhongHoatDong.Checked == false)
+            {
+                MessageBox.Show("Bạn phải chọn trạng thái", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(cmb_ChucVuNV.Text))
+            {
+                MessageBox.Show("Chức vụ nhân viên không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txt_EmailNV.Text))
+            {
+                MessageBox.Show("Email không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (Regex.IsMatch(txt_EmailNV.Text, @"(@)(.+)$") == false)
+            {
+
+                MessageBox.Show("Email không hợp lệ", "Thông báo");
+                return false;
+            }
+
+            if (string.IsNullOrEmpty(txt_PassNV.Text))
+            {
+                MessageBox.Show("Mật khẩu không được để trống", "Thông báo");
+                return false;
+            }
+            
+            else
+            {
+                return true;
+            }
+        }
         public void LoadLstChucVu()
         {
             foreach (var x in _CvService.GetAll())
@@ -160,27 +246,95 @@ namespace _3.PL
 
         private void bnt_Them_Click(object sender, EventArgs e)
         {
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm nhân viên này?", "Xác nhận", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (check() == false)
             {
-                MessageBox.Show(_NvService.Add(GetGui()));
-                LoadDGridNV(null);
-
+                return;
             }
-            if (dialogResult == DialogResult.No) return;
+            else
+            {
+                foreach (var x in _NvService.GetAll())
+                {
+                    if (x.MaNhanVien == txt_MaNV.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+
+                    if (x.TenNhanVien == txt_TenNV.Text)
+                    {
+                        MessageBox.Show("Tên này đã tồn tại", "Thông báo");
+                        return;
+                    }
+
+                    if (x.Email == txt_EmailNV.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+
+                    if (x.DienThoai == txt_SdtNV.Text)
+                    {
+                        MessageBox.Show("Tên này đã tồn tại", "Thông báo");
+                        return;
+                    }
+
+                }
+
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm nhân viên này?", "Xác nhận",
+                    MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    MessageBox.Show(_NvService.Add(GetGui()));
+                    LoadDGridNV(null);
+
+                }
+
+                if (dialogResult == DialogResult.No) return;
+            }
         }
 
         private void bnt_Sua_Click(object sender, EventArgs e)
         {
-            var temp = GetGui();
-            temp.MaNhanVien = _maClick;
-            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa nhân viên này?", "Xác nhận", MessageBoxButtons.YesNo);
-            if (dialogResult == DialogResult.Yes)
+            if (check() == false)
             {
-                MessageBox.Show(_NvService.Update(temp));
-                LoadDGridNV(null);
+                return;
             }
-            if (dialogResult == DialogResult.No) return;
+            else
+            {
+                foreach (var x in _NvService.GetAll())
+                {
+                    if (x.MaNhanVien == txt_MaNV.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+
+                    if (x.Email == txt_EmailNV.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+
+                    if (x.DienThoai == txt_SdtNV.Text)
+                    {
+                        MessageBox.Show("Tên này đã tồn tại", "Thông báo");
+                        return;
+                    }
+
+                }
+
+                var temp = GetGui();
+                temp.MaNhanVien = _maClick;
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa nhân viên này?", "Xác nhận",
+                    MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    MessageBox.Show(_NvService.Update(temp));
+                    LoadDGridNV(null);
+                }
+
+                if (dialogResult == DialogResult.No) return;
+            }
         }
 
         private void btn_Xoa_Click(object sender, EventArgs e)

@@ -56,6 +56,22 @@ namespace _3.PL.View
             dgrid_dhGiao.Columns[1].Visible = false;
             dgrid_hdchitiet.Columns[1].Visible = false;
         }
+
+        public bool check()
+        {
+            if (string.IsNullOrEmpty(txt_mahd.Text))
+            {
+                MessageBox.Show("Mã hóa đơn không được để trống");
+                return false;
+            }
+
+            if (dtp_Ship.Value > dtp_NhanHang.Value)
+            {
+                MessageBox.Show("Ngày ship phải trước hoặc bằng ngày nhận", "Thông báo");
+                return false;
+            }
+            return true;
+        }
         private void LoadCmb()
         {
             cmb_sdtkhachhang.Items.Clear();
@@ -706,6 +722,7 @@ namespace _3.PL.View
                 lbl_tongtien.Text = lbl_totalcart.Text;
             }
         }
+
     }  
     }
 

@@ -100,7 +100,68 @@ namespace _3.PL.View
 
 
         }
-       
+        public bool check()
+        {
+            if (string.IsNullOrEmpty(cmb_tensp.Text))
+            {
+                MessageBox.Show("Tên sản phẩm không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txt_Ma.Text))
+            {
+                MessageBox.Show("Mã không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(cmb_dongsanpham.Text))
+            {
+                MessageBox.Show("Dòng sản phẩm không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(cmb_nhasanxuat.Text))
+            {
+                MessageBox.Show("Nhà sản xuất không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(cmb_mausac.Text))
+            {
+                MessageBox.Show("Màu sắc không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(cmb_ChatLieu.Text))
+            {
+                MessageBox.Show("Chất liệu không được bỏ trống!", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(cmb_Size.Text))
+            {
+                MessageBox.Show("Size không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txt_soluong.Text))
+            {
+                MessageBox.Show("Số lượng không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txt_gianhap.Text))
+            {
+                MessageBox.Show("Giá nhập không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txt_giaban.Text))
+            {
+                MessageBox.Show("Giá bán không được bỏ trống", "Thông báo");
+                return false;
+            }
+            if (rbtn_HoatDong.Checked == false && rbtn_KhongHoatDong.Checked == false)
+            {
+                MessageBox.Show("Bạn phải chọn trạng thái", "Thông báo");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
         private void LoadDgridSP()
         {
             int stt = 1;
@@ -279,7 +340,20 @@ namespace _3.PL.View
 
         private void btn_themsp_Click(object sender, EventArgs e)
         {
-
+            if (check()==false)
+            {
+                return;
+            }
+            else
+            {
+                foreach (var x in _ChiTIetSpViews)
+                {
+                    if (x.Ma == txt_Ma.Text)
+                    {
+                        MessageBox.Show("Mã đã tồn tại", "Thông báo");
+                    }
+                }
+            }
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm sản phẩn này?", "Xác nhận", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {

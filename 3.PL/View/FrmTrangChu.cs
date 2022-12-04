@@ -24,10 +24,11 @@ namespace _3.PL
             int nWidthEllipse,
             int nHeightEllipse
             );
-        public FrmTrangChu()
+        public FrmTrangChu(string user)
         {
             InitializeComponent();
             Region = System.Drawing.Region.FromHrgn(CreateRoundRecRgn(0, 0, Width, Height, 25, 25));
+            User.Text = user;
 
         }
 
