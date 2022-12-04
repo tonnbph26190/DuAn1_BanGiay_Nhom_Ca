@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using _2.BUS.IServices;
 using _2.BUS.Services;
+using _3.PL.View;
 
 namespace _3.PL
 {
@@ -88,6 +89,13 @@ namespace _3.PL
                     return;
                 }
             }
+        }
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+            FrmQuenMK q=new FrmQuenMK();
+            q.ShowDialog();
+
         }
     }
 }
