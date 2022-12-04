@@ -54,74 +54,91 @@ namespace _3.PL.View
             };
         }
 
-        private void btn_Add_Click(object sender, EventArgs e)
+        public bool check()
         {
-            if (txt_MaCV.Text == "")
+            if (string.IsNullOrEmpty(txt_MaCV.Text))
             {
-                MessageBox.Show("Mã chức vụ không được để trống!", "Thông báo", MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Question);
+                MessageBox.Show("Không được đê trống Mã", "Thông báo");
+                return false;
             }
-
-            if (txt_TenCv.Text == "")
+            if (string.IsNullOrEmpty(txt_TenCv.Text))
             {
-                MessageBox.Show("Tên chức vụ không được để trống!", "Thông báo", MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Question);
+                MessageBox.Show("Không được đê trống Dòng sản phẩm", "Thông báo");
+                return false;
+            }
+            if (rbtn_HoatDong.Checked == false && rbtn_KhongHoatDong.Checked == false)
+            {
+                MessageBox.Show("Bạn phải chọn trạng thái", "Thông báo");
+                return false;
             }
             else
             {
-                DialogResult dg = MessageBox.Show("Bạn có muốn thêm không", "Thông báo", MessageBoxButtons.YesNo,
-                    MessageBoxIcon.Asterisk);
-                if (dg == DialogResult.Yes)
+                return true;
+            }
+        }
+        private void btn_Add_Click(object sender, EventArgs e)
+        {
+            if (check() == false)
+            {
+                return;
+            }
+            else
+            {
+                foreach (var x in _chucVuService.GetAll())
                 {
-                    _chucVuService.Add(GetDataFromGui());
-                    MessageBox.Show("Thêm thành công");
-                    LoadData();
-                }
-                else
-                {
-                    MessageBox.Show("Thêm thất bại");
-                }
-
-                if (dg == DialogResult.No)
-                {
-                    return;
+                    if (x.Ma == txt_MaCV.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.Ten == txt_TenCv.Text)
+                    {
+                        MessageBox.Show("chất liệu này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        _chucVuService.Add(GetDataFromGui());
+                        MessageBox.Show("Thêm thành công");
+                        LoadData();
+                    }
+                    if (dialogResult == DialogResult.No) return;
                 }
             }
         }
 
         private void btn_Update_Click(object sender, EventArgs e)
         {
-            if (txt_MaCV.Text == "")
+            if (check() == false)
             {
-                MessageBox.Show("Mã chức vụ không được để trống!", "Thông báo", MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Question);
                 return;
-            }
-
-            if (txt_TenCv.Text == "")
-            {
-                MessageBox.Show("Tên chức vụ không được để trống!", "Thông báo", MessageBoxButtons.OKCancel,
-                    MessageBoxIcon.Question);
-                return;
-            }
-            DialogResult dg = MessageBox.Show("Bạn có muốn sửa không", "Thông báo", MessageBoxButtons.YesNo,
-                MessageBoxIcon.Asterisk);
-            if (dg == DialogResult.Yes)
-            {
-                var temp = GetDataFromGui();
-                temp.Id = _id;                        
-                _chucVuService.Update(temp);
-                MessageBox.Show("Sửa chức vụ thành công");
-                LoadData();
             }
             else
             {
-                MessageBox.Show("Sửa thất bại");
-            }
-
-            if (dg == DialogResult.No)
-            {
-                return;
+                foreach (var x in _chucVuService.GetAll())
+                {
+                    if (x.Ma == txt_MaCV.Text)
+                    {
+                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    if (x.Ten == txt_TenCv.Text)
+                    {
+                        MessageBox.Show("chất liệu này đã tồn tại", "Thông báo");
+                        return;
+                    }
+                    DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        var temp = GetDataFromGui();
+                        temp.Id = _id;
+                        _chucVuService.Update(temp);
+                        MessageBox.Show("Sửa chức vụ thành công");
+                        LoadData();
+                    }
+                    if (dialogResult == DialogResult.No) return;
+                }
             }
         }
 
