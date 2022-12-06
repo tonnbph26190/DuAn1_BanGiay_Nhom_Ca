@@ -66,6 +66,11 @@
             this.label12 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -75,6 +80,11 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.button7);
+            this.groupBox1.Controls.Add(this.button6);
+            this.groupBox1.Controls.Add(this.button5);
+            this.groupBox1.Controls.Add(this.button4);
+            this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.button1);
             this.groupBox1.Controls.Add(this.button2);
             this.groupBox1.Controls.Add(this.bnt_Sua);
@@ -274,7 +284,7 @@
             this.comboBox5.FormattingEnabled = true;
             this.comboBox5.Location = new System.Drawing.Point(186, 169);
             this.comboBox5.Name = "comboBox5";
-            this.comboBox5.Size = new System.Drawing.Size(177, 28);
+            this.comboBox5.Size = new System.Drawing.Size(132, 28);
             this.comboBox5.TabIndex = 20;
             // 
             // comboBox4
@@ -282,7 +292,7 @@
             this.comboBox4.FormattingEnabled = true;
             this.comboBox4.Location = new System.Drawing.Point(186, 215);
             this.comboBox4.Name = "comboBox4";
-            this.comboBox4.Size = new System.Drawing.Size(177, 28);
+            this.comboBox4.Size = new System.Drawing.Size(132, 28);
             this.comboBox4.TabIndex = 19;
             // 
             // comboBox3
@@ -290,7 +300,7 @@
             this.comboBox3.FormattingEnabled = true;
             this.comboBox3.Location = new System.Drawing.Point(186, 262);
             this.comboBox3.Name = "comboBox3";
-            this.comboBox3.Size = new System.Drawing.Size(177, 28);
+            this.comboBox3.Size = new System.Drawing.Size(132, 28);
             this.comboBox3.TabIndex = 18;
             // 
             // comboBox2
@@ -298,7 +308,7 @@
             this.comboBox2.FormattingEnabled = true;
             this.comboBox2.Location = new System.Drawing.Point(186, 305);
             this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(177, 28);
+            this.comboBox2.Size = new System.Drawing.Size(132, 28);
             this.comboBox2.TabIndex = 17;
             // 
             // comboBox1
@@ -306,7 +316,7 @@
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(186, 125);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(177, 28);
+            this.comboBox1.Size = new System.Drawing.Size(132, 28);
             this.comboBox1.TabIndex = 16;
             // 
             // textBox2
@@ -456,6 +466,56 @@
             this.flowLayoutPanel2.Size = new System.Drawing.Size(114, 539);
             this.flowLayoutPanel2.TabIndex = 2;
             // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.Location = new System.Drawing.Point(326, 125);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(37, 29);
+            this.button3.TabIndex = 84;
+            this.button3.UseVisualStyleBackColor = false;
+            // 
+            // button4
+            // 
+            this.button4.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button4.Image = ((System.Drawing.Image)(resources.GetObject("button4.Image")));
+            this.button4.Location = new System.Drawing.Point(326, 261);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(37, 29);
+            this.button4.TabIndex = 85;
+            this.button4.UseVisualStyleBackColor = false;
+            // 
+            // button5
+            // 
+            this.button5.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button5.Image = ((System.Drawing.Image)(resources.GetObject("button5.Image")));
+            this.button5.Location = new System.Drawing.Point(326, 304);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(37, 29);
+            this.button5.TabIndex = 86;
+            this.button5.UseVisualStyleBackColor = false;
+            // 
+            // button6
+            // 
+            this.button6.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button6.Image = ((System.Drawing.Image)(resources.GetObject("button6.Image")));
+            this.button6.Location = new System.Drawing.Point(326, 212);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(37, 29);
+            this.button6.TabIndex = 87;
+            this.button6.UseVisualStyleBackColor = false;
+            // 
+            // button7
+            // 
+            this.button7.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button7.Image = ((System.Drawing.Image)(resources.GetObject("button7.Image")));
+            this.button7.Location = new System.Drawing.Point(326, 169);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(37, 29);
+            this.button7.TabIndex = 88;
+            this.button7.UseVisualStyleBackColor = false;
+            // 
             // Fm_ChiTietSP_Edit
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -517,5 +577,10 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button bnt_Sua;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
     }
 }

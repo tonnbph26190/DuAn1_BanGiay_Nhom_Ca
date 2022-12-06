@@ -41,7 +41,7 @@ namespace _3.PL
                 MessageBox.Show("email bạn nhập không hợp lệ", "Thông báo");
                 return false;
             }
-            if (Regex.IsMatch(txt_TaiKhoan.Text, @"(@)(.+)$") == false)
+            if (Regex.IsMatch(txt_TaiKhoan.Text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$") == false)
             {
 
                 MessageBox.Show("Email không hợp lệ", "Thông báo");
@@ -50,12 +50,6 @@ namespace _3.PL
             if (txt_MatKhau.Text.Length <= 3)
             {
                 MessageBox.Show("Mật khẩu bạn nhập không hợp lệ", "Thông báo");
-                return false;
-            }
-            if (Regex.IsMatch(txt_TaiKhoan.Text, @"(@)(.+)$") == false)
-            {
-
-                MessageBox.Show("Tài khoản phải nhập đúng định dang", "Thông báo");
                 return false;
             }
             else
