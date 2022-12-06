@@ -88,18 +88,18 @@ namespace _3.PL.View
                     }
                     if (x.Ten == txt_TenDSP.Text)
                     {
-                        MessageBox.Show("chất liệu này đã tồn tại", "Thông báo");
+                        MessageBox.Show("Dòng sản phẩm này đã tồn tại", "Thông báo");
                         return;
                     }
-                    DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        _dongSpService.Add(GetDataFromGui());
-                        MessageBox.Show("Thêm thành công");
-                        LoadData();
-                    }
-                    if (dialogResult == DialogResult.No) return;
                 }
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Dòng sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    _dongSpService.Add(GetDataFromGui());
+                    MessageBox.Show("Thêm thành công");
+                    LoadData();
+                }
+                if (dialogResult == DialogResult.No) return;
             }
         }
 
@@ -120,18 +120,19 @@ namespace _3.PL.View
                     }
                     if (x.Ten == txt_TenDSP.Text)
                     {
-                        MessageBox.Show("chất liệu này đã tồn tại", "Thông báo");
+                        MessageBox.Show("Dòng sản phẩm này đã tồn tại", "Thông báo");
                         return;
                     }
-                    DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        _dongSpService.Update(GetDataFromGui());
-                        MessageBox.Show("Sửa chức vụ thành công");
-                        LoadData();
-                    }
-                    if (dialogResult == DialogResult.No) return;
+                    
                 }
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Dòng sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    _dongSpService.Update(GetDataFromGui());
+                    MessageBox.Show("Sửa Dòng sản phẩm thành công");
+                    LoadData();
+                }
+                if (dialogResult == DialogResult.No) return;
             }
         }
 

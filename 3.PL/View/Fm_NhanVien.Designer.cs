@@ -68,6 +68,7 @@
             this.cmb_LocNV = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txt_TimKiemNV = new System.Windows.Forms.TextBox();
+            this.button3 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pb_AnhNV)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_NV)).BeginInit();
@@ -259,7 +260,7 @@
             this.cmb_ChucVuNV.Location = new System.Drawing.Point(183, 371);
             this.cmb_ChucVuNV.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.cmb_ChucVuNV.Name = "cmb_ChucVuNV";
-            this.cmb_ChucVuNV.Size = new System.Drawing.Size(173, 28);
+            this.cmb_ChucVuNV.Size = new System.Drawing.Size(134, 28);
             this.cmb_ChucVuNV.TabIndex = 26;
             // 
             // label2
@@ -296,6 +297,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.Info;
+            this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.cbx_KoHoatDong);
             this.groupBox1.Controls.Add(this.cbx_HoatDong);
             this.groupBox1.Controls.Add(this.dateTimePicker1);
@@ -502,6 +504,16 @@
             this.txt_TimKiemNV.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txt_TimKiemNV_MouseDown);
             this.txt_TimKiemNV.MouseHover += new System.EventHandler(this.txt_TimKiemNV_MouseHover);
             // 
+            // button3
+            // 
+            this.button3.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+            this.button3.Location = new System.Drawing.Point(319, 371);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(37, 29);
+            this.button3.TabIndex = 85;
+            this.button3.UseVisualStyleBackColor = false;
+            // 
             // Fm_NhanVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -568,5 +580,6 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.CheckBox cbx_KoHoatDong;
         private System.Windows.Forms.CheckBox cbx_HoatDong;
+        private System.Windows.Forms.Button button3;
     }
 }

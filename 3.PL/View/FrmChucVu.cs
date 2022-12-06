@@ -63,7 +63,7 @@ namespace _3.PL.View
             }
             if (string.IsNullOrEmpty(txt_TenCv.Text))
             {
-                MessageBox.Show("Không được đê trống Dòng sản phẩm", "Thông báo");
+                MessageBox.Show("Không được đê trống Chức Vụ", "Thông báo");
                 return false;
             }
             if (rbtn_HoatDong.Checked == false && rbtn_KhongHoatDong.Checked == false)
@@ -93,18 +93,18 @@ namespace _3.PL.View
                     }
                     if (x.Ten == txt_TenCv.Text)
                     {
-                        MessageBox.Show("chất liệu này đã tồn tại", "Thông báo");
+                        MessageBox.Show("Chức Vụ này đã tồn tại", "Thông báo");
                         return;
                     }
-                    DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        _chucVuService.Add(GetDataFromGui());
-                        MessageBox.Show("Thêm thành công");
-                        LoadData();
-                    }
-                    if (dialogResult == DialogResult.No) return;
                 }
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Chức Vụ này?", "Xác nhận", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    _chucVuService.Add(GetDataFromGui());
+                    MessageBox.Show("Thêm thành công");
+                    LoadData();
+                }
+                if (dialogResult == DialogResult.No) return;
             }
         }
 
@@ -125,20 +125,20 @@ namespace _3.PL.View
                     }
                     if (x.Ten == txt_TenCv.Text)
                     {
-                        MessageBox.Show("chất liệu này đã tồn tại", "Thông báo");
+                        MessageBox.Show("Chức Vụ này đã tồn tại", "Thông báo");
                         return;
                     }
-                    DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
-                    if (dialogResult == DialogResult.Yes)
-                    {
-                        var temp = GetDataFromGui();
-                        temp.Id = _id;
-                        _chucVuService.Update(temp);
-                        MessageBox.Show("Sửa chức vụ thành công");
-                        LoadData();
-                    }
-                    if (dialogResult == DialogResult.No) return;
                 }
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Chức Vụ này?", "Xác nhận", MessageBoxButtons.YesNo);
+                if (dialogResult == DialogResult.Yes)
+                {
+                    var temp = GetDataFromGui();
+                    temp.Id = _id;
+                    _chucVuService.Update(temp);
+                    MessageBox.Show("Sửa chức vụ thành công");
+                    LoadData();
+                }
+                if (dialogResult == DialogResult.No) return;
             }
         }
 
