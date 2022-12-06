@@ -41,21 +41,15 @@ namespace _3.PL
                 MessageBox.Show("email bạn nhập không hợp lệ", "Thông báo");
                 return false;
             }
-            if (Regex.IsMatch(txt_TaiKhoan.Text, @"(@)(.+)$") == false)
+            if (Regex.IsMatch(txt_TaiKhoan.Text, @"^([\w\.\-]+)@([\w\-]+)((\.(\w){2,3})+)$") == false)
             {
 
                 MessageBox.Show("Email không hợp lệ", "Thông báo");
                 return false;
             }
-            if (txt_MatKhau.Text.Length <= 3)
+            if (txt_MatKhau.Text.Length < 3)
             {
                 MessageBox.Show("Mật khẩu bạn nhập không hợp lệ", "Thông báo");
-                return false;
-            }
-            if (Regex.IsMatch(txt_TaiKhoan.Text, @"(@)(.+)$") == false)
-            {
-
-                MessageBox.Show("Tài khoản phải nhập đúng định dang", "Thông báo");
                 return false;
             }
             else
@@ -67,12 +61,12 @@ namespace _3.PL
 
         private void btn_DangNhap_Click(object sender, EventArgs e)
         {
-            if (CheckDK() == false)
-            {
-                return;
-            }
-            else
-            {
+            //if (CheckDK() == false)
+            //{
+            //    return;
+            //}
+            //else
+            //{
                 foreach (var x in _nhanVienService.GetAll())
                 {
                     if (x.Email == txt_TaiKhoan.Text && x.PassWord == txt_MatKhau.Text)
@@ -88,7 +82,7 @@ namespace _3.PL
                     }
                     return;
                 }
-            }
+            //}
         }
 
         private void label3_Click(object sender, EventArgs e)
