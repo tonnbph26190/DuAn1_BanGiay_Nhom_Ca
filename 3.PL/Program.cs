@@ -21,7 +21,6 @@ namespace _3.PL
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Fm_NhanVien());
         }
-        //Tần bị bịp
     }
 }
     
