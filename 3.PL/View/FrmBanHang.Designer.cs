@@ -245,7 +245,6 @@
             // button1
             // 
             this.button1.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.button1.Image = global::_3.PL.Properties.Resources.icons8_check_mark_40;
             this.button1.Location = new System.Drawing.Point(151, 170);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(127, 44);
