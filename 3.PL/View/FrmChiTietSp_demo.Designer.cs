@@ -69,6 +69,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txt_Ma = new System.Windows.Forms.TextBox();
             this.Fl_SanPham = new System.Windows.Forms.FlowLayoutPanel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_sanpham)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_Qrcode)).BeginInit();
@@ -453,11 +454,20 @@
             this.Fl_SanPham.Size = new System.Drawing.Size(103, 528);
             this.Fl_SanPham.TabIndex = 165;
             // 
+            // textBox1
+            // 
+            this.textBox1.Enabled = false;
+            this.textBox1.Location = new System.Drawing.Point(738, 499);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(223, 23);
+            this.textBox1.TabIndex = 166;
+            // 
             // FrmChiTietSp_demo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1463, 681);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.Fl_SanPham);
             this.Controls.Add(this.txt_Ma);
             this.Controls.Add(this.cmb_Size);
@@ -546,5 +556,6 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox txt_Ma;
         private System.Windows.Forms.FlowLayoutPanel Fl_SanPham;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }
