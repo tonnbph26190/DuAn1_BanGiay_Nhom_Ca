@@ -47,7 +47,7 @@ namespace _3.PL
                 MessageBox.Show("Email không hợp lệ", "Thông báo");
                 return false;
             }
-            if (txt_MatKhau.Text.Length <= 3)
+            if (txt_MatKhau.Text.Length < 3)
             {
                 MessageBox.Show("Mật khẩu bạn nhập không hợp lệ", "Thông báo");
                 return false;
@@ -91,5 +91,6 @@ namespace _3.PL
             q.ShowDialog();
 
         }
+
     }
 }

@@ -29,6 +29,7 @@ namespace _3.PL
             InitializeComponent();
             Region = System.Drawing.Region.FromHrgn(CreateRoundRecRgn(0, 0, Width, Height, 25, 25));
             User.Text = user;
+            label1.Text = "Chúc bạn một ngày vui vẻ 😉";
 
         }
 
@@ -100,6 +101,35 @@ namespace _3.PL
             Fm_KhachHang frmKhachHang = new Fm_KhachHang() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.pnlFromLoad.Controls.Add(frmKhachHang);
             frmKhachHang.Show();
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            int x = label1.Location.X;
+            x--;
+            label1.Location = new Point(x, label1.Location.Y);
+            if (x == 0)
+            {
+                x = panel2.Size.Width;
+                label1.Location = new Point(x, label1.Location.Y);
+            }
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            DialogResult dg = MessageBox.Show("Bạn có muốn đăng xuất không?", "Thông báo", MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question);
+            if (dg == DialogResult.Yes)
+            {
+                FrmLogin frmLogin = new FrmLogin();
+                frmLogin.Show();
+                this.Hide();
+            }
+
+            if (dg == DialogResult.No)
+            {
+                return;
+            }
         }
     }
 }
