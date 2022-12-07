@@ -23,8 +23,8 @@ namespace _3.PL.View
 {
     public partial class FrmChiTietSp_demo : Form
     {
-        string linkavatar ="";
-        string linkQR ="";
+        string linkavatar = "";
+        string linkQR = "";
         private IChiTietSpServices _iQLSanPhamView;
         private IDongSPService _iDongSpService;
         private IMauSacService _iMauSacService;
@@ -50,7 +50,7 @@ namespace _3.PL.View
             _ChiTIetSpViews = new List<ChiTIetSpView>();
             LoadCmb();
             loadFlSp();
-           
+
 
         }
         public void LoadCmb()
@@ -302,30 +302,20 @@ namespace _3.PL.View
             txt_giaban.Text = ctspv.DonGiaBan.ToString();
             txt_Ma.Text = ctspv.Ma;
             richtxt_mota.Text = ctspv.MoTa;
-            if (ctspv.anh != null && File.Exists(ctspv.anh))
+            if (ctspv.anh != null)
             {
-                pic_SanPham.Image = Image.FromFile(ctspv.anh);
-                Image img = Image.FromFile(ctspv.anh);
-                pic_SanPham.SizeMode = PictureBoxSizeMode.StretchImage;
-                linkavatar = ctspv.anh;
-                pic_SanPham.Image= img;
                 
-            }
-            else
-            {
+                Image img = Image.FromFile(ctspv.anh);
+                pic_SanPham.Image = img;
+                pic_SanPham.SizeMode = PictureBoxSizeMode.StretchImage;
 
-                pic_SanPham.Image = null;
+                // Bitmap bm = new Bitmap(txt_Anh.Text);
             }
             if (ctspv.Mavach != null && File.Exists(ctspv.Mavach))
             {
                 pic_Qrcode.Image = Image.FromFile(ctspv.Mavach);
                 pic_Qrcode.SizeMode = PictureBoxSizeMode.StretchImage;
                 linkQR = ctspv.Mavach;
-            }
-            else
-            {
-
-                pic_Qrcode.Image = null;
             }
             if (ctspv.TrangThai == 1)
             {
