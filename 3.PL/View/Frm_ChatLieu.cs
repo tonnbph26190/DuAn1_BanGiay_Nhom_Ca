@@ -17,9 +17,11 @@ namespace _3.PL.View
     {
         private IChatLieuService _iMauService;
         Guid _idWhenclick;
-        public Frm_ChatLieu()
+        Frm_ChiTietSanPham _form;
+        public Frm_ChatLieu(Frm_ChiTietSanPham form)
         {
             _iMauService = new ChatLieuService();
+            _form = form;
             InitializeComponent();
             LoadMau();
         }
@@ -99,6 +101,7 @@ namespace _3.PL.View
                 {
                     MessageBox.Show(_iMauService.Add(GetDataFromGui()));
                     LoadMau();
+                    _form.updateData();
                 }
                 if (dialogResult == DialogResult.No) return;
 
@@ -135,6 +138,7 @@ namespace _3.PL.View
                     temp.Id = _idWhenclick;
                     MessageBox.Show(_iMauService.Update(temp));
                     LoadMau();
+                    _form.updateData();
                 }
                 if (dialogResult == DialogResult.No) return;
             }

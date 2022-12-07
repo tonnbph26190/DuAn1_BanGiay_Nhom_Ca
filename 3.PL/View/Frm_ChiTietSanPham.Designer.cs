@@ -106,7 +106,7 @@
             this.dgrid_sanpham.Location = new System.Drawing.Point(678, 65);
             this.dgrid_sanpham.Name = "dgrid_sanpham";
             this.dgrid_sanpham.RowTemplate.Height = 25;
-            this.dgrid_sanpham.Size = new System.Drawing.Size(513, 490);
+            this.dgrid_sanpham.Size = new System.Drawing.Size(578, 490);
             this.dgrid_sanpham.TabIndex = 158;
             this.dgrid_sanpham.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrid_sanpham_CellClick);
             // 
@@ -243,6 +243,7 @@
             this.btn_ThemSanPham.Size = new System.Drawing.Size(32, 22);
             this.btn_ThemSanPham.TabIndex = 90;
             this.btn_ThemSanPham.UseVisualStyleBackColor = false;
+            this.btn_ThemSanPham.Click += new System.EventHandler(this.btn_ThemSanPham_Click);
             // 
             // btn_ThenNsx
             // 
@@ -254,6 +255,7 @@
             this.btn_ThenNsx.Size = new System.Drawing.Size(32, 22);
             this.btn_ThenNsx.TabIndex = 88;
             this.btn_ThenNsx.UseVisualStyleBackColor = false;
+            this.btn_ThenNsx.Click += new System.EventHandler(this.btn_ThenNsx_Click);
             // 
             // btn_ThemChatLieu
             // 
@@ -265,6 +267,7 @@
             this.btn_ThemChatLieu.Size = new System.Drawing.Size(32, 22);
             this.btn_ThemChatLieu.TabIndex = 87;
             this.btn_ThemChatLieu.UseVisualStyleBackColor = false;
+            this.btn_ThemChatLieu.Click += new System.EventHandler(this.btn_ThemChatLieu_Click);
             // 
             // btn_ThemSize
             // 
@@ -276,6 +279,7 @@
             this.btn_ThemSize.Size = new System.Drawing.Size(32, 22);
             this.btn_ThemSize.TabIndex = 86;
             this.btn_ThemSize.UseVisualStyleBackColor = false;
+            this.btn_ThemSize.Click += new System.EventHandler(this.btn_ThemSize_Click);
             // 
             // btn_ThemMauSac
             // 
@@ -287,6 +291,7 @@
             this.btn_ThemMauSac.Size = new System.Drawing.Size(32, 22);
             this.btn_ThemMauSac.TabIndex = 85;
             this.btn_ThemMauSac.UseVisualStyleBackColor = false;
+            this.btn_ThemMauSac.Click += new System.EventHandler(this.btn_ThemMauSac_Click);
             // 
             // btn_ThemDSP
             // 
@@ -298,6 +303,7 @@
             this.btn_ThemDSP.Size = new System.Drawing.Size(32, 22);
             this.btn_ThemDSP.TabIndex = 84;
             this.btn_ThemDSP.UseVisualStyleBackColor = false;
+            this.btn_ThemDSP.Click += new System.EventHandler(this.btn_ThemDSP_Click);
             // 
             // label13
             // 
@@ -600,7 +606,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1208, 606);
+            this.ClientSize = new System.Drawing.Size(1268, 606);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.dgrid_sanpham);
