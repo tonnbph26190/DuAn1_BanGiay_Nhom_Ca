@@ -22,7 +22,7 @@ namespace _3.PL
             InitializeComponent();
             _nhanVienService = new NhanVienService();
         }
-
+        
 
         public bool CheckDK()
         {
@@ -69,11 +69,14 @@ namespace _3.PL
             {
                 foreach (var x in _nhanVienService.GetAll())
                 {
+                    
                     if (x.Email == txt_TaiKhoan.Text && x.PassWord == txt_MatKhau.Text)
                     {
-                        MessageBox.Show("Đăng nhập thành công", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+
+                        MessageBox.Show("Đăng nhập thành công", "Thông báo");
+                        
                         FrmTrangChu tc = new FrmTrangChu(txt_TaiKhoan.Text);
-                        tc.ShowDialog();
+                        tc.ShowDialog();                     
                         this.Hide();
                     }
                     else

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _3.PL.Properties;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static _3.PL.View.Frm_Alert;
 
 namespace _3.PL.View
 {
@@ -20,36 +22,41 @@ namespace _3.PL.View
          
 
         private int x, y;
-        public enum emAction
+        public enum enmAction
         {
             wait,
             start,
             close
         }
 
-        private Frm_Alert.emAction action;
+
+        public enum enmType
+        {
+            Success,
+            Warning,
+            Error,
+            Info
+        }
+        private Frm_Alert.enmAction action;
 
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var t = new System.Timers.Timer();
-            t.Interval = 1;
-            action = emAction.close;
+            timer1.Interval = 1;
+            action = enmAction.close;
 
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            var t = new System.Timers.Timer();
             switch (this.action)
             {
-
-                case emAction.wait:
-                    t.Interval = 5000;
-                    action = emAction.close;
+                case enmAction.wait:
+                    timer1.Interval = 3000;
+                    action = enmAction.close;
                     break;
-                case emAction.start:
-                    t.Interval = 1;
+                case Frm_Alert.enmAction.start:
+                    this.timer1.Interval = 1;
                     this.Opacity += 0.1;
                     if (this.x < this.Location.X)
                     {
@@ -59,13 +66,14 @@ namespace _3.PL.View
                     {
                         if (this.Opacity == 1.0)
                         {
-                            action = emAction.wait;
+                            action = Frm_Alert.enmAction.wait;
                         }
                     }
                     break;
-                case emAction.close:
-                    t.Interval = 1;
+                case enmAction.close:
+                    timer1.Interval = 1;
                     this.Opacity -= 0.1;
+
                     this.Left -= 3;
                     if (base.Opacity == 0.0)
                     {
@@ -75,16 +83,13 @@ namespace _3.PL.View
             }
         }
 
-        public void showAlert(string mess)
+        public void showAlert(string mess, enmType type)
         {
-            var t = new System.Timers.Timer();
             this.Opacity = 0.0;
             this.StartPosition = FormStartPosition.Manual;
             string fname;
-            //this.button1.Image = global::_3.PL.Properties.Resources.x_mark_24;
-            //button1.Image=Image.FromFile("D:\\Downloads\\DuAn1_BanGiay_Nhom_Ca1\\3.PL\\Resources\\close.png");
-            //pictureBox1.Image = Image.FromFile("D:\\Downloads\\DuAn1_BanGiay_Nhom_Ca1\\3.PL\\Resources\\close.png");
-            for (int i = 0; i < 10; i++)
+
+            for (int i = 1; i < 10; i++)
             {
                 fname = "alert" + i.ToString();
                 Frm_Alert frm = (Frm_Alert)Application.OpenForms[fname];
@@ -93,18 +98,42 @@ namespace _3.PL.View
                 {
                     this.Name = fname;
                     this.x = Screen.PrimaryScreen.WorkingArea.Width - this.Width + 15;
-                    this.y = Screen.PrimaryScreen.WorkingArea.Height - this.Height * i;
+                    this.y = Screen.PrimaryScreen.WorkingArea.Height - this.Height * i - 5 * i;
                     this.Location = new Point(this.x, this.y);
                     break;
+
                 }
+
+            }
+            this.x = Screen.PrimaryScreen.WorkingArea.Width - base.Width - 5;
+
+            switch (type)
+            {
+                case enmType.Success:
+                    //this.pictureBox1.Image = Resources.success;
+                    this.BackColor = Color.SeaGreen;
+                    break;
+                case enmType.Error:
+                    //this.pictureBox1.Image = Resources.error;
+                    this.BackColor = Color.DarkRed;
+                    break;
+                case enmType.Info:
+                   // this.pictureBox1.Image = Resources.info;
+                    this.BackColor = Color.RoyalBlue;
+                    break;
+                case enmType.Warning:
+                   // this.pictureBox1.Image = Resources.warning;
+                    this.BackColor = Color.DarkOrange;
+                    break;
             }
 
-            this.x = Screen.PrimaryScreen.WorkingArea.Width - base.Width - 5;
+
             this.lbl_mess.Text = mess;
+
             this.Show();
-            this.action = emAction.start;
-            t.Interval = 1;
-            t.Start();
+            this.action = enmAction.start;
+            this.timer1.Interval = 1;
+            this.timer1.Start();
         }
 
     }

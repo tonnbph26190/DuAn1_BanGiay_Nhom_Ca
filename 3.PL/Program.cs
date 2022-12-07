@@ -19,7 +19,7 @@ namespace _3.PL
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmTrangChu(null));
+            Application.Run(new FrmLogin());
         }
         //Tần bị bịp
     }
