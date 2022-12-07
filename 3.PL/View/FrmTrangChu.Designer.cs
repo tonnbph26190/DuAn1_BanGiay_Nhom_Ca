@@ -67,7 +67,7 @@
             this.pn_Menu.Location = new System.Drawing.Point(0, 0);
             this.pn_Menu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pn_Menu.Name = "pn_Menu";
-            this.pn_Menu.Size = new System.Drawing.Size(238, 575);
+            this.pn_Menu.Size = new System.Drawing.Size(238, 698);
             this.pn_Menu.TabIndex = 0;
             // 
             // btn_NhanVien
@@ -277,7 +277,7 @@
             this.pnlFromLoad.Location = new System.Drawing.Point(238, 57);
             this.pnlFromLoad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pnlFromLoad.Name = "pnlFromLoad";
-            this.pnlFromLoad.Size = new System.Drawing.Size(1260, 517);
+            this.pnlFromLoad.Size = new System.Drawing.Size(1288, 639);
             this.pnlFromLoad.TabIndex = 1;
             // 
             // label2
@@ -304,7 +304,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.ClientSize = new System.Drawing.Size(1497, 575);
+            this.ClientSize = new System.Drawing.Size(1525, 698);
             this.Controls.Add(this.lb_TrangChu);
             this.Controls.Add(this.pnlFromLoad);
             this.Controls.Add(this.pn_Menu);

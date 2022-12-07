@@ -18,10 +18,12 @@ namespace _3.PL.View
     {
         private ISizeService _iSizeService;
         Guid _idWhenclick;
-        public Frm_SizeGiay()
+        Frm_ChiTietSanPham _form;
+        public Frm_SizeGiay(Frm_ChiTietSanPham form)
         {
             InitializeComponent();
             _iSizeService = new SizeService();
+            _form = form;
             LoadSize();
             Drg_size.Columns[1].Visible = false;
         }
@@ -105,6 +107,7 @@ namespace _3.PL.View
                 {
                     MessageBox.Show(_iSizeService.Add(GetDataFromGui()));
                     LoadSize();
+                    _form.updateData();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -138,6 +141,7 @@ namespace _3.PL.View
                     temp.Id = _idWhenclick;
                     MessageBox.Show(_iSizeService.Update(temp));
                     LoadSize();
+                    _form.updateData();
                 }
                 if (dialogResult == DialogResult.No) return;
             }

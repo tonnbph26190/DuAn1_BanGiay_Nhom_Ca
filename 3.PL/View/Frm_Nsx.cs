@@ -17,7 +17,8 @@ namespace _3.PL.View
     {
         private INsxService _iMauService;
         Guid _idWhenclick;
-        public Frm_Nsx()
+        Frm_ChiTietSanPham _form;
+        public Frm_Nsx(Frm_ChiTietSanPham form)
         {
             InitializeComponent();
 
@@ -25,6 +26,7 @@ namespace _3.PL.View
             _iMauService = new NsxService();
             LoadMau();
             Drg_mausac.Columns[1].Visible = false;
+            _form = form;
         }
         private void LoadMau()
         {
@@ -100,6 +102,7 @@ namespace _3.PL.View
                 {
                     MessageBox.Show(_iMauService.Add(GetDataFromGui()));
                     LoadMau();
+                    _form.updateData();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -133,6 +136,7 @@ namespace _3.PL.View
                     temp.Id = _idWhenclick;
                     MessageBox.Show(_iMauService.Update(temp));
                     LoadMau();
+                    _form.updateData();
                 }
                 if (dialogResult == DialogResult.No) return;
             }

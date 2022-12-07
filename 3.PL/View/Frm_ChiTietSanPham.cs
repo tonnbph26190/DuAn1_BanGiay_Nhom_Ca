@@ -2,6 +2,7 @@
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
 using _3.PL.Utilities;
+using _3.PL.View;
 using QRCoder;
 using System;
 using System.Collections.Generic;
@@ -366,7 +367,17 @@ namespace _3.PL
 
         private void bnt_Them_Click(object sender, EventArgs e)
         {
-
+            DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Sp này?", "Xác nhận", MessageBoxButtons.YesNo);
+            if (dialogResult == DialogResult.Yes)
+            {
+                if (_iQLSanPhamView.ADD(GetDataFromGui()))
+                {
+                    MessageBox.Show("Thêm thành công");
+                }
+                LoadDgridSP();
+                
+            }
+            if (dialogResult == DialogResult.No) return;
         }
 
         private void btn_ThemList_Click(object sender, EventArgs e)
@@ -436,6 +447,48 @@ namespace _3.PL
                 loadFlSp();
             }
             if (dialogResult == DialogResult.No) return;
+        }
+
+        private void btn_ThemSanPham_Click(object sender, EventArgs e)
+        {
+            Frm_SanPham sp=new Frm_SanPham();
+            sp.ShowDialog(this);
+        }
+
+        private void btn_ThemDSP_Click(object sender, EventArgs e)
+        {
+            FrmDongSp dongSp= new FrmDongSp();
+            dongSp.ShowDialog(this);
+        }
+
+        private void btn_ThenNsx_Click(object sender, EventArgs e)
+        {
+            Frm_Nsx nsx= new Frm_Nsx(this);
+            nsx.ShowDialog(this);
+        }
+
+        private void btn_ThemChatLieu_Click(object sender, EventArgs e)
+        {
+            Frm_ChatLieu chatLieu= new Frm_ChatLieu(this);
+            chatLieu.ShowDialog(this);
+        }
+
+        private void btn_ThemMauSac_Click(object sender, EventArgs e)
+        {
+            Frm_MauSac mauSac= new Frm_MauSac(this);
+            mauSac.ShowDialog(this);
+        }
+
+        private void btn_ThemSize_Click(object sender, EventArgs e)
+        {
+            Frm_SizeGiay sizeGiay= new Frm_SizeGiay(this);
+            sizeGiay.ShowDialog(this);
+        }
+        public void updateData()
+        {
+
+            LoadCmb();
+
         }
     }
 }
