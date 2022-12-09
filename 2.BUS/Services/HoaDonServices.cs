@@ -30,7 +30,7 @@ namespace _2.BUS.Services
             if (obj == null) return "thêm thất bại";
             var hoaDon = new HoaDon()
             {
-                Id = Guid.Empty,
+                Id = Guid.NewGuid(),
                 MaHoaDon = obj.MaHoaDon,
                 IdKhachHang = obj.IdKhachHang,
                 IdNhanVien = obj.IdNhanVien,
@@ -51,6 +51,8 @@ namespace _2.BUS.Services
         {
             if (obj == null) return "sửa thất bại";
             var hoaDon = _iHoaDonRepository.GetAll().FirstOrDefault(c => c.Id == obj.Id);
+            if (hoaDon == null) return "sửa thất bại";
+            
             //hoaDon.Ma = obj.MaHd;
             hoaDon.MaHoaDon = obj.MaHoaDon;
             hoaDon.IdKhachHang = obj.IdKhachHang;
@@ -96,8 +98,8 @@ namespace _2.BUS.Services
                         NgayShipHang=a.NgayShipHang == null ? nullDateTime.Value : a.NgayShipHang.Value,
                         NgayThanhToan=a.NgayThanhToan == null ? nullDateTime.Value : a.NgayThanhToan.Value,
                         IdNhanVien = c.Id,
-                        IdKhachHang = b.Id==null?Guid.Empty:b.Id,
-                        NguoiBan = c.TenNhanVien,
+                        IdKhachHang = b.Id==Guid.Empty?Guid.Empty:b.Id,
+                        NguoiBan = a.NguoiBan,
                         TrangThai = a.TrangThai,
                         TenKH=b.Ten
                     }

@@ -42,6 +42,7 @@ namespace _3.PL.View
             lb_Ma.Text = obj.Ma;
             lb_TenSp.Text=_iQLSanPhamView.GETNAME(obj.Ma);
             pic_SanPham.ImageLocation = obj.Anh;
+            pic_SanPham.SizeMode=PictureBoxSizeMode.StretchImage;
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)

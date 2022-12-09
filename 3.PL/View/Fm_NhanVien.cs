@@ -2,6 +2,7 @@
 using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
+using _3.PL.View;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
 using System.Collections;
@@ -124,12 +125,16 @@ namespace _3.PL
         }
         public void LoadLstChucVu()
         {
-            foreach (var x in _CvService.GetAll())
+            cmb_ChucVuNV.Items.Clear();
+            foreach (var x in _CvService.GetAll().Where(c=>c.TrangThai==1))
             {
                 cmb_ChucVuNV.Items.Add(x.Ma + "-" + x.Ten);
             }
         }
-       
+       public void Change() 
+        {
+           LoadLstChucVu();
+        }
         public void LoadLoc()
         {
             ArrayList row =new ArrayList();
@@ -199,6 +204,7 @@ namespace _3.PL
 
         private void dgrid_NV_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex == -1) return;
             int rowIndex = e.RowIndex;
             if (rowIndex == _NvService.GetAll(null).Count) return;
             _maClick = dgrid_NV.Rows[rowIndex].Cells[1].Value.ToString();
@@ -302,12 +308,7 @@ namespace _3.PL
             else
             {
                 foreach (var x in _NvService.GetAll())
-                {
-                    if (x.MaNhanVien == txt_MaNV.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
+                {                   
 
                     if (x.Email == txt_EmailNV.Text)
                     {
@@ -593,6 +594,12 @@ namespace _3.PL
             {
                 cbx_HoatDong.Checked = false;
             }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            FrmChucVu chucVu= new FrmChucVu(this);
+            chucVu.Show();
         }
     }
 }

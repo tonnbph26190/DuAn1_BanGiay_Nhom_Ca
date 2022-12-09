@@ -135,6 +135,9 @@ namespace _2.BUS.Services
             return GetAll().FirstOrDefault(c=>c.Ma == input).TenSp;
         }
 
-       
+        public string GetMaByID(Guid? id)
+        {
+           return GetAll().FirstOrDefault(c=>c.Id== id).Ma;
+        }
     }
 }

@@ -264,6 +264,7 @@ namespace _3.PL
                 System.Windows.Forms.Button btn = new System.Windows.Forms.Button() { Width = 80, Height = 80 };
                 btn.Text = x.Ma;
                 btn.Tag = x;
+                btn.Image= Bitmap.FromFile(x.anh);
                 btn.BackColor = Color.Red;
                 btn.Click += Btn_Click; ;
                 btn.ForeColor = Color.Black;
@@ -440,10 +441,8 @@ namespace _3.PL
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xoa sản phẩn này?", "Xác nhận", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                var temp = GetDataFromGui();
-                temp.Id = _idWhenclick;
+                var temp = _ChiTIetSpViews.FirstOrDefault(c => c.Id == _idWhenclick2);
                 _ChiTIetSpViews.Remove(temp);
-
                 loadFlSp();
             }
             if (dialogResult == DialogResult.No) return;
@@ -488,6 +487,11 @@ namespace _3.PL
         {
 
             LoadCmb();
+
+        }
+
+        private void Frm_ChiTietSanPham_Load(object sender, EventArgs e)
+        {
 
         }
     }

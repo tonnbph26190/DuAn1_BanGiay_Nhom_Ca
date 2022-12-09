@@ -23,7 +23,8 @@ namespace _2.BUS.Services
         {
             if (obj == null) return "thêm thất bại";
             var khachHang = new KhachHang()
-            {
+            {    
+                Id=obj.Id,
                 Ma = obj.Ma,
                 Ten = obj.Ten,
                 Email = obj.Email,
