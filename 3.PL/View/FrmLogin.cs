@@ -93,6 +93,11 @@ namespace _3.PL
             {
                 foreach (var x in _nhanVienService.GetAll())
                 {
+                    if (x.TrangThai == 0)
+                    {
+                        MessageBox.Show("Nhân viên này đâng không hoạt động", "Thông báo", MessageBoxButtons.OKCancel,
+                            MessageBoxIcon.Asterisk);
+                    }
                     
                     if (x.Email == txt_TaiKhoan.Text && x.PassWord == txt_MatKhau.Text)
                     {
