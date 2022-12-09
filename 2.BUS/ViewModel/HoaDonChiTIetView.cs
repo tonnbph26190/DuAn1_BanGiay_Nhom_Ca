@@ -20,7 +20,7 @@ namespace _2.BUS.ViewModel
         public Guid IdhoaDon { get; set; }
         public int TrangThai { get; set; }
         public Guid IdChiTIetSp { get; set; }
-
+        public double Tong { get; set; }
         public string GhiChu { get; set; }
     }
 }

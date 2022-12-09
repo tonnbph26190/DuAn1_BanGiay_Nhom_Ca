@@ -84,14 +84,7 @@ namespace _3.PL
             frmhoaDon.Show();
         }
 
-        private void btn_Voucher_Click(object sender, EventArgs e)
-        {
-            lb_TrangChu.Text = "Voucher";
-            this.pnlFromLoad.Controls.Clear();
-            Fm_GiamGia frmGiamGia = new Fm_GiamGia() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-            this.pnlFromLoad.Controls.Add(frmGiamGia);
-            frmGiamGia.Show();
-        }
+        
 
         private void btn_KhachHang_Click(object sender, EventArgs e)
         {
@@ -100,6 +93,15 @@ namespace _3.PL
             Fm_KhachHang frmKhachHang = new Fm_KhachHang() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.pnlFromLoad.Controls.Add(frmKhachHang);
             frmKhachHang.Show();
+        }
+
+        private void btn_BanHang_Click(object sender, EventArgs e)
+        {
+            lb_TrangChu.Text = "Bán Hàng";
+            this.pnlFromLoad.Controls.Clear();
+            FrmThanhToan frmThanhToan = new FrmThanhToan() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            this.pnlFromLoad.Controls.Add(frmThanhToan);
+            frmThanhToan.Show();
         }
     }
 }

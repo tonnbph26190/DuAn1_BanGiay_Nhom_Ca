@@ -440,8 +440,7 @@ namespace _3.PL.View
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn xoa sản phẩn này?", "Xác nhận", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                var temp = GetDataFromGui();
-                temp.Id = _idWhenclick;
+                var temp = _ChiTIetSpViews.FirstOrDefault(c => c.Id == _idWhenclick2);
                 _ChiTIetSpViews.Remove(temp);
 
                 loadFlSp();

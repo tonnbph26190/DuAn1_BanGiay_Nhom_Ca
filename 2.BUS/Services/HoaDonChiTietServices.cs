@@ -34,7 +34,9 @@ namespace _2.BUS.Services
                 IdhoaDon = obj.IdhoaDon,
                 IdChiTIetSp = obj.IdChiTIetSp,
                 SoLuong = obj.SoLuong,
-                DonGia = obj.DonGia
+                DonGia = obj.DonGia,
+                GiamGia = obj.GiamGia,
+               
             };
             if (_iHoaDonChiTietRepository.Add(hoaDonChiTiet)) return "thêm thành công";
             return "thêm thất bại";
@@ -47,6 +49,7 @@ namespace _2.BUS.Services
             if (obj == null) return "sửa thất bại";
             var hoaDonChiTiet = _iHoaDonChiTietRepository.GetAll().FirstOrDefault(c => c.IdhoaDon == obj.IdhoaDon && c.IdChiTIetSp == obj.IdChiTIetSp);
             hoaDonChiTiet.SoLuong = obj.SoLuong;
+            hoaDonChiTiet.GiamGia = obj.GiamGia;
             hoaDonChiTiet.DonGia = obj.DonGia;
             if (_iHoaDonChiTietRepository.Update(hoaDonChiTiet)) return "sửa thành công";
             return "sửa thất bại";
@@ -78,6 +81,27 @@ namespace _2.BUS.Services
             var hoaDonChiTiet = _iHoaDonChiTietRepository.GetAll().FirstOrDefault(c => c.IdhoaDon == obj.IdhoaDon && c.IdChiTIetSp == obj.IdChiTIetSp);
             if (_iHoaDonChiTietRepository.Delete(hoaDonChiTiet)) return "xóa thành công";
             return "xóa thất bại";
+        }
+
+        public List<HoaDonChiTIetView> ShowHoadonChitiet()
+        {
+            var data =
+                (
+                    from a in _iHoaDonChiTietRepository.GetAll()
+                    join b in _iHoaDonRepository.GetAll() on a.IdhoaDon equals b.Id
+                    join c in _iQlSanphamService.GetAll() on a.IdChiTIetSp equals c.Id
+                    
+                    select new HoaDonChiTIetView()
+                    {
+                        IdChiTIetSp = c.Id,
+                        MaSp = c.Ma,
+                        TenSp = c.TenSp,
+                        SoLuong = a.SoLuong.Value,
+                        DonGia = a.DonGia.Value,
+                        Tong= a.SoLuong.Value* a.DonGia.Value,
+                    }
+                ).ToList();
+            return data;
         }
     }
 }
