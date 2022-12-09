@@ -52,7 +52,7 @@ namespace _3.PL.View
                 MailMessage mail = new MailMessage();
                 mail.To.Add(to);
                 mail.From = new MailAddress(from);
-                mail.Subject = "Mật khẩu mới của bạn";
+                mail.Subject = "Mã xác nhận của bạn";
                 mail.Body = content;
                 SmtpClient smtp = new SmtpClient("smtp.gmail.com");
                 smtp.EnableSsl = true;

@@ -10,16 +10,11 @@ using System.Windows.Forms;
 
 namespace _3.PL.View
 {
-    public partial class Fm_ChiTietSP_Edit : Form
+    public partial class FrmBanHang : Form
     {
-        public Fm_ChiTietSP_Edit()
+        public FrmBanHang()
         {
             InitializeComponent();
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
     }
 }
