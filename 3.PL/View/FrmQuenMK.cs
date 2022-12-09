@@ -26,6 +26,7 @@ namespace _3.PL.View
             _NhanVienService= new NhanVienService();
         }
 
+
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode==Keys.Enter)
