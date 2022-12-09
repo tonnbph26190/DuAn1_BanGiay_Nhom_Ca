@@ -265,7 +265,7 @@ namespace _3.PL.View
                 string ma = txt_Ma.Text;
                 do
                 {
-                    ma ="SP"+ Utility.GetNumber(3);
+                    ma ="SP"+ Utilitys.GetNumber(3);
                 } while (_iQLSanPhamView.GetAll().Any(c => c.Ma.Equals(ma)));
                 txt_Ma.Text = ma;
             }

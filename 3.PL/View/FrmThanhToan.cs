@@ -1,4 +1,5 @@
-﻿using _2.BUS.IServices;
+﻿using _1.DAL.Models;
+using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
 using _3.PL.Utilities;
@@ -32,6 +33,7 @@ namespace _3.PL.View
         FilterInfoCollection filterInfoCollection;
         VideoCaptureDevice captureDevice;
         string MaNVLG;
+        bool Flag = true;
         public FrmThanhToan()
         {
             InitializeComponent();
@@ -79,6 +81,7 @@ namespace _3.PL.View
                 products.Controls.Add(btn);
                 Fl_SanPhams.Controls.Add(products);
                 
+                
             }
             
         }
@@ -89,7 +92,15 @@ namespace _3.PL.View
         {
             
             _idSanpham = ((sender as System.Windows.Forms.Button).Tag as ChiTIetSpView).Id;
-            ThemSpVaoGiohang(_idSanpham);
+            if (Flag)
+            {
+                ThemSpVaoGiohang(_idSanpham);
+            }
+            else
+            {
+                Frm_Alert fm = new Frm_Alert();
+                fm.showAlert("Đơn hàng đang được giao đi", Frm_Alert.enmType.Warning);
+            }
             totalCart();
         }
 
@@ -124,7 +135,7 @@ namespace _3.PL.View
             var data = _lstChitietHD.FirstOrDefault(c => c.IdChiTIetSp == sp.Id);
             if (sp.SoLuong == 0)
             {
-                MessageBox.Show("Sản phẩm trong giỏ hàng đã vượt quá số lượng cho phép", "Cảnh báo");
+                MessageBox.Show("Sản phẩm trong giỏ hàng đã hết", "Cảnh báo");
                 return;
             }
             if (data == null)
@@ -250,6 +261,10 @@ namespace _3.PL.View
             txt_MaNv.Text = _iQlNhanvienService.GetAll().FirstOrDefault(c => c.Id == hoadonview.IdNhanVien).MaNhanVien;
             txt_DiaChi.Text = hoadonview.NguoiBan;
             txt_ThanhTien.Text=lbl_totalcart.Text;
+            if (hoadonview.TrangThai==2)
+            {
+                Flag = false;
+            }
             if (hoadonview.TrangThai==1)
             {
                 rbtn_DaTT.Checked = true;
@@ -326,10 +341,16 @@ namespace _3.PL.View
                 KhachHang = _iKhachHangService.GetAll().FirstOrDefault(c => c.SoDienThoai == txt_Sdt.Text.Trim());
                 if (KhachHang != null)
                 {
-
+                    if (_iHoadonService.ShowHoadon().Any(c=>c.MaHoaDon==txt_MaHD.Text))
+                    {
+                        var obj = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.MaHoaDon == txt_MaHD.Text);
+                        obj.TrangThai = rbtn_ChuaThanhToan.Checked ? 0 : 1;
+                        obj.NgayThanhToan=DateTime.Now;
+                        _iHoadonService.Update(obj);
+                    }
                     HoaDonView hoadon = new HoaDonView()
                     {
-                        MaHoaDon = "HD" + Utility.GetNumber(3),
+                        MaHoaDon ="HD" + Utilitys.GetNumber(3),
                         NgayLap = DateTime.Today,
                         NgayNhanHang=DateTime.Today,
                         NgayShipHang=DateTime.Today,
@@ -339,8 +360,9 @@ namespace _3.PL.View
                         TrangThai = rbtn_ChuaThanhToan.Checked?0:1,
                         TenKH = KhachHang.Ten,
                         Sdt = KhachHang.SoDienThoai,
-                        NguoiBan=txt_DiaChi.Text
+                        NguoiBan=KhachHang.DiaChi,
                     };
+                     txt_luu.Text=hoadon.MaHoaDon;
                     _iHoadonService.Add(hoadon);
                     var IdHd = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.MaHoaDon == hoadon.MaHoaDon).Id;
                     foreach (var item in _lstChitietHD)
@@ -368,7 +390,10 @@ namespace _3.PL.View
                     Frm_Alert frm_Alert = new Frm_Alert();
                     if (rbtn_DaTT.Checked)
                     {
-                        
+                        if (ck_in.Checked=true)
+                        {
+                            inHoaDon();
+                        }
                         
                         frm_Alert.showAlert($"Thanh toán hóa đơn thành công. ID: {hoadon.MaHoaDon}", Frm_Alert.enmType.Info);
                         
@@ -396,9 +421,10 @@ namespace _3.PL.View
                         TrangThai=1,
                     };
                     _iKhachHangService.Add(kh);
+                    
                     HoaDonView hoadon = new HoaDonView()
                     {                       
-                        MaHoaDon = "HD" + Utility.GetNumber(3),
+                        MaHoaDon = "HD" + Utilitys.GetNumber(3),
                         NgayLap = DateTime.Today,
                         NgayNhanHang = DateTime.Today,
                         NgayShipHang = DateTime.Today,
@@ -409,6 +435,7 @@ namespace _3.PL.View
                         TenKH = kh.Ten,                      
 
                     };
+                    txt_luu.Text = hoadon.MaHoaDon;
                     _iHoadonService.Add(hoadon);
                     var IdHd = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.MaHoaDon == hoadon.MaHoaDon).Id;
                     foreach (var item in _lstChitietHD)
@@ -449,6 +476,7 @@ namespace _3.PL.View
             LoadGiohang();
             clean();
             totalCart();
+            Flag=true;
         }
         void clean()
         {
@@ -485,8 +513,8 @@ namespace _3.PL.View
 
         private void btn_TruSp_Click(object sender, EventArgs e)
         {
-           
-            
+            if (_idHoadon!=Guid.Empty)
+            {
                 var item = _lstChitietHD.FirstOrDefault(x => x.IdChiTIetSp == _idSanpham);
                 item.SoLuong--;
                 if (item.SoLuong<=0)
@@ -495,6 +523,7 @@ namespace _3.PL.View
                 }
                 LoadGiohang();
                 totalCart();
+            }
             
         }
 
@@ -643,7 +672,151 @@ namespace _3.PL.View
 
         private void btn_Update_Click(object sender, EventArgs e)
         {
-           
+            if (_idHoadon != Guid.Empty)
+            {
+                if (_lstChitietHD.Any())
+                {
+                   
+                    KhachHang = _iKhachHangService.GetAll().FirstOrDefault(c => c.SoDienThoai == txt_Sdt.Text);
+                    if (KhachHang != null)
+                    {
+                        var hoadon = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.Id == _idHoadon);
+                        var hdct = _iHoadonChitietSerivce.ShowHoadonChitiet(hoadon.Id);
+                        if (hoadon.TrangThai==2)
+                        {                                  
+                            return;
+                        }
+                        foreach (var item in hdct)
+                        {
+                            item.IdhoaDon = hoadon.Id;
+                            _iHoadonChitietSerivce.Delete(item);
+                        }
+                        foreach (var item in _lstChitietHD)
+                        {
+                            item.IdhoaDon = hoadon.Id;
+                            _iHoadonChitietSerivce.Add(item);
+                            var sp = _iQlSanphamSerivce.GetAll().FirstOrDefault(c => c.Id == item.IdChiTIetSp);
+                            sp.SoLuong -= item.SoLuong;
+                            _iQlSanphamSerivce.UPDATE(sp);
+                        }
+                        Guid IdNhanvien = _iQlNhanvienService.GetAll().FirstOrDefault(c => c.MaNhanVien==txt_MaNv.Text).Id;
+                        hoadon.NgayLap = DateTime.Now;
+
+                        hoadon.IdNhanVien = IdNhanvien;
+                        hoadon.IdKhachHang = KhachHang.Id;
+                        _iHoadonService.Update(hoadon);
+
+                        //txt_mahd.Text = hoadon.MaHd;
+                        clean();
+                        MessageBox.Show($"Cập nhật hóa đơn thành công. ID: {hoadon.MaHoaDon}");
+                        _idHoadon = Guid.Empty;
+                        loadSp();
+                        loadHDCho();
+                        dgrid_hdchitiet.Rows.Clear();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Vui lòng nhập khách hàng");
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Chưa có sản phẩm nào trong giỏ hàng");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Vui lòng chọn hóa đơn chưa thanh toán");
+            }
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            if (_idHoadon!=Guid.Empty)
+            {
+                var obj = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.Id == _idHoadon);
+                obj.NgayNhanHang=DateTime.Now;
+                obj.TrangThai = 1;
+                _iHoadonService.Update(obj); clean();
+                _lstChitietHD = new List<HoaDonChiTIetView>();
+                loadHDCho();
+            }
+        }
+        void inHoaDon()
+        {
+           printPreviewDialog1.Document =printDocument1;
+            printPreviewDialog1.ShowDialog();
+        }
+
+        private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
+        {
+            var w =printDocument1.DefaultPageSettings.PaperSize.Width;
+            //Lấy tên cửa hàng
+
+            e.Graphics.DrawString(
+                "Cá Shoes".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black,
+                new PointF(100, 20));
+            //Mã hóa đơn
+
+            e.Graphics.DrawString(
+                String.Format("{0}", txt_luu.Text),
+                new Font("Courier New", 12, FontStyle.Bold),
+                Brushes.Black, new PointF(w / 2 + 200, 20));
+
+
+
+            e.Graphics.DrawString(
+                String.Format("{0}", DateTime.Now.ToString("dd/MM/yyyy HH:MM")),
+                new Font("Courier New", 12, FontStyle.Bold),
+                Brushes.Black, new PointF(w / 2 + 200, 45));
+
+            Pen blackPEn = new Pen(Color.Black, 1);
+            var y = 70;
+
+            Point p1 = new Point(10, y);
+            Point p2 = new Point(w - 10, y);
+            e.Graphics.DrawLine(blackPEn, p1, p2);
+
+            y += 30;
+            e.Graphics.DrawString(
+                "Phiếu Thanh Toán".ToUpper(), new Font("Courier New", 30, FontStyle.Bold), Brushes.Black,
+                new PointF(190, y));
+
+
+            y += 80;
+            e.Graphics.DrawString("STT", new Font("Varial", 10, FontStyle.Bold), Brushes.Black, new Point(10, y));
+            e.Graphics.DrawString("Tên hàng hóa", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                new Point(50, y));
+            e.Graphics.DrawString("Số lượng", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                new Point(w / 2, y));
+            e.Graphics.DrawString("Đơn giá", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                new Point(w / 2 + 100, y));
+            e.Graphics.DrawString("Thành tiền", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                new Point(w - 200, y));
+            //var id = _lstHoaDonBans.Select(x => x.IdhoaDon).FirstOrDefault();
+            var list = _iHoadonService.ShowHoadon().Where(c => _iHoadonService.GetMabyID(c.Id) == txt_luu.Text);
+
+            int i = 1;
+            y += 20;
+            foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => _iHoadonService.GetMabyID(c.IdhoaDon) == txt_luu.Text))
+            {
+                e.Graphics.DrawString(string.Format("{0}", i++), new Font("Varial", 8, FontStyle.Bold), Brushes.Black,
+                    new Point(10, y));
+                e.Graphics.DrawString("" +_iQlSanphamSerivce.GetAll()
+                                          .Where(c => c.Id == x.IdChiTIetSp)
+                                          .Select(c => c.TenNsx+" "+c.TenSp).FirstOrDefault() + " " +
+                                      _iQlSanphamSerivce.GetAll().Where(c =>
+                                              c.Id == x.IdChiTIetSp)
+                                          .Select(c => c.MoTa).FirstOrDefault(),
+                    new Font("Varial", 8, FontStyle.Bold), Brushes.Black, new Point(50, y));
+                e.Graphics.DrawString(string.Format("{0:N0}", x.SoLuong), new Font("Varial", 8, FontStyle.Bold),
+                    Brushes.Black, new Point(w / 2, y));
+                e.Graphics.DrawString(string.Format("{0:N0}", x.DonGia), new Font("Varial", 8, FontStyle.Bold),
+                    Brushes.Black, new Point(w / 2 + 100, y));
+                e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia))), new Font("Varial", 8, FontStyle.Bold),
+                    Brushes.Black, new Point(w - 200, y));
+                y += 20;
+            }
+        }   
     }
 }

@@ -110,19 +110,19 @@ namespace _3.PL.View
             switch (type)
             {
                 case enmType.Success:
-                    //this.pictureBox1.Image = Resources.success;
+                    this.pictureBox1.Image = Resources.oke;
                     this.BackColor = Color.SeaGreen;
                     break;
                 case enmType.Error:
-                    //this.pictureBox1.Image = Resources.error;
+                    this.pictureBox1.Image = Resources.Wa;
                     this.BackColor = Color.DarkRed;
                     break;
                 case enmType.Info:
-                   // this.pictureBox1.Image = Resources.info;
+                    this.pictureBox1.Image = Resources.oke;
                     this.BackColor = Color.RoyalBlue;
                     break;
                 case enmType.Warning:
-                   // this.pictureBox1.Image = Resources.warning;
+                   this.pictureBox1.Image = Resources.Wa;
                     this.BackColor = Color.DarkOrange;
                     break;
             }

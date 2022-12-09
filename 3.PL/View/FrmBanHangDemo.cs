@@ -393,8 +393,11 @@ namespace _3.PL.View
                     {
                         HoaDonView hoadon = new HoaDonView()
                         {
-                            MaHoaDon = "HD" + Utility.GetNumber(8),
+                            MaHoaDon = "HD" + Utilitys.GetNumber(8),
                             NgayLap = DateTime.Now,
+                            NgayThanhToan= DateTime.Now,
+                            NgayNhanHang=DateTime.Now,
+                            NgayShipHang=DateTime.Now,  
                             IdNhanVien = IdNhanvien,
                             IdKhachHang = KhachHang.Id,
                             TrangThai = 0,
@@ -649,7 +652,7 @@ namespace _3.PL.View
                     {
                         HoaDonView hoadon = new HoaDonView()
                         {
-                            MaHoaDon = "HD" + Utility.GetNumber(8),
+                            MaHoaDon = "HD" + Utilitys.GetNumber(8),
                             NgayLap = DateTime.Now,
                             IdNhanVien = IdNhanvien,
                             IdKhachHang = KhachHang.Id,
