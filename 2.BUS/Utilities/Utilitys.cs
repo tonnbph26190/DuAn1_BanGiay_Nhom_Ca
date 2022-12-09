@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace _3.PL.Utilities
 {
-    public class Utility
+    public class Utilitys
     {
         public static string ZenMaTuDong(string fullName)
         {

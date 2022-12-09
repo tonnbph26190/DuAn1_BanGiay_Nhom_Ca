@@ -106,5 +106,10 @@ namespace _2.BUS.Services
                 ).ToList();
             return data;
         }
+
+        public string GetMabyID(Guid? id)
+        {
+          return  ShowHoadon().FirstOrDefault(x => x.Id==id).MaHoaDon;
+        }
     }
 }

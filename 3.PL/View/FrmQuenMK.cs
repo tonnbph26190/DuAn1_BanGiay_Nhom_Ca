@@ -46,7 +46,7 @@ namespace _3.PL.View
             {
                 from = "ckuotga1997@gmail.com";
                 pass = "rblzrnngambpsdoe";
-                content = Utility.GetNumber(6);
+                content = Utilitys.GetNumber(6);
 
                 to =textBox1.Text.Trim();
                 MailMessage mail = new MailMessage();

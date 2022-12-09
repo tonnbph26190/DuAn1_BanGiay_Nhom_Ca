@@ -82,6 +82,10 @@
             this.label8 = new System.Windows.Forms.Label();
             this.btn_CLear = new System.Windows.Forms.Button();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.printDocument1 = new System.Drawing.Printing.PrintDocument();
+            this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
+            this.ck_in = new System.Windows.Forms.CheckBox();
+            this.txt_luu = new System.Windows.Forms.TextBox();
             this.panel4.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -135,7 +139,7 @@
             // btn_XacNhan
             // 
             this.btn_XacNhan.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_XacNhan.Location = new System.Drawing.Point(15, 523);
+            this.btn_XacNhan.Location = new System.Drawing.Point(114, 524);
             this.btn_XacNhan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_XacNhan.Name = "btn_XacNhan";
             this.btn_XacNhan.Size = new System.Drawing.Size(82, 37);
@@ -320,6 +324,7 @@
             this.button6.TabIndex = 1;
             this.button6.Text = "Xác nhận";
             this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // btn_XoaSp
             // 
@@ -640,7 +645,7 @@
             this.btn_CLear.BackColor = System.Drawing.SystemColors.Highlight;
             this.btn_CLear.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btn_CLear.Image = ((System.Drawing.Image)(resources.GetObject("btn_CLear.Image")));
-            this.btn_CLear.Location = new System.Drawing.Point(118, 523);
+            this.btn_CLear.Location = new System.Drawing.Point(202, 524);
             this.btn_CLear.Name = "btn_CLear";
             this.btn_CLear.Size = new System.Drawing.Size(88, 38);
             this.btn_CLear.TabIndex = 154;
@@ -654,12 +659,47 @@
             this.timer1.Interval = 1000;
             this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
+            // printDocument1
+            // 
+            this.printDocument1.PrintPage += new System.Drawing.Printing.PrintPageEventHandler(this.printDocument1_PrintPage);
+            // 
+            // printPreviewDialog1
+            // 
+            this.printPreviewDialog1.AutoScrollMargin = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.AutoScrollMinSize = new System.Drawing.Size(0, 0);
+            this.printPreviewDialog1.ClientSize = new System.Drawing.Size(400, 300);
+            this.printPreviewDialog1.Enabled = true;
+            this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
+            this.printPreviewDialog1.Name = "printPreviewDialog1";
+            this.printPreviewDialog1.Visible = false;
+            // 
+            // ck_in
+            // 
+            this.ck_in.AutoSize = true;
+            this.ck_in.Location = new System.Drawing.Point(72, 542);
+            this.ck_in.Name = "ck_in";
+            this.ck_in.Size = new System.Drawing.Size(36, 19);
+            this.ck_in.TabIndex = 160;
+            this.ck_in.Text = "In";
+            this.ck_in.UseVisualStyleBackColor = true;
+            // 
+            // txt_luu
+            // 
+            this.txt_luu.Enabled = false;
+            this.txt_luu.Location = new System.Drawing.Point(1035, 548);
+            this.txt_luu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txt_luu.Name = "txt_luu";
+            this.txt_luu.Size = new System.Drawing.Size(70, 23);
+            this.txt_luu.TabIndex = 3;
+            // 
             // FrmThanhToan
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(1197, 613);
+            this.Controls.Add(this.txt_luu);
+            this.Controls.Add(this.ck_in);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel5);
             this.Controls.Add(this.btn_CLear);
@@ -754,5 +794,9 @@
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txt_GiamGia;
         private System.Windows.Forms.Button btn_Update;
+        private System.Drawing.Printing.PrintDocument printDocument1;
+        private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
+        private System.Windows.Forms.CheckBox ck_in;
+        private System.Windows.Forms.TextBox txt_luu;
     }
 }
