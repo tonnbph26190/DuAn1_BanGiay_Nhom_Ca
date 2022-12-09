@@ -77,16 +77,18 @@
             this.btn_CLear = new System.Windows.Forms.Button();
             this.bnt_Sua = new System.Windows.Forms.Button();
             this.btn_ThemList = new System.Windows.Forms.Button();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_sanpham)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_QR)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_SanPham)).BeginInit();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(695, 47);
+            this.label12.Location = new System.Drawing.Point(679, 17);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(59, 15);
             this.label12.TabIndex = 159;
@@ -94,7 +96,7 @@
             // 
             // textBox1
             // 
-            this.textBox1.Location = new System.Drawing.Point(760, 39);
+            this.textBox1.Location = new System.Drawing.Point(744, 9);
             this.textBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(319, 23);
@@ -103,10 +105,10 @@
             // dgrid_sanpham
             // 
             this.dgrid_sanpham.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgrid_sanpham.Location = new System.Drawing.Point(678, 65);
+            this.dgrid_sanpham.Location = new System.Drawing.Point(678, 38);
             this.dgrid_sanpham.Name = "dgrid_sanpham";
             this.dgrid_sanpham.RowTemplate.Height = 25;
-            this.dgrid_sanpham.Size = new System.Drawing.Size(578, 490);
+            this.dgrid_sanpham.Size = new System.Drawing.Size(578, 560);
             this.dgrid_sanpham.TabIndex = 158;
             this.dgrid_sanpham.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrid_sanpham_CellClick);
             // 
@@ -114,10 +116,11 @@
             // 
             this.Fl_SanPham.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.Fl_SanPham.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.Fl_SanPham.Location = new System.Drawing.Point(572, 20);
+            this.Fl_SanPham.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Fl_SanPham.Location = new System.Drawing.Point(3, 19);
             this.Fl_SanPham.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Fl_SanPham.Name = "Fl_SanPham";
-            this.Fl_SanPham.Size = new System.Drawing.Size(100, 535);
+            this.Fl_SanPham.Size = new System.Drawing.Size(93, 567);
             this.Fl_SanPham.TabIndex = 151;
             // 
             // groupBox1
@@ -601,16 +604,25 @@
             this.btn_ThemList.UseVisualStyleBackColor = false;
             this.btn_ThemList.Click += new System.EventHandler(this.btn_ThemList_Click);
             // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.Fl_SanPham);
+            this.groupBox2.Location = new System.Drawing.Point(573, 9);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(99, 589);
+            this.groupBox2.TabIndex = 161;
+            this.groupBox2.TabStop = false;
+            // 
             // Frm_ChiTietSanPham
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(1268, 606);
+            this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label12);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.dgrid_sanpham);
-            this.Controls.Add(this.Fl_SanPham);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.bnt_Them);
@@ -622,11 +634,13 @@
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "Frm_ChiTietSanPham";
             this.Text = "Sản Phẩm";
+            this.Load += new System.EventHandler(this.Frm_ChiTietSanPham_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_sanpham)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_QR)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pic_SanPham)).EndInit();
+            this.groupBox2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -682,5 +696,6 @@
         private System.Windows.Forms.Button btn_CLear;
         private System.Windows.Forms.Button bnt_Sua;
         private System.Windows.Forms.Button btn_ThemList;
+        private System.Windows.Forms.GroupBox groupBox2;
     }
 }

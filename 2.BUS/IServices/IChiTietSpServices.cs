@@ -17,5 +17,6 @@ namespace _2.BUS.IServices
         ChiTietSp? GETMASP(string? input);
         string? GETNAME(string? input);
         List<ChiTIetSpView> GetAll();
+        string? GetMaByID(Guid? id);
     }
 }

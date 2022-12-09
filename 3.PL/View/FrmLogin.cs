@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using _2.BUS.IServices;
 using _2.BUS.Services;
 using _3.PL.View;
+using iTextSharp.text.xml.xmp;
 
 namespace _3.PL
 {
@@ -21,9 +22,32 @@ namespace _3.PL
         {
             InitializeComponent();
             _nhanVienService = new NhanVienService();
-        }
-        
+            int count = 1;
+            txt_MatKhau.Text = Properties.Settings.Default.Mk;
+            txt_TaiKhoan.Text= Properties.Settings.Default.Tk;
 
+        }
+
+        public void saveInfor()
+        {
+            if (checkBox1.Checked == true)
+            {
+                Properties.Settings.Default.Tk = txt_TaiKhoan.Text;
+                Properties.Settings.Default.Mk = txt_MatKhau.Text;
+                Properties.Settings.Default.TKdaLogin = txt_TaiKhoan.Text;
+                Properties.Settings.Default.MKdaLogin =txt_MatKhau.Text;
+                Properties.Settings.Default.Save();
+
+            }
+            else
+            {
+                Properties.Settings.Default.Tk = "";
+                Properties.Settings.Default.Mk = "";
+                Properties.Settings.Default.TKdaLogin = txt_TaiKhoan.Text;
+                Properties.Settings.Default.MKdaLogin = txt_MatKhau.Text;
+                Properties.Settings.Default.Save();
+            }
+        }
         public bool CheckDK()
         {
             if (string.IsNullOrEmpty(txt_TaiKhoan.Text))
@@ -74,10 +98,11 @@ namespace _3.PL
                     {
 
                         MessageBox.Show("Đăng nhập thành công", "Thông báo");
-                        
+                        saveInfor();
                         FrmTrangChu tc = new FrmTrangChu(txt_TaiKhoan.Text);
-                        tc.ShowDialog();                     
                         this.Hide();
+                        tc.ShowDialog();                     
+                           
                     }
                     else
                     {
@@ -93,6 +118,20 @@ namespace _3.PL
             FrmQuenMK q=new FrmQuenMK();
             q.ShowDialog();
 
+        }
+
+        
+
+        private void checkBox2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox2.Checked == true)
+            {
+                txt_MatKhau.PasswordChar = '\0';
+            }
+            else
+            {
+                txt_MatKhau.PasswordChar = '*';
+            }
         }
     }
 }

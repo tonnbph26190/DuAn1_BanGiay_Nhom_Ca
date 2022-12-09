@@ -33,7 +33,7 @@
             this.btn_NhanVien = new System.Windows.Forms.Button();
             this.btn_DoanhThu = new System.Windows.Forms.Button();
             this.btn_KhachHang = new System.Windows.Forms.Button();
-            this.btn_Voucher = new System.Windows.Forms.Button();
+            this.btn_BanHang = new System.Windows.Forms.Button();
             this.btn_HoaDon = new System.Windows.Forms.Button();
             this.btn_SanPham = new System.Windows.Forms.Button();
             this.btn_ThanhToan = new System.Windows.Forms.Button();
@@ -58,7 +58,7 @@
             this.pn_Menu.Controls.Add(this.btn_NhanVien);
             this.pn_Menu.Controls.Add(this.btn_DoanhThu);
             this.pn_Menu.Controls.Add(this.btn_KhachHang);
-            this.pn_Menu.Controls.Add(this.btn_Voucher);
+            this.pn_Menu.Controls.Add(this.btn_BanHang);
             this.pn_Menu.Controls.Add(this.btn_HoaDon);
             this.pn_Menu.Controls.Add(this.btn_SanPham);
             this.pn_Menu.Controls.Add(this.btn_ThanhToan);
@@ -128,24 +128,24 @@
             this.btn_KhachHang.UseVisualStyleBackColor = true;
             this.btn_KhachHang.Click += new System.EventHandler(this.btn_KhachHang_Click);
             // 
-            // btn_Voucher
+            // btn_BanHang
             // 
-            this.btn_Voucher.Dock = System.Windows.Forms.DockStyle.Top;
-            this.btn_Voucher.FlatAppearance.BorderSize = 0;
-            this.btn_Voucher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btn_Voucher.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_Voucher.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
-            this.btn_Voucher.Image = ((System.Drawing.Image)(resources.GetObject("btn_Voucher.Image")));
-            this.btn_Voucher.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_Voucher.Location = new System.Drawing.Point(0, 296);
-            this.btn_Voucher.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.btn_Voucher.Name = "btn_Voucher";
-            this.btn_Voucher.Size = new System.Drawing.Size(238, 55);
-            this.btn_Voucher.TabIndex = 4;
-            this.btn_Voucher.Text = "Voucher";
-            this.btn_Voucher.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btn_Voucher.UseVisualStyleBackColor = true;
-            this.btn_Voucher.Click += new System.EventHandler(this.btn_Voucher_Click);
+            this.btn_BanHang.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_BanHang.FlatAppearance.BorderSize = 0;
+            this.btn_BanHang.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_BanHang.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_BanHang.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
+            this.btn_BanHang.Image = ((System.Drawing.Image)(resources.GetObject("btn_BanHang.Image")));
+            this.btn_BanHang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_BanHang.Location = new System.Drawing.Point(0, 296);
+            this.btn_BanHang.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_BanHang.Name = "btn_BanHang";
+            this.btn_BanHang.Size = new System.Drawing.Size(238, 55);
+            this.btn_BanHang.TabIndex = 4;
+            this.btn_BanHang.Text = "Bán Hàng";
+            this.btn_BanHang.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btn_BanHang.UseVisualStyleBackColor = true;
+            this.btn_BanHang.Click += new System.EventHandler(this.btn_BanHang_Click);
             // 
             // btn_HoaDon
             // 
@@ -193,7 +193,6 @@
             this.btn_ThanhToan.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btn_ThanhToan.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btn_ThanhToan.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
-            this.btn_ThanhToan.Image = global::_3.PL.Properties.Resources.icons8_get_cash_50;
             this.btn_ThanhToan.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.btn_ThanhToan.Location = new System.Drawing.Point(0, 131);
             this.btn_ThanhToan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -333,7 +332,7 @@
         private System.Windows.Forms.Button btn_NhanVien;
         private System.Windows.Forms.Button btn_DoanhThu;
         private System.Windows.Forms.Button btn_KhachHang;
-        private System.Windows.Forms.Button btn_Voucher;
+        private System.Windows.Forms.Button btn_BanHang;
         private System.Windows.Forms.Button btn_HoaDon;
         private System.Windows.Forms.Button btn_SanPham;
         private System.Windows.Forms.Label label1;

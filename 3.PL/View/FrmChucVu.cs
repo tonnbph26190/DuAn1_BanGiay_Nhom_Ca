@@ -19,11 +19,12 @@ namespace _3.PL.View
     public partial class FrmChucVu : Form
     {
         private IChucVuService _chucVuService;
-        Guid _id;  
-        public FrmChucVu()
+        Guid _id;
+        Fm_NhanVien _form;
+        public FrmChucVu(Fm_NhanVien form)
         {
             InitializeComponent();
-           
+           _form= form;
             _chucVuService = new ChucVuService();
             LoadData();
             
@@ -103,6 +104,7 @@ namespace _3.PL.View
                     _chucVuService.Add(GetDataFromGui());
                     MessageBox.Show("Thêm thành công");
                     LoadData();
+                    _form.Change();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -118,11 +120,7 @@ namespace _3.PL.View
             {
                 foreach (var x in _chucVuService.GetAll())
                 {
-                    if (x.Ma == txt_MaCV.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
+                   
                     if (x.Ten == txt_TenCv.Text)
                     {
                         MessageBox.Show("Chức Vụ này đã tồn tại", "Thông báo");
@@ -137,6 +135,7 @@ namespace _3.PL.View
                     _chucVuService.Update(temp);
                     MessageBox.Show("Sửa chức vụ thành công");
                     LoadData();
+                    _form.Change();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
