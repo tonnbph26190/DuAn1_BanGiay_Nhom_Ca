@@ -12,7 +12,7 @@ namespace _2.BUS.ViewModel
 
         public string MaSp { get; set; }
         public string TenSp { get; set; }
-
+        public string sdt { get; set; }
         public double DonGia { get; set; }
         public int SoLuong { get; set; }
         public double GiamGia { get; set; }

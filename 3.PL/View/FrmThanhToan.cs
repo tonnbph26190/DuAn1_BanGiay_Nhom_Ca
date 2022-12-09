@@ -4,6 +4,7 @@ using _2.BUS.Services;
 using _2.BUS.ViewModel;
 using _3.PL.Utilities;
 using AForge.Video.DirectShow;
+using iTextSharp.text.pdf.codec;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -128,6 +129,7 @@ namespace _3.PL.View
                     dgrid_hdchitiet.Rows.Add(stt++, x.IdChiTIetSp, x.MaSp, x.TenSp, x.SoLuong, x.DonGia);
                 }
             }
+            totalCart();
         }
         private void ThemSpVaoGiohang(Guid idSanpham)
         {
@@ -264,6 +266,7 @@ namespace _3.PL.View
             if (hoadonview.TrangThai==2)
             {
                 Flag = false;
+                
             }
             if (hoadonview.TrangThai==1)
             {
@@ -322,12 +325,12 @@ namespace _3.PL.View
                     total += Convert.ToInt32(x.DonGia) * x.SoLuong;
                 }
                 lbl_totalcart.Text = total.ToString();
-                //lbl_tongtien.Text = total.ToString();
+                
             }
             else
             {
                 lbl_totalcart.Text = "";
-                //lbl_tongtien.Text = "";
+                
             }
         }
 
@@ -412,28 +415,31 @@ namespace _3.PL.View
                 }
                 else
                 {
-                    
+
                     KhachHangView kh = new KhachHangView()
                     {
                         Id = Guid.NewGuid(),
-                        Ten = txt_TenKh.Text,
+                        Ten = txt_TenKh.Text==""?"khach vang lai":txt_TenKh.Text,
                         diemTieuDung = 0,
-                        TrangThai=1,
+                        TrangThai = 1,
+                        SoDienThoai = txt_Sdt.Text,
+                        DiaChi=txt_DiaChi.Text,
                     };
                     _iKhachHangService.Add(kh);
-                    
+
                     HoaDonView hoadon = new HoaDonView()
-                    {                       
+                    {
                         MaHoaDon = "HD" + Utilitys.GetNumber(3),
                         NgayLap = DateTime.Today,
                         NgayNhanHang = DateTime.Today,
                         NgayShipHang = DateTime.Today,
                         NgayThanhToan = DateTime.Today,
-                        IdNhanVien = IdNhanvien,                     
-                        IdKhachHang=kh.Id,                     
+                        IdNhanVien = IdNhanvien,
+                        IdKhachHang = kh.Id,
                         TrangThai = rbtn_ChuaThanhToan.Checked ? 0 : 1,
-                        TenKH = kh.Ten,                      
-
+                        TenKH = kh.Ten,
+                        Sdt = kh.SoDienThoai,
+                        NguoiBan=kh.DiaChi
                     };
                     txt_luu.Text = hoadon.MaHoaDon;
                     _iHoadonService.Add(hoadon);
@@ -667,6 +673,7 @@ namespace _3.PL.View
             obj.TrangThai = 2;
             obj.NgayShipHang=DateTime.Now;
             _iHoadonService.Update(obj);
+            inHoaDon();
             loadHDCho();
         }
 
@@ -750,72 +757,172 @@ namespace _3.PL.View
 
         private void printDocument1_PrintPage(object sender, System.Drawing.Printing.PrintPageEventArgs e)
         {
-            var w =printDocument1.DefaultPageSettings.PaperSize.Width;
-            //Lấy tên cửa hàng
-
-            e.Graphics.DrawString(
-                "Cá Shoes".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black,
-                new PointF(100, 20));
-            //Mã hóa đơn
-
-            e.Graphics.DrawString(
-                String.Format("{0}", txt_luu.Text),
-                new Font("Courier New", 12, FontStyle.Bold),
-                Brushes.Black, new PointF(w / 2 + 200, 20));
-
-
-
-            e.Graphics.DrawString(
-                String.Format("{0}", DateTime.Now.ToString("dd/MM/yyyy HH:MM")),
-                new Font("Courier New", 12, FontStyle.Bold),
-                Brushes.Black, new PointF(w / 2 + 200, 45));
-
-            Pen blackPEn = new Pen(Color.Black, 1);
-            var y = 70;
-
-            Point p1 = new Point(10, y);
-            Point p2 = new Point(w - 10, y);
-            e.Graphics.DrawLine(blackPEn, p1, p2);
-
-            y += 30;
-            e.Graphics.DrawString(
-                "Phiếu Thanh Toán".ToUpper(), new Font("Courier New", 30, FontStyle.Bold), Brushes.Black,
-                new PointF(190, y));
-
-
-            y += 80;
-            e.Graphics.DrawString("STT", new Font("Varial", 10, FontStyle.Bold), Brushes.Black, new Point(10, y));
-            e.Graphics.DrawString("Tên hàng hóa", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                new Point(50, y));
-            e.Graphics.DrawString("Số lượng", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                new Point(w / 2, y));
-            e.Graphics.DrawString("Đơn giá", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                new Point(w / 2 + 100, y));
-            e.Graphics.DrawString("Thành tiền", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                new Point(w - 200, y));
-            //var id = _lstHoaDonBans.Select(x => x.IdhoaDon).FirstOrDefault();
-            var list = _iHoadonService.ShowHoadon().Where(c => _iHoadonService.GetMabyID(c.Id) == txt_luu.Text);
-
-            int i = 1;
-            y += 20;
-            foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => _iHoadonService.GetMabyID(c.IdhoaDon) == txt_luu.Text))
+            if (txt_MaHD.Text == "")
             {
-                e.Graphics.DrawString(string.Format("{0}", i++), new Font("Varial", 8, FontStyle.Bold), Brushes.Black,
-                    new Point(10, y));
-                e.Graphics.DrawString("" +_iQlSanphamSerivce.GetAll()
-                                          .Where(c => c.Id == x.IdChiTIetSp)
-                                          .Select(c => c.TenNsx+" "+c.TenSp).FirstOrDefault() + " " +
-                                      _iQlSanphamSerivce.GetAll().Where(c =>
-                                              c.Id == x.IdChiTIetSp)
-                                          .Select(c => c.MoTa).FirstOrDefault(),
-                    new Font("Varial", 8, FontStyle.Bold), Brushes.Black, new Point(50, y));
-                e.Graphics.DrawString(string.Format("{0:N0}", x.SoLuong), new Font("Varial", 8, FontStyle.Bold),
-                    Brushes.Black, new Point(w / 2, y));
-                e.Graphics.DrawString(string.Format("{0:N0}", x.DonGia), new Font("Varial", 8, FontStyle.Bold),
-                    Brushes.Black, new Point(w / 2 + 100, y));
-                e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia))), new Font("Varial", 8, FontStyle.Bold),
-                    Brushes.Black, new Point(w - 200, y));
+                var w = printDocument1.DefaultPageSettings.PaperSize.Width;
+                //Lấy tên cửa hàng
+                var T = _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => c.IdhoaDon == _iHoadonService.GetID(txt_luu.Text));
+                e.Graphics.DrawString(
+                    "Cá Shoes".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black,
+                    new PointF(100, 20));
+                //Mã hóa đơn
+
+                e.Graphics.DrawString(
+                    String.Format("{0}", txt_luu.Text),
+                    new Font("Courier New", 12, FontStyle.Bold),
+                    Brushes.Black, new PointF(w / 2 + 200, 20));
+
+
+
+                e.Graphics.DrawString(
+                    String.Format("{0}", DateTime.Now.ToString("dd/MM/yyyy HH:MM")),
+                    new Font("Courier New", 12, FontStyle.Bold),
+                    Brushes.Black, new PointF(w / 2 + 200, 45));
+
+                Pen blackPEn = new Pen(Color.Black, 1);
+                var y = 70;
+
+                Point p1 = new Point(10, y);
+                Point p2 = new Point(w - 10, y);
+                e.Graphics.DrawLine(blackPEn, p1, p2);
+
+                y += 30;
+                e.Graphics.DrawString(
+                    "Phiếu Thanh Toán".ToUpper(), new Font("Courier New", 30, FontStyle.Bold), Brushes.Black,
+                    new PointF(190, y));
+
+
+                y += 80;
+                e.Graphics.DrawString("STT", new Font("Varial", 10, FontStyle.Bold), Brushes.Black, new Point(10, y));
+                e.Graphics.DrawString("Tên hàng hóa", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(50, y));
+                e.Graphics.DrawString("Số lượng", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(w / 2, y));
+                e.Graphics.DrawString("Đơn giá", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(w / 2 + 100, y));
+                e.Graphics.DrawString("Giam", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(w / 2 + 170, y));
+                e.Graphics.DrawString("Thành tiền", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(w - 200, y));
+                //var id = _lstHoaDonBans.Select(x => x.IdhoaDon).FirstOrDefault();
+                var list = _iHoadonService.ShowHoadon().Where(c => c.Id == _iHoadonService.GetID(txt_luu.Text));
+
+                int i = 1;
+
                 y += 20;
+
+                foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => c.IdhoaDon == _iHoadonService.GetID(txt_luu.Text)))
+                {
+                    e.Graphics.DrawString(string.Format("{0}", i++), new Font("Varial", 8, FontStyle.Bold), Brushes.Black,
+                        new Point(10, y));
+                    e.Graphics.DrawString("" + _iQlSanphamSerivce.GetAll()
+                                              .Where(c => c.Id == x.IdChiTIetSp)
+                                              .Select(c => c.TenNsx + " " + c.TenSp).FirstOrDefault() + " " +
+                                          _iQlSanphamSerivce.GetAll().Where(c =>
+                                                  c.Id == x.IdChiTIetSp)
+                                              .Select(c => c.MoTa).FirstOrDefault(),
+                        new Font("Varial", 8, FontStyle.Bold), Brushes.Black, new Point(50, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", x.SoLuong), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w / 2, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", x.DonGia), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w / 2 + 100, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w / 2 + 170, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia)) - x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w - 200, y));
+                    y += 20;
+                }
+            }
+            else
+            {
+               
+                var ton2 = _iHoadonService.ShowHoadon().Where(c => c.MaHoaDon.Trim().Equals(txt_MaHD.Text.Trim()));
+                //var test= _iHoadonService.ShowHoadon().Select(c=>c.MaHoaDon).ToList();
+                //var txt = txt_MaHD.Text;
+                var w = printDocument1.DefaultPageSettings.PaperSize.Width;
+                //Lấy tên cửa hàng
+                var T = _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => c.IdhoaDon == _iHoadonService.GetID(txt_MaHD.Text));
+                e.Graphics.DrawString(
+                    "Cá Shoes".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black,
+                    new PointF(100, 20));
+                //Mã hóa đơn
+
+                e.Graphics.DrawString(
+                    String.Format("{0}", txt_MaHD.Text),
+                    new Font("Courier New", 12, FontStyle.Bold),
+                    Brushes.Black, new PointF(w / 2 + 200, 20));
+
+
+
+                e.Graphics.DrawString(
+                    String.Format("{0}", DateTime.Now.ToString("dd/MM/yyyy HH:MM")),
+                    new Font("Courier New", 12, FontStyle.Bold),
+                    Brushes.Black, new PointF(w / 2 + 200, 45));
+
+                Pen blackPEn = new Pen(Color.Black, 1);
+                var y = 70;
+
+                Point p1 = new Point(10, y);
+                Point p2 = new Point(w - 10, y);
+                e.Graphics.DrawLine(blackPEn, p1, p2);
+
+                y += 30;
+                e.Graphics.DrawString(
+                    "Phiếu Giao Hàng".ToUpper(), new Font("Courier New", 30, FontStyle.Bold), Brushes.Black,
+                    new PointF(190, y));
+
+
+                y += 80;
+                e.Graphics.DrawString("STT", new Font("Varial", 10, FontStyle.Bold), Brushes.Black, new Point(10, y));
+                e.Graphics.DrawString("Tên hàng hóa", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(50, y));
+                e.Graphics.DrawString("Số lượng", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(w / 2, y));
+                e.Graphics.DrawString("Đơn giá", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(w / 2 + 100, y));
+                e.Graphics.DrawString("Giam", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(w / 2 + 170, y));
+                e.Graphics.DrawString("Thành tiền", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(w - 200, y)); 
+                e.Graphics.DrawString("Địa chỉ:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                    new Point(w-820, y+80));
+                e.Graphics.DrawString("SĐT:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                   new Point(w - 820, y + 110));
+                var tung = w - 820;
+                var hoanh = y + 80;
+                //var id = _lstHoaDonBans.Select(x => x.IdhoaDon).FirstOrDefault();
+                var list = _iHoadonService.ShowHoadon().Where(c => c.MaHoaDon.Trim().Equals(txt_MaHD.Text.Trim()));
+
+                int i = 1;
+
+                y += 30;
+
+                foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => c.IdhoaDon == _iHoadonService.GetID(txt_MaHD.Text)))
+                {
+                    e.Graphics.DrawString(string.Format("{0}", i++), new Font("Varial", 8, FontStyle.Bold), Brushes.Black,
+                        new Point(10, y));
+                    e.Graphics.DrawString("" + _iQlSanphamSerivce.GetAll()
+                                              .Where(c => c.Id == x.IdChiTIetSp)
+                                              .Select(c => c.TenNsx + " " + c.TenSp).FirstOrDefault() + " " +
+                                          _iQlSanphamSerivce.GetAll().Where(c =>
+                                                  c.Id == x.IdChiTIetSp)
+                                              .Select(c => c.MoTa).FirstOrDefault(),
+                        new Font("Varial", 8, FontStyle.Bold), Brushes.Black, new Point(50, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", x.SoLuong), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w / 2, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", x.DonGia), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w / 2 + 100, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w / 2 + 170, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia)) - x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w - 200, y));
+                    y += 20;
+                    e.Graphics.DrawString(x.sdt, new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                        new Point(tung + 40, hoanh+29));
+                    e.Graphics.DrawString(_iHoadonService.ShowHoadon().FirstOrDefault(c=>c.Sdt==x.sdt).NguoiBan, new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                        new Point(tung + 60, hoanh));
+                }
+                
             }
         }   
     }
