@@ -307,22 +307,7 @@ namespace _3.PL
             }
             else
             {
-                foreach (var x in _NvService.GetAll())
-                {                   
-
-                    if (x.Email == txt_EmailNV.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-
-                    if (x.DienThoai == txt_SdtNV.Text)
-                    {
-                        MessageBox.Show("Tên này đã tồn tại", "Thông báo");
-                        return;
-                    }
-
-                }
+                
 
                 var temp = GetGui();
                 temp.MaNhanVien = _maClick;

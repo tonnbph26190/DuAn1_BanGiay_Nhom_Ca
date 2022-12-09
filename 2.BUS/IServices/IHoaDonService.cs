@@ -15,6 +15,7 @@ namespace _2.BUS.IServices
         List<string> TrangThai();
         List<HoaDonView> ShowHoadon();
         string? GetMabyID(Guid? id);
+        Guid GetID(string? id);
         
     }
 }

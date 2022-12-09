@@ -98,7 +98,10 @@ namespace _2.BUS.Services
                         TenSp = c.TenSp,
                         SoLuong = a.SoLuong.Value,
                         DonGia = a.DonGia.Value,
-                        Tong= a.SoLuong.Value* a.DonGia.Value,
+                        Tong= a.SoLuong.Value* a.DonGia.Value-a.GiamGia.Value,
+                        IdhoaDon=b.Id,
+                        sdt=b.Sdt,
+                        GiamGia=a.GiamGia.Value,
                     }
                 ).ToList();
             return data;

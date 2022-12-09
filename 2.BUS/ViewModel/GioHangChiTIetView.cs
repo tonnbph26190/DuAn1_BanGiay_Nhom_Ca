@@ -14,5 +14,6 @@ namespace _2.BUS.ViewModel
         public decimal DonGia { get; set; }
         public decimal DonGiaKhiGiam { get; set; }
         public Guid IdGioHang { get; set; }
+       
     }
 }

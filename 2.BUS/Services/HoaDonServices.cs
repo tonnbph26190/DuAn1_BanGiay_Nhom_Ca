@@ -101,7 +101,9 @@ namespace _2.BUS.Services
                         IdKhachHang = b.Id==Guid.Empty?Guid.Empty:b.Id,
                         NguoiBan = a.NguoiBan,
                         TrangThai = a.TrangThai,
-                        TenKH=b.Ten
+                        TenKH=b.Ten,
+                        Sdt=b.SoDienThoai,
+                        
                     }
                 ).ToList();
             return data;
@@ -110,6 +112,11 @@ namespace _2.BUS.Services
         public string GetMabyID(Guid? id)
         {
           return  ShowHoadon().FirstOrDefault(x => x.Id==id).MaHoaDon;
+        }
+
+        public Guid GetID(string id)
+        {
+            return ShowHoadon().FirstOrDefault(c => c.MaHoaDon == id).Id;
         }
     }
 }

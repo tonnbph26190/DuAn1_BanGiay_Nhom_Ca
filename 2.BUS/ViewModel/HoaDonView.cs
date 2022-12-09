@@ -19,7 +19,7 @@ namespace _2.BUS.ViewModel
         public DateTime NgayNhanHang { get; set; }
         public DateTime NgayThanhToan { get; set; }
 
-
+        
         public Guid IdNhanVien { get; set; }
         public Guid IdKhachHang { get; set; }
         public int TrangThai { get; set; }
