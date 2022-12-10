@@ -14,10 +14,10 @@ namespace _1.DAL.Models
         [StringLength(50)]
         public string MaHoaDon { get; set; }
        
-        public DateTime? NgayLap { get; set; }
+        public DateTime NgayLap { get; set; }
         
-        public DateTime? NgayNhanHang { get; set; }
-        public DateTime? NgayThanhToan { get; set; }
+        public DateTime NgayNhanHang { get; set; }
+        public DateTime NgayThanhToan { get; set; }
             
        
         public Guid IdNhanVien { get; set; }

@@ -12,6 +12,8 @@
     <PackageReference Include="AForge.Video.DirectShow" Version="2.2.5" />
     <PackageReference Include="iTextSharp" Version="5.5.13.1" />
     <PackageReference Include="QRCoder" Version="1.4.3" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="20.3.0.60" />
+    <PackageReference Include="ZedGraph.Web" Version="5.1.5" />
     <PackageReference Include="ZXing.Net" Version="0.16.6" />
   </ItemGroup>
 
