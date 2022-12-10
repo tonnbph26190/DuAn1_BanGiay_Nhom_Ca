@@ -85,12 +85,7 @@ namespace _3.PL
 
         private void btn_DangNhap_Click(object sender, EventArgs e)
         {
-            if (CheckDK() == false)
-            {
-                return;
-            }
-            else
-            {
+            
                 foreach (var x in _nhanVienService.GetAll())
                 {
                     if (x.TrangThai == 0)
@@ -114,7 +109,7 @@ namespace _3.PL
                         MessageBox.Show("Tài khoản hoặc mật khẩu không đúng", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
                     return;
-                }
+                
             }
         }
 

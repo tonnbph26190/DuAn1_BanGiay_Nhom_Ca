@@ -56,8 +56,9 @@ namespace _3.PL.View
             label8.Visible= false;
             label11.Visible= false;
             txt_GiamGia.Visible= false;
-
-
+            txt_DiaChi2.Enabled=false;
+            txt_luu.Visible= false;
+            txt_DiaChi.Visible= false;
         }
         private void loadSp()
         {
@@ -377,11 +378,11 @@ namespace _3.PL.View
                         
                         if (ck_diem.Checked)
                         {
-                            item.SoLuong= item.SoLuong;
-                            item.GiamGia = KhachHang.diemTieuDung;
-                            item.DonGia = sp.DonGiaBan;
                             KhachHang.diemTieuDung = KhachHang.diemTieuDung - Convert.ToDouble(txt_GiamGia.Text);
-                            
+                            item.SoLuong= item.SoLuong;
+                            item.GiamGia =Convert.ToDouble(txt_GiamGia.Text);
+                            item.DonGia = sp.DonGiaBan;
+                                                    
                         }
                         _iQlSanphamSerivce.UPDATE(sp);
                         _iHoadonChitietSerivce.Update(item);
@@ -423,7 +424,7 @@ namespace _3.PL.View
                         diemTieuDung = 0,
                         TrangThai = 1,
                         SoDienThoai = txt_Sdt.Text,
-                        DiaChi=txt_DiaChi.Text,
+                        DiaChi=txt_DiaChi2.Text,
                     };
                     _iKhachHangService.Add(kh);
 
@@ -486,7 +487,7 @@ namespace _3.PL.View
         }
         void clean()
         {
-            txt_MaNv.Text = "";
+            
             txt_Sdt.Text = "";
             txt_DiaChi.Text = "";
             txt_TenKh.Text = "";
@@ -496,6 +497,7 @@ namespace _3.PL.View
             rbtn_DaTT.Checked= false;
             lbl_totalcart.Text = "";
             txt_GiamGia.Text = "";
+            txt_MaHD.Text = "";
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -510,11 +512,23 @@ namespace _3.PL.View
 
         private void button5_Click(object sender, EventArgs e)
         {      
-          var item = _lstChitietHD.FirstOrDefault(x => x.IdChiTIetSp == _idSanpham);
-          _lstChitietHD.Remove(item);
-          _idSanpham = Guid.Empty;
-          LoadGiohang();
-          totalCart();
+         
+            if (_idHoadon != null)
+            {
+                if (_lstChitietHD.Any())
+                {
+                    var item = _lstChitietHD.FirstOrDefault(x => x.IdChiTIetSp == _idSanpham);
+                    _lstChitietHD.Remove(item);
+                    _idSanpham = Guid.Empty;
+                    LoadGiohang();
+                   
+                    totalCart();
+                    if (!_lstChitietHD.Any())
+                    {
+                        clean();
+                    }
+                }
+            }
         }
 
         private void btn_TruSp_Click(object sender, EventArgs e)
@@ -590,13 +604,16 @@ namespace _3.PL.View
             if (obj==null)
             {
                 txt_TenKh.Enabled = true;
+                txt_DiaChi2.Enabled = true;
             }
             else
             {
                 txt_TenKh.Enabled = false;
+                txt_DiaChi2.Enabled = false;
             }
             txt_TenKh.Text = obj == null ? txt_TenKh.Text : obj.Ten;         
             txt_Diem.Text = obj == null ? "0" : obj.diemTieuDung.ToString();
+            txt_DiaChi2.Text = obj == null ? txt_TenKh.Text : obj.DiaChi;
         }
 
         private void groupBox3_Enter(object sender, EventArgs e)
@@ -680,19 +697,13 @@ namespace _3.PL.View
         private void btn_Update_Click(object sender, EventArgs e)
         {
             if (_idHoadon != Guid.Empty)
-            {
-                if (_lstChitietHD.Any())
-                {
-                   
+            {                 
                     KhachHang = _iKhachHangService.GetAll().FirstOrDefault(c => c.SoDienThoai == txt_Sdt.Text);
                     if (KhachHang != null)
                     {
                         var hoadon = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.Id == _idHoadon);
                         var hdct = _iHoadonChitietSerivce.ShowHoadonChitiet(hoadon.Id);
-                        if (hoadon.TrangThai==2)
-                        {                                  
-                            return;
-                        }
+                       
                         foreach (var item in hdct)
                         {
                             item.IdhoaDon = hoadon.Id;
@@ -724,12 +735,8 @@ namespace _3.PL.View
                     else
                     {
                         MessageBox.Show("Vui lòng nhập khách hàng");
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Chưa có sản phẩm nào trong giỏ hàng");
-                }
+                    }            
+               
             }
             else
             {
@@ -744,7 +751,10 @@ namespace _3.PL.View
                 var obj = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.Id == _idHoadon);
                 obj.NgayNhanHang=DateTime.Now;
                 obj.TrangThai = 1;
+                Frm_Alert fm = new Frm_Alert();
+                fm.showAlert($"Thanh toán hóa đơn {obj.MaHoaDon} thành công", Frm_Alert.enmType.Success);
                 _iHoadonService.Update(obj); clean();
+                
                 _lstChitietHD = new List<HoaDonChiTIetView>();
                 loadHDCho();
             }
@@ -888,6 +898,8 @@ namespace _3.PL.View
                     new Point(w-820, y+80));
                 e.Graphics.DrawString("SĐT:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                    new Point(w - 820, y + 110));
+                e.Graphics.DrawString("Tên khách hàng:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                   new Point(w - 820, y + 140));
                 var tung = w - 820;
                 var hoanh = y + 80;
                 //var id = _lstHoaDonBans.Select(x => x.IdhoaDon).FirstOrDefault();
@@ -921,9 +933,16 @@ namespace _3.PL.View
                         new Point(tung + 40, hoanh+29));
                     e.Graphics.DrawString(_iHoadonService.ShowHoadon().FirstOrDefault(c=>c.Sdt==x.sdt).NguoiBan, new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                         new Point(tung + 60, hoanh));
+                    e.Graphics.DrawString(_iHoadonService.ShowHoadon().FirstOrDefault(c => c.Sdt == x.sdt).TenKH, new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                        new Point(tung + 115, hoanh+61));
                 }
                 
             }
-        }   
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
