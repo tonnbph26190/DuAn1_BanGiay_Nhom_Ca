@@ -13,5 +13,6 @@ namespace _2.BUS.IServices
         string Update(HoaDonChiTIetView obj);
         string Delete(HoaDonChiTIetView obj);
         List<HoaDonChiTIetView> ShowHoadonChitiet(Guid id);
+        List<HoaDonChiTIetView> GetAll();
     }
 }

@@ -83,6 +83,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Frm_Alert";
             this.Text = "Frm_Alert";
+            this.Load += new System.EventHandler(this.Frm_Alert_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -94,6 +95,6 @@
         private System.Windows.Forms.Label lbl_mess;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Timer timer1;
+        internal System.Windows.Forms.Timer timer1;
     }
 }

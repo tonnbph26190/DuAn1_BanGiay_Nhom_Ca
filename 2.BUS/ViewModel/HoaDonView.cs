@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _1.DAL.Models;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -26,5 +27,9 @@ namespace _2.BUS.ViewModel
         public DateTime NgayShipHang { get; set; }
         public string NguoiBan { get; set; }
         public string Sdt { get; set; }
+        public HoaDon hoaDon { get; set; }
+        public KhachHang khachHang { get; set; }
+        public NhanVien nhanVien { get; set; }
+
     }
 }

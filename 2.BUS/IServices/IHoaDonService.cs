@@ -14,5 +14,6 @@ namespace _2.BUS.IServices
         string Delete(HoaDonView obj);
         List<string> TrangThai();
         List<HoaDonView> ShowHoadon();
+        List<HoaDonView> GetAll();
     }
 }

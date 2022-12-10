@@ -16,6 +16,8 @@ namespace _2.BUS.Services
         private IHoaDonRepository _iHoaDonRepository;
         private IKhachHangReposistories _iKhachhangRepository;
         private INhanVienService _iQlNhanvienSerivce;
+        private INhanVienRepository _invRepos;
+
         DateTime? nullDateTime = null;
 
         public HoaDonServices()
@@ -23,6 +25,7 @@ namespace _2.BUS.Services
             _iHoaDonRepository = new HoaDonRepository();
             _iKhachhangRepository = new KhachHangReposistories();
             _iQlNhanvienSerivce = new NhanVienService();
+            _invRepos = new NhanVienRepository();
         }
 
         public string Add(HoaDonView obj)
@@ -91,10 +94,10 @@ namespace _2.BUS.Services
                     {
                         Id = a.Id,
                         MaHoaDon = a.MaHoaDon,
-                        NgayLap = a.NgayLap==null?nullDateTime.Value:a.NgayLap.Value,
-                        NgayNhanHang=a.NgayNhanHang == null ? nullDateTime.Value : a.NgayNhanHang.Value,
-                        NgayShipHang=a.NgayShipHang == null ? nullDateTime.Value : a.NgayShipHang.Value,
-                        NgayThanhToan=a.NgayThanhToan == null ? nullDateTime.Value : a.NgayThanhToan.Value,
+                        NgayLap = a.NgayLap==null?nullDateTime.Value:a.NgayLap,
+                        NgayNhanHang=a.NgayNhanHang == null ? nullDateTime.Value : a.NgayNhanHang,
+                        NgayShipHang=a.NgayShipHang == null ? nullDateTime.Value : a.NgayShipHang,
+                        NgayThanhToan=a.NgayThanhToan == null ? nullDateTime.Value : a.NgayThanhToan,
                         IdNhanVien = c.Id,
                         IdKhachHang = b.Id==null?Guid.Empty:b.Id,
                         NguoiBan = c.TenNhanVien,
@@ -102,6 +105,35 @@ namespace _2.BUS.Services
                         TenKH=b.Ten
                     }
                 ).ToList();
+            return data;
+        }
+
+        public List<HoaDonView> GetAll()
+        {
+            List<HoaDonView> data = new List<HoaDonView>();
+            data =
+               (
+                   from a in _iHoaDonRepository.GetAll()
+                   join b in _iKhachhangRepository.GetAll() on a.IdKhachHang equals b.Id
+                   join c in _invRepos.GetAll() on a.IdNhanVien equals c.Id
+                   select new HoaDonView()
+                   {
+                       Id = a.Id,
+                       MaHoaDon = a.MaHoaDon,
+                       NgayLap = a.NgayLap,
+                       NgayNhanHang = a.NgayNhanHang,
+                       NgayShipHang = a.NgayShipHang,
+                       NgayThanhToan = a.NgayThanhToan,
+                       IdNhanVien = c.Id,
+                       IdKhachHang = b.Id,
+                       NguoiBan = c.TenNhanVien,
+                       TrangThai = a.TrangThai,
+                       TenKH = b.Ten,
+                       hoaDon = a,
+                       khachHang = b,
+                       nhanVien = c,
+                   }
+               ).ToList();
             return data;
         }
     }

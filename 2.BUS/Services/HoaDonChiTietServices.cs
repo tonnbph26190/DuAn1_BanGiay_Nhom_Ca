@@ -79,5 +79,27 @@ namespace _2.BUS.Services
             if (_iHoaDonChiTietRepository.Delete(hoaDonChiTiet)) return "xóa thành công";
             return "xóa thất bại";
         }
+
+        public List<HoaDonChiTIetView> GetAll()
+        {
+            var data =
+               (
+                   from a in _iHoaDonChiTietRepository.GetAll()
+                   join b in _iHoaDonRepository.GetAll() on a.IdhoaDon equals b.Id
+                   join c in _iQlSanphamService.GetAll() on a.IdChiTIetSp equals c.Id
+
+                   select new HoaDonChiTIetView()
+                   {
+                       IdChiTIetSp = c.Id,
+                       MaSp = c.Ma,
+                       TenSp = c.TenSp,
+                       SoLuong = a.SoLuong.Value,
+                       DonGia = a.DonGia.Value,
+                       ThanhTien = a.ThanhTien.Value,
+                       //NgayLap = b.NgayLap
+                   }
+               ).ToList();
+            return data;
+        }
     }
 }

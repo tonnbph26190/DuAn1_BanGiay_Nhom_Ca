@@ -78,7 +78,7 @@ namespace _3.PL.View
         public void showAlert(string mess)
         {
             var t = new System.Timers.Timer();
-            this.Opacity = 0.0;
+            //this.Opacity = 0.0;
             this.StartPosition = FormStartPosition.Manual;
             string fname;
             //this.button1.Image = global::_3.PL.Properties.Resources.x_mark_24;
@@ -105,6 +105,39 @@ namespace _3.PL.View
             this.action = emAction.start;
             t.Interval = 1;
             t.Start();
+        }
+
+        private void Frm_Alert_Load(object sender, EventArgs e)
+        {
+             Postion();
+            //showAlert();
+           
+
+        }
+
+        public void Postion()
+        {
+            int xPos = 0;
+            int yPos = 0;
+            //xPos = Screen.GetWorkingArea(this).Width;
+            //yPos = Screen.GetWorkingArea(this).Height;
+            //this.Location = new Point(xPos - this.Width, yPos - this.Height);
+            //var t = new System.Timers.Timer();
+            ////this.Opacity = 0.0;
+            ////this.StartPosition = FormStartPosition.Manual;
+            //// string fname;
+            ////this.lbl_mess.Text = mess;
+            ////this.ShowDialog();
+            //this.action = emAction.start;
+            //t.Interval = 1;
+            //t.Start();
+
+            xPos = Screen.PrimaryScreen.WorkingArea.Width - this.Width + 15;
+            yPos = Screen.PrimaryScreen.WorkingArea.Height - this.Height * 1;
+            this.Location = new Point(xPos, yPos);
+            this.action = emAction.start;
+            //t.Interval = 1;
+            //t.Start();
         }
 
     }

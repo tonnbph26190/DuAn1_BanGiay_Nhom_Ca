@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _3.PL.View;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +16,18 @@ namespace _3.PL
         public Fm_GiamGia()
         {
             InitializeComponent();
+        }
+
+        public void Alert(string mess) 
+        {
+            Frm_Alert frm = new Frm_Alert();
+            frm.showAlert(mess);
+        }
+
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            Alert("t là test nè");
         }
     }
 }
