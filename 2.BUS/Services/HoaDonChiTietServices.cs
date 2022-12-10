@@ -62,7 +62,8 @@ namespace _2.BUS.Services
                     from a in _iHoaDonChiTietRepository.GetAll()
                     join b in _iHoaDonRepository.GetAll() on a.IdhoaDon equals b.Id
                     join c in _iQlSanphamService.GetAll() on a.IdChiTIetSp equals c.Id
-                    where a.IdhoaDon == id
+                    where a.IdhoaDon == id||a.IdChiTIetSp==id
+                    
                     select new HoaDonChiTIetView()
                     {
                         IdChiTIetSp = c.Id,
@@ -102,6 +103,7 @@ namespace _2.BUS.Services
                         IdhoaDon=b.Id,
                         sdt=b.Sdt,
                         GiamGia=a.GiamGia.Value,
+                        ThanhTien = a.SoLuong.Value * a.DonGia.Value - a.GiamGia.Value
                     }
                 ).ToList();
             return data;

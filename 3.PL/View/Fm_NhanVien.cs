@@ -307,7 +307,7 @@ namespace _3.PL
             }
             else
             {
-                
+               
 
                 var temp = GetGui();
                 temp.MaNhanVien = _maClick;

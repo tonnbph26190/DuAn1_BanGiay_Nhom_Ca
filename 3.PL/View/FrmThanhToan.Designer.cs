@@ -68,6 +68,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.txt_DiaChi2 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
             this.txt_GiamGia = new System.Windows.Forms.TextBox();
             this.ck_diem = new System.Windows.Forms.CheckBox();
@@ -86,6 +87,12 @@
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
             this.ck_in = new System.Windows.Forms.CheckBox();
             this.txt_luu = new System.Windows.Forms.TextBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.pictureBox4 = new System.Windows.Forms.PictureBox();
             this.panel4.SuspendLayout();
             this.groupBox4.SuspendLayout();
             this.panel5.SuspendLayout();
@@ -101,6 +108,9 @@
             this.groupBox2.SuspendLayout();
             this.panel3.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
             // 
             // panel4
@@ -151,7 +161,7 @@
             // 
             // txt_DiaChi
             // 
-            this.txt_DiaChi.Location = new System.Drawing.Point(106, 81);
+            this.txt_DiaChi.Location = new System.Drawing.Point(1003, 575);
             this.txt_DiaChi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_DiaChi.Name = "txt_DiaChi";
             this.txt_DiaChi.Size = new System.Drawing.Size(172, 23);
@@ -314,6 +324,7 @@
             this.button7.TabIndex = 1;
             this.button7.Text = "HĐ giao hàng";
             this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button6
             // 
@@ -447,6 +458,7 @@
             // 
             // txt_MaNv
             // 
+            this.txt_MaNv.Enabled = false;
             this.txt_MaNv.Location = new System.Drawing.Point(220, 30);
             this.txt_MaNv.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_MaNv.Name = "txt_MaNv";
@@ -455,6 +467,7 @@
             // 
             // txt_MaHD
             // 
+            this.txt_MaHD.Enabled = false;
             this.txt_MaHD.Location = new System.Drawing.Point(5, 30);
             this.txt_MaHD.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_MaHD.Name = "txt_MaHD";
@@ -500,6 +513,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.txt_DiaChi2);
             this.groupBox3.Controls.Add(this.label11);
             this.groupBox3.Controls.Add(this.txt_GiamGia);
             this.groupBox3.Controls.Add(this.ck_diem);
@@ -507,7 +521,6 @@
             this.groupBox3.Controls.Add(this.label10);
             this.groupBox3.Controls.Add(this.rbtn_ChuaThanhToan);
             this.groupBox3.Controls.Add(this.rbtn_DaTT);
-            this.groupBox3.Controls.Add(this.txt_DiaChi);
             this.groupBox3.Controls.Add(this.txt_TenKh);
             this.groupBox3.Controls.Add(this.txt_Sdt);
             this.groupBox3.Controls.Add(this.label7);
@@ -523,6 +536,14 @@
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Giao hàng";
+            // 
+            // txt_DiaChi2
+            // 
+            this.txt_DiaChi2.Location = new System.Drawing.Point(106, 81);
+            this.txt_DiaChi2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txt_DiaChi2.Name = "txt_DiaChi2";
+            this.txt_DiaChi2.Size = new System.Drawing.Size(172, 23);
+            this.txt_DiaChi2.TabIndex = 166;
             // 
             // label11
             // 
@@ -686,11 +707,66 @@
             // txt_luu
             // 
             this.txt_luu.Enabled = false;
-            this.txt_luu.Location = new System.Drawing.Point(1035, 548);
+            this.txt_luu.Location = new System.Drawing.Point(1111, 548);
             this.txt_luu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_luu.Name = "txt_luu";
             this.txt_luu.Size = new System.Drawing.Size(70, 23);
             this.txt_luu.TabIndex = 3;
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.DodgerBlue;
+            this.pictureBox2.Location = new System.Drawing.Point(540, 548);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(21, 23);
+            this.pictureBox2.TabIndex = 161;
+            this.pictureBox2.TabStop = false;
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.Red;
+            this.pictureBox3.Location = new System.Drawing.Point(652, 548);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(20, 23);
+            this.pictureBox3.TabIndex = 162;
+            this.pictureBox3.TabStop = false;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(567, 551);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(79, 15);
+            this.label12.TabIndex = 160;
+            this.label12.Text = "Hóa Đơn Chờ";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(678, 551);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(61, 15);
+            this.label13.TabIndex = 163;
+            this.label13.Text = "Đang giao";
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Location = new System.Drawing.Point(783, 551);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(113, 15);
+            this.label14.TabIndex = 164;
+            this.label14.Text = "NOTE:1000điểm =1k";
+            // 
+            // pictureBox4
+            // 
+            this.pictureBox4.BackColor = System.Drawing.Color.White;
+            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
+            this.pictureBox4.Location = new System.Drawing.Point(745, 542);
+            this.pictureBox4.Name = "pictureBox4";
+            this.pictureBox4.Size = new System.Drawing.Size(32, 31);
+            this.pictureBox4.TabIndex = 165;
+            this.pictureBox4.TabStop = false;
             // 
             // FrmThanhToan
             // 
@@ -698,7 +774,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(1197, 613);
+            this.Controls.Add(this.pictureBox4);
+            this.Controls.Add(this.label14);
+            this.Controls.Add(this.label13);
+            this.Controls.Add(this.label12);
+            this.Controls.Add(this.pictureBox3);
+            this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.txt_luu);
+            this.Controls.Add(this.txt_DiaChi);
             this.Controls.Add(this.ck_in);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel5);
@@ -734,6 +817,9 @@
             this.panel3.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -798,5 +884,12 @@
         private System.Windows.Forms.PrintPreviewDialog printPreviewDialog1;
         private System.Windows.Forms.CheckBox ck_in;
         private System.Windows.Forms.TextBox txt_luu;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.PictureBox pictureBox4;
+        private System.Windows.Forms.TextBox txt_DiaChi2;
     }
 }
