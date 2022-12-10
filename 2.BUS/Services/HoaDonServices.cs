@@ -93,10 +93,10 @@ namespace _2.BUS.Services
                     {
                         Id = a.Id,
                         MaHoaDon = a.MaHoaDon,
-                        NgayLap = a.NgayLap==null?nullDateTime.Value:a.NgayLap.Value,
-                        NgayNhanHang=a.NgayNhanHang == null ? nullDateTime.Value : a.NgayNhanHang.Value,
+                        NgayLap = a.NgayLap==null?nullDateTime.Value:a.NgayLap,
+                        NgayNhanHang=a.NgayNhanHang == null ? nullDateTime.Value : a.NgayNhanHang,
                         NgayShipHang=a.NgayShipHang == null ? nullDateTime.Value : a.NgayShipHang.Value,
-                        NgayThanhToan=a.NgayThanhToan == null ? nullDateTime.Value : a.NgayThanhToan.Value,
+                        NgayThanhToan=a.NgayThanhToan == null ? nullDateTime.Value : a.NgayThanhToan,
                         IdNhanVien = c.Id,
                         IdKhachHang = b.Id==Guid.Empty?Guid.Empty:b.Id,
                         NguoiBan = a.NguoiBan,

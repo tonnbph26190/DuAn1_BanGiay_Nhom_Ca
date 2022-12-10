@@ -14,5 +14,6 @@ namespace _2.BUS.IServices
         string Delete(HoaDonChiTIetView obj);
         List<HoaDonChiTIetView> ShowHoadonChitiet(Guid id);
         List<HoaDonChiTIetView> ShowHoadonChitiet();
+        List<HoaDonChiTIetView> GetAll();
     }
 }
