@@ -121,5 +121,21 @@ namespace _3.PL
         {
             
         }
+
+        private void btn_DangXuat_Click(object sender, EventArgs e)
+        {
+            DialogResult dg = MessageBox.Show("Bạn có muốn đăng xuất không?", "Thông báo", MessageBoxButtons.OKCancel);
+            if (dg == DialogResult.OK)
+            {
+                this.Close();
+                FrmLogin frmlg = new FrmLogin();
+                frmlg.ShowDialog();
+            }
+
+            if (dg == DialogResult.No)
+            {
+                return;
+            }
+        }
     }
 }
