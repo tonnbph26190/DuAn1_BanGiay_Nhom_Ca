@@ -791,6 +791,7 @@ namespace _3.PL.View
             if (_idHoadon!=Guid.Empty)
             {
                 var obj = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.Id == _idHoadon);
+               
                 obj.NgayNhanHang=DateTime.Now;
                 obj.TrangThai = 1;
                 Frm_Alert fm = new Frm_Alert();
