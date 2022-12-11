@@ -91,49 +91,25 @@ namespace _3.PL
         }
 
         private void btn_DangNhap_Click(object sender, EventArgs e)
-        {
-            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-LDAM7DR\SQLEXPRESS;Initial Catalog=MetMoi;Persist Security Info=True;User ID=handt18;Password=123456");
-
-
+        {                               
             foreach (var x in _nhanVienService.GetAll())
-            {
-                if (x.TrangThai == 0)
+            {              
+                if (x.PassWord==txt_MatKhau.Text&&x.Email==txt_TaiKhoan.Text&&x.TrangThai==1)
                 {
-                    MessageBox.Show("Nhân viên này đâng không hoạt động", "Thông báo", MessageBoxButtons.OKCancel,
-                        MessageBoxIcon.Asterisk);
+                    MessageBox.Show("Dăng nhập thành công");                   
+                    break;
                 }
-
-               
-                try
+                else
                 {
-                    conn.Open();
-                    string sql = "select *from NhanVien where Email='" + txt_TaiKhoan.Text + "' and Pass='" + txt_MatKhau.Text + "'";
-                    SqlCommand cmd = new SqlCommand(sql,conn);
-                    SqlDataReader dta = cmd.ExecuteReader();
-                    if (dta.Read()==true)
-                    {
-
-                        MessageBox.Show("Đăng nhập thành công", "Thông báo");
-                        saveInfor();
-                        Frm_Load tc = new Frm_Load(txt_TaiKhoan.Text);
-                        this.Hide();
-                        tc.ShowDialog();
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Tài khoản hoặc mật khẩu không đúng", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                    }
-                }
-                catch (Exception)
-                {
-
-                    MessageBox.Show("Liên hệ Cá để fix", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
-                }
-                
-                return;
+                    MessageBox.Show("Tài khoản ko hợp lệ");
+                    return;
+                }           
 
             }
+            Frm_Load load = new Frm_Load(txt_TaiKhoan.Text);
+            this.Hide();
+            load.ShowDialog();
+            
         }
 
         private void label3_Click(object sender, EventArgs e)
