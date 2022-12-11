@@ -422,24 +422,18 @@ namespace _3.PL
 
                 foreach (var item in _ChiTIetSpViews)
                 {
-
-                    if ((_iQLSanPhamView.ADD(item)))
-                    {
-                        MessageBox.Show("Them Thanh Cong");
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Them that That Bai");
-                        return;
-                    }
-                    _ChiTIetSpViews.Remove(item);
                     if (_ChiTIetSpViews.Count == 0)
                     {
-                        break;
+                        return;
                     }
+                    if ((_iQLSanPhamView.ADD(item)))
+                    {                        
+                        break;
 
+                    }                                    
                 }
+                MessageBox.Show("Them Thanh Cong");
+                _ChiTIetSpViews.Clear();
 
                 loadFlSp();
                 LoadDgridSP();
