@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmLogin));
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -44,6 +45,9 @@
             this.txt_MatKhau = new System.Windows.Forms.TextBox();
             this.txt_TaiKhoan = new System.Windows.Forms.TextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -54,6 +58,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label2);
@@ -67,18 +72,18 @@
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.txt_MatKhau);
             this.groupBox1.Controls.Add(this.txt_TaiKhoan);
-            this.groupBox1.Location = new System.Drawing.Point(24, 70);
+            this.groupBox1.Location = new System.Drawing.Point(24, 80);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(396, 281);
+            this.groupBox1.Size = new System.Drawing.Size(396, 306);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             // 
             // label5
             // 
             this.label5.BackColor = System.Drawing.Color.Black;
-            this.label5.Location = new System.Drawing.Point(91, 183);
+            this.label5.Location = new System.Drawing.Point(91, 209);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(224, 2);
             this.label5.TabIndex = 12;
@@ -87,7 +92,7 @@
             // label4
             // 
             this.label4.BackColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(90, 140);
+            this.label4.Location = new System.Drawing.Point(91, 170);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(224, 2);
             this.label4.TabIndex = 11;
@@ -114,7 +119,7 @@
             // pictureBox4
             // 
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(46, 162);
+            this.pictureBox4.Location = new System.Drawing.Point(47, 190);
             this.pictureBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(38, 22);
@@ -125,7 +130,7 @@
             // pictureBox3
             // 
             this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(46, 118);
+            this.pictureBox3.Location = new System.Drawing.Point(47, 150);
             this.pictureBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(38, 22);
@@ -136,7 +141,7 @@
             // checkBox2
             // 
             this.checkBox2.AutoSize = true;
-            this.checkBox2.Location = new System.Drawing.Point(319, 169);
+            this.checkBox2.Location = new System.Drawing.Point(319, 195);
             this.checkBox2.Name = "checkBox2";
             this.checkBox2.Size = new System.Drawing.Size(15, 14);
             this.checkBox2.TabIndex = 7;
@@ -146,7 +151,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(91, 188);
+            this.checkBox1.Location = new System.Drawing.Point(91, 214);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(102, 19);
             this.checkBox1.TabIndex = 6;
@@ -158,7 +163,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.Crimson;
-            this.label3.Location = new System.Drawing.Point(91, 249);
+            this.label3.Location = new System.Drawing.Point(91, 275);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(102, 17);
             this.label3.TabIndex = 5;
@@ -170,7 +175,7 @@
             this.btn_DangNhap.BackColor = System.Drawing.Color.Azure;
             this.btn_DangNhap.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.btn_DangNhap.Image = ((System.Drawing.Image)(resources.GetObject("btn_DangNhap.Image")));
-            this.btn_DangNhap.Location = new System.Drawing.Point(91, 207);
+            this.btn_DangNhap.Location = new System.Drawing.Point(91, 233);
             this.btn_DangNhap.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_DangNhap.Name = "btn_DangNhap";
             this.btn_DangNhap.Size = new System.Drawing.Size(224, 40);
@@ -184,19 +189,20 @@
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.LightCyan;
             this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(144, 20);
+            this.pictureBox1.Location = new System.Drawing.Point(108, 0);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(111, 83);
+            this.pictureBox1.Size = new System.Drawing.Size(175, 146);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 3;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // txt_MatKhau
             // 
             this.txt_MatKhau.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.txt_MatKhau.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_MatKhau.Location = new System.Drawing.Point(91, 164);
+            this.txt_MatKhau.Location = new System.Drawing.Point(91, 190);
             this.txt_MatKhau.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_MatKhau.Name = "txt_MatKhau";
             this.txt_MatKhau.PasswordChar = '*';
@@ -207,7 +213,7 @@
             // 
             this.txt_TaiKhoan.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.txt_TaiKhoan.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.txt_TaiKhoan.Location = new System.Drawing.Point(91, 120);
+            this.txt_TaiKhoan.Location = new System.Drawing.Point(91, 150);
             this.txt_TaiKhoan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.txt_TaiKhoan.Name = "txt_TaiKhoan";
             this.txt_TaiKhoan.Size = new System.Drawing.Size(223, 16);
@@ -224,17 +230,44 @@
             this.pictureBox2.TabIndex = 3;
             this.pictureBox2.TabStop = false;
             // 
+            // timer1
+            // 
+            this.timer1.Interval = 1000;
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(24, 52);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(121, 23);
+            this.comboBox1.TabIndex = 4;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label7.ForeColor = System.Drawing.Color.Crimson;
+            this.label7.Location = new System.Drawing.Point(219, 275);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(46, 17);
+            this.label7.TabIndex = 14;
+            this.label7.Text = "check?";
+            this.label7.Click += new System.EventHandler(this.label7_Click);
+            // 
             // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(831, 431);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.pictureBox2);
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FrmLogin";
             this.Text = "Đăng nhập";
+            this.Load += new System.EventHandler(this.FrmLogin_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
@@ -263,5 +296,8 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox4;
         private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.Label label7;
     }
 }

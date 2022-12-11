@@ -127,7 +127,7 @@ namespace _3.PL.View
             int sumdonthanhcong = 0;
             for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
             {
-                sumdonthanhcong += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[10].Value);
+                sumdonthanhcong += 1;
             }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
 

@@ -40,7 +40,6 @@
             this.panel2 = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
             this.pnlNav = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
             this.User = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.pnlFromLoad = new System.Windows.Forms.Panel();
@@ -209,7 +208,6 @@
             this.panel2.BackColor = System.Drawing.Color.Beige;
             this.panel2.Controls.Add(this.panel3);
             this.panel2.Controls.Add(this.pnlNav);
-            this.panel2.Controls.Add(this.label1);
             this.panel2.Controls.Add(this.User);
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
@@ -236,23 +234,12 @@
             this.pnlNav.Size = new System.Drawing.Size(3, 75);
             this.pnlNav.TabIndex = 2;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
-            this.label1.Location = new System.Drawing.Point(74, 106);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(81, 17);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Good luck";
-            // 
             // User
             // 
             this.User.AutoSize = true;
             this.User.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.User.ForeColor = System.Drawing.Color.Blue;
-            this.User.Location = new System.Drawing.Point(40, 81);
+            this.User.Location = new System.Drawing.Point(12, 103);
             this.User.Name = "User";
             this.User.Size = new System.Drawing.Size(88, 17);
             this.User.TabIndex = 1;
@@ -261,13 +248,14 @@
             // pictureBox1
             // 
             this.pictureBox1.Image = global::_3.PL.Properties.Resources.icons8_account_96;
-            this.pictureBox1.Location = new System.Drawing.Point(91, 25);
+            this.pictureBox1.Location = new System.Drawing.Point(33, 17);
             this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(55, 47);
+            this.pictureBox1.Size = new System.Drawing.Size(141, 84);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // pnlFromLoad
             // 

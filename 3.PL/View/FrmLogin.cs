@@ -11,13 +11,19 @@ using System.Windows.Forms;
 using _2.BUS.IServices;
 using _2.BUS.Services;
 using _3.PL.View;
+using AForge.Video.DirectShow;
 using iTextSharp.text.xml.xmp;
+using ZXing;
 
 namespace _3.PL
 {
     public partial class FrmLogin : Form
     {
         private INhanVienService _nhanVienService;
+        FilterInfoCollection filterInfoCollection;
+        VideoCaptureDevice captureDevice;
+        string b;
+        
         public FrmLogin()
         {
             InitializeComponent();
@@ -93,7 +99,7 @@ namespace _3.PL
                         MessageBox.Show("Nhân viên này đâng không hoạt động", "Thông báo", MessageBoxButtons.OKCancel,
                             MessageBoxIcon.Asterisk);
                     }
-                    
+                   
                     if (x.Email == txt_TaiKhoan.Text && x.PassWord == txt_MatKhau.Text)
                     {
 
@@ -132,6 +138,72 @@ namespace _3.PL
             {
                 txt_MatKhau.PasswordChar = '*';
             }
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            captureDevice = new VideoCaptureDevice(filterInfoCollection[comboBox1.SelectedIndex].MonikerString);
+            captureDevice.NewFrame += CaptureDevice_NewFrame; ;
+            captureDevice.Start();
+            timer1.Start();
+        }
+
+        private void CaptureDevice_NewFrame(object sender, AForge.Video.NewFrameEventArgs eventArgs)
+        {
+            pictureBox1.Image = (Bitmap)eventArgs.Frame.Clone();
+        }
+
+        private void FrmLogin_Load(object sender, EventArgs e)
+        {
+            filterInfoCollection = new FilterInfoCollection(FilterCategory.VideoInputDevice);
+            foreach (FilterInfo filter in filterInfoCollection)
+            {
+                comboBox1.Items.Add(filter.Name);
+                comboBox1.SelectedIndex = 0;
+            }
+            
+        }
+
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (pictureBox1.Image != null)
+            {
+                BarcodeReader barcodeReader = new BarcodeReader();
+                Result result = barcodeReader.Decode((Bitmap)pictureBox1.Image);
+                if (result != null)
+                {
+                     b = result.ToString().Split("||")[0];
+                    if (_nhanVienService.GetAll().Any(c => c.SoCmnd == b))
+                    {
+                        var obj = _nhanVienService.GetAll().FirstOrDefault(c => c.SoCmnd == b);
+                        txt_TaiKhoan.Text = obj == null ? "" : obj.Email.Trim();
+                        txt_MatKhau.Text = obj == null ? "" : obj.PassWord.Trim();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nhân viên không tồn tại");
+                    }
+                    if (b == "001203014880")
+                    {
+                        FrmTrangChu tc = new FrmTrangChu("Admin");
+                        this.Hide();
+                        tc.ShowDialog();
+                    }
+                    timer1.Stop();
+                    if (captureDevice.IsRunning)
+                    {
+                        captureDevice.SignalToStop();
+                    }
+                }
+
+
+            }
+        }
+
+        private void label7_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
