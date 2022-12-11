@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using _3.PL.View;
+using _2.BUS.IServices;
+using _2.BUS.Services;
+using _3.PL.Properties;
 
 namespace _3.PL
 {
@@ -24,12 +27,13 @@ namespace _3.PL
             int nWidthEllipse,
             int nHeightEllipse
             );
+        private INhanVienService _NvService;
         public FrmTrangChu(string user)
         {
             InitializeComponent();
             Region = System.Drawing.Region.FromHrgn(CreateRoundRecRgn(0, 0, Width, Height, 25, 25));
             User.Text = user;
-
+            
         }
 
         private void FrmTrangChu_Load(object sender, EventArgs e)
@@ -79,9 +83,9 @@ namespace _3.PL
         {
             lb_TrangChu.Text = "Hóa Đơn";
             this.pnlFromLoad.Controls.Clear();
-            Fm_HoaDon frmhoaDon = new Fm_HoaDon() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-            this.pnlFromLoad.Controls.Add(frmhoaDon);
-            frmhoaDon.Show();
+           Frm_ThongKeHD frm=new Frm_ThongKeHD() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            this.pnlFromLoad.Controls.Add(frm);
+            frm.Show();
         }
 
         
@@ -102,6 +106,11 @@ namespace _3.PL
             FrmThanhToan frmThanhToan = new FrmThanhToan() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.pnlFromLoad.Controls.Add(frmThanhToan);
             frmThanhToan.Show();
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }

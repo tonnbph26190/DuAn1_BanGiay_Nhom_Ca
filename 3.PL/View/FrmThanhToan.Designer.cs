@@ -66,7 +66,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.txt_DiaChi2 = new System.Windows.Forms.TextBox();
             this.label11 = new System.Windows.Forms.Label();
@@ -76,16 +75,16 @@
             this.label10 = new System.Windows.Forms.Label();
             this.rbtn_ChuaThanhToan = new System.Windows.Forms.RadioButton();
             this.rbtn_DaTT = new System.Windows.Forms.RadioButton();
+            this.ck_in = new System.Windows.Forms.CheckBox();
+            this.btn_CLear = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.txt_ThanhTien = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
-            this.btn_CLear = new System.Windows.Forms.Button();
+            this.txt_ThanhTien = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.printDocument1 = new System.Drawing.Printing.PrintDocument();
             this.printPreviewDialog1 = new System.Windows.Forms.PrintPreviewDialog();
-            this.ck_in = new System.Windows.Forms.CheckBox();
             this.txt_luu = new System.Windows.Forms.TextBox();
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.pictureBox3 = new System.Windows.Forms.PictureBox();
@@ -106,7 +105,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel2.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.panel3.SuspendLayout();
             this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -149,7 +147,7 @@
             // btn_XacNhan
             // 
             this.btn_XacNhan.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.btn_XacNhan.Location = new System.Drawing.Point(114, 524);
+            this.btn_XacNhan.Location = new System.Drawing.Point(106, 248);
             this.btn_XacNhan.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btn_XacNhan.Name = "btn_XacNhan";
             this.btn_XacNhan.Size = new System.Drawing.Size(82, 37);
@@ -230,7 +228,7 @@
             this.groupBox6.Size = new System.Drawing.Size(143, 338);
             this.groupBox6.TabIndex = 1;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Hóa đơn chờ ";
+            this.groupBox6.Text = "Hóa đơn chua TT";
             // 
             // FL_HoaDon
             // 
@@ -502,15 +500,6 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Mã HĐ";
             // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.groupBox3);
-            this.panel3.Location = new System.Drawing.Point(12, 263);
-            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(300, 217);
-            this.panel3.TabIndex = 8;
-            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.txt_DiaChi2);
@@ -522,17 +511,21 @@
             this.groupBox3.Controls.Add(this.rbtn_ChuaThanhToan);
             this.groupBox3.Controls.Add(this.rbtn_DaTT);
             this.groupBox3.Controls.Add(this.txt_TenKh);
+            this.groupBox3.Controls.Add(this.ck_in);
             this.groupBox3.Controls.Add(this.txt_Sdt);
+            this.groupBox3.Controls.Add(this.btn_CLear);
             this.groupBox3.Controls.Add(this.label7);
             this.groupBox3.Controls.Add(this.label6);
             this.groupBox3.Controls.Add(this.label5);
+            this.groupBox3.Controls.Add(this.label8);
+            this.groupBox3.Controls.Add(this.btn_XacNhan);
+            this.groupBox3.Controls.Add(this.txt_ThanhTien);
             this.groupBox3.Controls.Add(this.label4);
-            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.groupBox3.Location = new System.Drawing.Point(0, 0);
+            this.groupBox3.Location = new System.Drawing.Point(11, 263);
             this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Size = new System.Drawing.Size(300, 217);
+            this.groupBox3.Size = new System.Drawing.Size(300, 289);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Giao hàng";
@@ -616,6 +609,31 @@
             this.rbtn_DaTT.TabStop = true;
             this.rbtn_DaTT.Text = "Đã trả";
             this.rbtn_DaTT.UseVisualStyleBackColor = true;
+            this.rbtn_DaTT.CheckedChanged += new System.EventHandler(this.rbtn_DaTT_CheckedChanged);
+            // 
+            // ck_in
+            // 
+            this.ck_in.AutoSize = true;
+            this.ck_in.Location = new System.Drawing.Point(64, 266);
+            this.ck_in.Name = "ck_in";
+            this.ck_in.Size = new System.Drawing.Size(36, 19);
+            this.ck_in.TabIndex = 160;
+            this.ck_in.Text = "In";
+            this.ck_in.UseVisualStyleBackColor = true;
+            // 
+            // btn_CLear
+            // 
+            this.btn_CLear.BackColor = System.Drawing.SystemColors.Highlight;
+            this.btn_CLear.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.btn_CLear.Image = ((System.Drawing.Image)(resources.GetObject("btn_CLear.Image")));
+            this.btn_CLear.Location = new System.Drawing.Point(194, 246);
+            this.btn_CLear.Name = "btn_CLear";
+            this.btn_CLear.Size = new System.Drawing.Size(88, 38);
+            this.btn_CLear.TabIndex = 154;
+            this.btn_CLear.Text = "Reset";
+            this.btn_CLear.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btn_CLear.UseVisualStyleBackColor = false;
+            this.btn_CLear.Click += new System.EventHandler(this.btn_CLear_Click);
             // 
             // label6
             // 
@@ -635,6 +653,23 @@
             this.label5.TabIndex = 0;
             this.label5.Text = "SĐT";
             // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(10, 227);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(65, 15);
+            this.label8.TabIndex = 4;
+            this.label8.Text = "Thành Tiền";
+            // 
+            // txt_ThanhTien
+            // 
+            this.txt_ThanhTien.Location = new System.Drawing.Point(106, 219);
+            this.txt_ThanhTien.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txt_ThanhTien.Name = "txt_ThanhTien";
+            this.txt_ThanhTien.Size = new System.Drawing.Size(172, 23);
+            this.txt_ThanhTien.TabIndex = 5;
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -643,37 +678,6 @@
             this.label4.Size = new System.Drawing.Size(90, 15);
             this.label4.TabIndex = 0;
             this.label4.Text = "Tên khách hàng";
-            // 
-            // txt_ThanhTien
-            // 
-            this.txt_ThanhTien.Location = new System.Drawing.Point(118, 484);
-            this.txt_ThanhTien.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.txt_ThanhTien.Name = "txt_ThanhTien";
-            this.txt_ThanhTien.Size = new System.Drawing.Size(172, 23);
-            this.txt_ThanhTien.TabIndex = 5;
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(22, 487);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(65, 15);
-            this.label8.TabIndex = 4;
-            this.label8.Text = "Thành Tiền";
-            // 
-            // btn_CLear
-            // 
-            this.btn_CLear.BackColor = System.Drawing.SystemColors.Highlight;
-            this.btn_CLear.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.btn_CLear.Image = ((System.Drawing.Image)(resources.GetObject("btn_CLear.Image")));
-            this.btn_CLear.Location = new System.Drawing.Point(202, 524);
-            this.btn_CLear.Name = "btn_CLear";
-            this.btn_CLear.Size = new System.Drawing.Size(88, 38);
-            this.btn_CLear.TabIndex = 154;
-            this.btn_CLear.Text = "Reset";
-            this.btn_CLear.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-            this.btn_CLear.UseVisualStyleBackColor = false;
-            this.btn_CLear.Click += new System.EventHandler(this.btn_CLear_Click);
             // 
             // timer1
             // 
@@ -693,16 +697,6 @@
             this.printPreviewDialog1.Icon = ((System.Drawing.Icon)(resources.GetObject("printPreviewDialog1.Icon")));
             this.printPreviewDialog1.Name = "printPreviewDialog1";
             this.printPreviewDialog1.Visible = false;
-            // 
-            // ck_in
-            // 
-            this.ck_in.AutoSize = true;
-            this.ck_in.Location = new System.Drawing.Point(72, 542);
-            this.ck_in.Name = "ck_in";
-            this.ck_in.Size = new System.Drawing.Size(36, 19);
-            this.ck_in.TabIndex = 160;
-            this.ck_in.Text = "In";
-            this.ck_in.UseVisualStyleBackColor = true;
             // 
             // txt_luu
             // 
@@ -774,6 +768,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(1197, 613);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label13);
@@ -782,18 +777,12 @@
             this.Controls.Add(this.pictureBox2);
             this.Controls.Add(this.txt_luu);
             this.Controls.Add(this.txt_DiaChi);
-            this.Controls.Add(this.ck_in);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.panel5);
-            this.Controls.Add(this.btn_CLear);
             this.Controls.Add(this.panel7);
             this.Controls.Add(this.panel6);
-            this.Controls.Add(this.txt_ThanhTien);
-            this.Controls.Add(this.label8);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.btn_XacNhan);
             this.Controls.Add(this.panel2);
-            this.Controls.Add(this.panel3);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FrmThanhToan";
@@ -814,7 +803,6 @@
             this.panel2.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
-            this.panel3.ResumeLayout(false);
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
@@ -858,7 +846,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label5;

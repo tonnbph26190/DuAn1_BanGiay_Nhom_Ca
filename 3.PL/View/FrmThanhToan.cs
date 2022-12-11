@@ -56,7 +56,7 @@ namespace _3.PL.View
             label8.Visible= false;
             label11.Visible= false;
             txt_GiamGia.Visible= false;
-            txt_DiaChi2.Enabled=false;
+            rbtn_ChuaThanhToan.Checked = true;
             txt_luu.Visible= false;
             txt_DiaChi.Visible= false;
         }
@@ -340,7 +340,8 @@ namespace _3.PL.View
             
             if (_lstChitietHD.Any())
             {
-               
+                Frm_Alert frm_Alert = new Frm_Alert();
+                
                 Guid IdNhanvien = _iQlNhanvienService.GetAll().FirstOrDefault(c => c.MaNhanVien == MaNVLG).Id;
                 KhachHang = _iKhachHangService.GetAll().FirstOrDefault(c => c.SoDienThoai == txt_Sdt.Text.Trim());
                 if (KhachHang != null)
@@ -391,7 +392,7 @@ namespace _3.PL.View
                     loadHDCho();
                     loadSp();
                    
-                    Frm_Alert frm_Alert = new Frm_Alert();
+                   
                     if (rbtn_DaTT.Checked)
                     {
                         if (ck_in.Checked=true)
@@ -416,7 +417,8 @@ namespace _3.PL.View
                 }
                 else
                 {
-
+                    Frm_Alert frm_Alert2 = new Frm_Alert();
+                   
                     KhachHangView kh = new KhachHangView()
                     {
                         Id = Guid.NewGuid(),
@@ -456,15 +458,19 @@ namespace _3.PL.View
                     loadHDCho();
                     loadSp();
 
-                    Frm_Alert frm_Alert = new Frm_Alert();
+                    
                     if (rbtn_DaTT.Checked)
                     {
-                        frm_Alert.showAlert($"Thanh toán hóa đơn thành công. ID: {hoadon.MaHoaDon}", Frm_Alert.enmType.Info);
+                        frm_Alert2.showAlert($"Thanh toán hóa đơn thành công. ID: {hoadon.MaHoaDon}", Frm_Alert.enmType.Info);
+                    }
+                    else if(rbtn_ChuaThanhToan.Checked)
+                    {
+                        
+                        frm_Alert2.showAlert($"Tạo hóa đơn thành công. ID: {hoadon.MaHoaDon}", Frm_Alert.enmType.Success);
                     }
                     else
                     {
-                        
-                        frm_Alert.showAlert($"Tạo hóa đơn thành công. ID: {hoadon.MaHoaDon}", Frm_Alert.enmType.Success);
+                        frm_Alert2.showAlert($"Bạn chưa chọn trạng thái", Frm_Alert.enmType.Warning);
                     }
                     _lstChitietHD = new List<HoaDonChiTIetView>();
                     dgrid_hdchitiet.Rows.Clear();
@@ -493,8 +499,8 @@ namespace _3.PL.View
             txt_TenKh.Text = "";
             txt_ThanhTien.Text = "";
             dateTimePicker1 = new DateTimePicker();
-            rbtn_ChuaThanhToan.Checked= false;
-            rbtn_DaTT.Checked= false;
+            rbtn_ChuaThanhToan.Checked= true;
+           
             lbl_totalcart.Text = "";
             txt_GiamGia.Text = "";
             txt_MaHD.Text = "";
@@ -604,12 +610,12 @@ namespace _3.PL.View
             if (obj==null)
             {
                 txt_TenKh.Enabled = true;
-                txt_DiaChi2.Enabled = true;
+               
             }
             else
             {
                 txt_TenKh.Enabled = false;
-                txt_DiaChi2.Enabled = false;
+                
             }
             txt_TenKh.Text = obj == null ? txt_TenKh.Text : obj.Ten;         
             txt_Diem.Text = obj == null ? "0" : obj.diemTieuDung.ToString();
@@ -635,6 +641,7 @@ namespace _3.PL.View
                 txt_ThanhTien.Enabled = false;
                 txt_ThanhTien.Visible = false;
                 label8.Visible = false;
+                rbtn_DaTT.Checked = true;
             }
         }
 
@@ -682,6 +689,12 @@ namespace _3.PL.View
 
         private void button2_Click(object sender, EventArgs e)
         {
+            if (txt_DiaChi.Text==""||txt_Sdt.Text==""||txt_TenKh.Text=="")
+            {
+                Frm_Alert fm = new Frm_Alert();
+                fm.showAlert("Mời bạn nhập đầy đủ thông tin để sử dụng tính năng giao hàng ", Frm_Alert.enmType.Warning);
+                return;
+            }
             if (_idHoadon==Guid.Empty)
             {
                 return;
@@ -703,7 +716,12 @@ namespace _3.PL.View
                     {
                         var hoadon = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.Id == _idHoadon);
                         var hdct = _iHoadonChitietSerivce.ShowHoadonChitiet(hoadon.Id);
-                       
+                    if (hoadon.TrangThai==2)
+                    {
+                        Frm_Alert fm = new Frm_Alert();
+                        fm.showAlert("Hoa don dang duoc giao khong the sua", Frm_Alert.enmType.Warning);
+                        return;
+                    }
                         foreach (var item in hdct)
                         {
                             item.IdhoaDon = hoadon.Id;
@@ -943,6 +961,14 @@ namespace _3.PL.View
         private void button7_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void rbtn_DaTT_CheckedChanged(object sender, EventArgs e)
+        {
+            if (!rbtn_DaTT.Checked)
+            {
+                rbtn_ChuaThanhToan.Checked = true;
+            }
         }
     }
 }
