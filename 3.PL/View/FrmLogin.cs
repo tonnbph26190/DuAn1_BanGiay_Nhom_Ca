@@ -105,8 +105,8 @@ namespace _3.PL
 
                         MessageBox.Show("Đăng nhập thành công", "Thông báo");
                         saveInfor();
-                        FrmTrangChu tc = new FrmTrangChu(txt_TaiKhoan.Text);
-                        this.Hide();
+                        Frm_Load tc = new Frm_Load(txt_TaiKhoan.Text);
+                         this.Hide();
                         tc.ShowDialog();                     
                            
                     }
@@ -182,9 +182,9 @@ namespace _3.PL
                     }                  
                     else if (b == "001203014880")
                     {
-                        FrmTrangChu tc = new FrmTrangChu("Admin");
+                        Frm_Load tc = new Frm_Load("Admin");
                         this.Hide();
-                        tc.ShowDialog();
+                        tc.Show();
                     }
                     else
                     {
@@ -199,11 +199,6 @@ namespace _3.PL
 
 
             }
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-            
-        }
+        }        
     }
 }

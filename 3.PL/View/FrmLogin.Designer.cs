@@ -47,7 +47,6 @@
             this.pictureBox2 = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -58,7 +57,6 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.groupBox1.Controls.Add(this.label7);
             this.groupBox1.Controls.Add(this.label5);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.label2);
@@ -163,7 +161,7 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.Crimson;
-            this.label3.Location = new System.Drawing.Point(91, 275);
+            this.label3.Location = new System.Drawing.Point(153, 275);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(102, 17);
             this.label3.TabIndex = 5;
@@ -243,18 +241,6 @@
             this.comboBox1.Size = new System.Drawing.Size(121, 23);
             this.comboBox1.TabIndex = 4;
             // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label7.ForeColor = System.Drawing.Color.Crimson;
-            this.label7.Location = new System.Drawing.Point(219, 275);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(46, 17);
-            this.label7.TabIndex = 14;
-            this.label7.Text = "check?";
-            this.label7.Click += new System.EventHandler(this.label7_Click);
-            // 
             // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -298,6 +284,5 @@
         private System.Windows.Forms.PictureBox pictureBox3;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Label label7;
     }
 }

@@ -17,9 +17,11 @@ namespace _3.PL.View
     {
         private ISanPhamService _iSanPhamService;
         Guid _idWhenclick;
-        public Frm_SanPham()
+        Frm_ChiTietSanPham _form;
+        public Frm_SanPham(Frm_ChiTietSanPham form)
         {
             _iSanPhamService = new SanPhamService();
+            _form= form;
             InitializeComponent();
             LoadDgridSp(null);
         }
@@ -98,7 +100,7 @@ namespace _3.PL.View
                 if (dialogResult == DialogResult.Yes)
                 {
                     MessageBox.Show(_iSanPhamService.Add(GetDataFromGui()));
-
+                    _form.updateData();
                     LoadDgridSp(null);
                 }
                 if (dialogResult == DialogResult.No) return;
@@ -133,7 +135,7 @@ namespace _3.PL.View
                     var temp = GetDataFromGui();
                     temp.Id = _idWhenclick;
                     MessageBox.Show(_iSanPhamService.Update(temp));
-
+                    _form.updateData();
                     LoadDgridSp(null);
                 }
                 if (dialogResult == DialogResult.No) return;

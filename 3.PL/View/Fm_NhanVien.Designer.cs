@@ -453,6 +453,7 @@
             this.dgrid_NV.Size = new System.Drawing.Size(500, 361);
             this.dgrid_NV.TabIndex = 41;
             this.dgrid_NV.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrid_NV_CellClick);
+            this.dgrid_NV.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrid_NV_CellContentClick);
             // 
             // cmb_LocNV
             // 
