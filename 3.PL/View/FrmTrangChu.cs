@@ -32,6 +32,15 @@ namespace _3.PL
         {
             InitializeComponent();
             Region = System.Drawing.Region.FromHrgn(CreateRoundRecRgn(0, 0, Width, Height, 25, 25));
+            if (user=="Admin")
+            {
+                btn_BanHang.Enabled = false;
+                btn_DoanhThu.Enabled = false;
+                btn_HoaDon.Enabled= false;
+                btn_KhachHang.Enabled = false;  
+                btn_HoaDon.Enabled= false;
+                btn_SanPham.Enabled=false;
+            }
             User.Text = user;
             
         }

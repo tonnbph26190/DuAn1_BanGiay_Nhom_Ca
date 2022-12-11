@@ -179,16 +179,16 @@ namespace _3.PL
                         var obj = _nhanVienService.GetAll().FirstOrDefault(c => c.SoCmnd == b);
                         txt_TaiKhoan.Text = obj == null ? "" : obj.Email.Trim();
                         txt_MatKhau.Text = obj == null ? "" : obj.PassWord.Trim();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Nhân viên không tồn tại");
-                    }
-                    if (b == "001203014880")
+                    }                  
+                    else if (b == "001203014880")
                     {
                         FrmTrangChu tc = new FrmTrangChu("Admin");
                         this.Hide();
                         tc.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Nhân viên không tồn tại");
                     }
                     timer1.Stop();
                     if (captureDevice.IsRunning)
