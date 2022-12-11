@@ -13,6 +13,7 @@ using _2.BUS.Services;
 using _3.PL.View;
 using AForge.Video.DirectShow;
 using iTextSharp.text.xml.xmp;
+using Microsoft.Data.SqlClient;
 using ZXing;
 
 namespace _3.PL
@@ -23,14 +24,14 @@ namespace _3.PL
         FilterInfoCollection filterInfoCollection;
         VideoCaptureDevice captureDevice;
         string b;
-        
+
         public FrmLogin()
         {
             InitializeComponent();
             _nhanVienService = new NhanVienService();
             int count = 1;
             txt_MatKhau.Text = Properties.Settings.Default.Mk;
-            txt_TaiKhoan.Text= Properties.Settings.Default.Tk;
+            txt_TaiKhoan.Text = Properties.Settings.Default.Tk;
 
         }
 
@@ -41,7 +42,7 @@ namespace _3.PL
                 Properties.Settings.Default.Tk = txt_TaiKhoan.Text;
                 Properties.Settings.Default.Mk = txt_MatKhau.Text;
                 Properties.Settings.Default.TKdaLogin = txt_TaiKhoan.Text;
-                Properties.Settings.Default.MKdaLogin =txt_MatKhau.Text;
+                Properties.Settings.Default.MKdaLogin = txt_MatKhau.Text;
                 Properties.Settings.Default.Save();
 
             }
@@ -91,42 +92,58 @@ namespace _3.PL
 
         private void btn_DangNhap_Click(object sender, EventArgs e)
         {
-            
-                foreach (var x in _nhanVienService.GetAll())
+            SqlConnection conn = new SqlConnection(@"Data Source=DESKTOP-LDAM7DR\SQLEXPRESS;Initial Catalog=MetMoi;Persist Security Info=True;User ID=handt18;Password=123456");
+
+
+            foreach (var x in _nhanVienService.GetAll())
+            {
+                if (x.TrangThai == 0)
                 {
-                    if (x.TrangThai == 0)
-                    {
-                        MessageBox.Show("Nhân viên này đâng không hoạt động", "Thông báo", MessageBoxButtons.OKCancel,
-                            MessageBoxIcon.Asterisk);
-                    }
-                   
-                    if (x.Email == txt_TaiKhoan.Text && x.PassWord == txt_MatKhau.Text)
+                    MessageBox.Show("Nhân viên này đâng không hoạt động", "Thông báo", MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Asterisk);
+                }
+
+               
+                try
+                {
+                    conn.Open();
+                    string sql = "select *from NhanVien where Email='" + txt_TaiKhoan.Text + "' and Pass='" + txt_MatKhau.Text + "'";
+                    SqlCommand cmd = new SqlCommand(sql,conn);
+                    SqlDataReader dta = cmd.ExecuteReader();
+                    if (dta.Read()==true)
                     {
 
                         MessageBox.Show("Đăng nhập thành công", "Thông báo");
                         saveInfor();
                         Frm_Load tc = new Frm_Load(txt_TaiKhoan.Text);
-                         this.Hide();
-                        tc.ShowDialog();                     
-                           
+                        this.Hide();
+                        tc.ShowDialog();
+
                     }
                     else
                     {
                         MessageBox.Show("Tài khoản hoặc mật khẩu không đúng", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
                     }
-                    return;
+                }
+                catch (Exception)
+                {
+
+                    MessageBox.Show("Liên hệ Cá để fix", "Thông báo", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+                }
                 
+                return;
+
             }
         }
 
         private void label3_Click(object sender, EventArgs e)
         {
-            FrmQuenMK q=new FrmQuenMK();
+            FrmQuenMK q = new FrmQuenMK();
             q.ShowDialog();
 
         }
 
-        
+
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
@@ -161,7 +178,7 @@ namespace _3.PL
                 comboBox1.Items.Add(filter.Name);
                 comboBox1.SelectedIndex = 0;
             }
-            
+
         }
 
 
@@ -173,13 +190,13 @@ namespace _3.PL
                 Result result = barcodeReader.Decode((Bitmap)pictureBox1.Image);
                 if (result != null)
                 {
-                     b = result.ToString().Split("||")[0];
+                    b = result.ToString().Split("||")[0];
                     if (_nhanVienService.GetAll().Any(c => c.SoCmnd == b))
                     {
                         var obj = _nhanVienService.GetAll().FirstOrDefault(c => c.SoCmnd == b);
                         txt_TaiKhoan.Text = obj == null ? "" : obj.Email.Trim();
                         txt_MatKhau.Text = obj == null ? "" : obj.PassWord.Trim();
-                    }                  
+                    }
                     else if (b == "001203014880")
                     {
                         Frm_Load tc = new Frm_Load("Admin");
@@ -199,6 +216,6 @@ namespace _3.PL
 
 
             }
-        }        
+        }
     }
 }
