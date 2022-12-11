@@ -26,7 +26,7 @@ namespace _3.PL.View
         private IKhachHangService _iKhachHangService;
         private IHoaDonService _iHoadonService;
         private IHoaDonChiTietServices _iHoadonChitietSerivce;
-
+       
         List<HoaDonChiTIetView> _lstChitietHD;
         Guid _idSanpham;
         Guid _idHoadon;
@@ -63,7 +63,7 @@ namespace _3.PL.View
         private void loadSp()
         {
             Fl_SanPhams.Controls.Clear();
-            foreach (var  x in _iQlSanphamSerivce.GetAll())
+            foreach (var  x in _iQlSanphamSerivce.GetAll().Where(c=>c.SoLuong>0&&c.TrangThai==1))
             {
                 Panel products = new Panel()
                 {
@@ -267,7 +267,11 @@ namespace _3.PL.View
             if (hoadonview.TrangThai==2)
             {
                 Flag = false;
-                
+                ck_in.Enabled= false;
+            }
+            else
+            {
+                ck_in.Enabled = true;
             }
             if (hoadonview.TrangThai==1)
             {
@@ -341,7 +345,11 @@ namespace _3.PL.View
             if (_lstChitietHD.Any())
             {
                 Frm_Alert frm_Alert = new Frm_Alert();
-                
+                if (_iHoadonService.ShowHoadon().Any(c=>c.MaHoaDon==txt_MaHD.Text)&&rbtn_ChuaThanhToan.Checked)
+                {
+                    frm_Alert.showAlert("Mã hóa đơn đã tồn tại ko thể tạo",Frm_Alert.enmType.Warning);
+                    return;
+                }
                 Guid IdNhanvien = _iQlNhanvienService.GetAll().FirstOrDefault(c => c.MaNhanVien == MaNVLG).Id;
                 KhachHang = _iKhachHangService.GetAll().FirstOrDefault(c => c.SoDienThoai == txt_Sdt.Text.Trim());
                 if (KhachHang != null)
@@ -418,7 +426,11 @@ namespace _3.PL.View
                 else
                 {
                     Frm_Alert frm_Alert2 = new Frm_Alert();
-                   
+                    if (_iHoadonService.ShowHoadon().Any(c => c.MaHoaDon == txt_MaHD.Text) && rbtn_ChuaThanhToan.Checked)
+                    {
+                        frm_Alert2.showAlert("Mã hóa đơn đã tồn tại ko thể tạo", Frm_Alert.enmType.Warning);
+                        return;
+                    }
                     KhachHangView kh = new KhachHangView()
                     {
                         Id = Guid.NewGuid(),
@@ -462,11 +474,13 @@ namespace _3.PL.View
                     if (rbtn_DaTT.Checked)
                     {
                         frm_Alert2.showAlert($"Thanh toán hóa đơn thành công. ID: {hoadon.MaHoaDon}", Frm_Alert.enmType.Info);
+                        clean();
                     }
                     else if(rbtn_ChuaThanhToan.Checked)
                     {
                         
                         frm_Alert2.showAlert($"Tạo hóa đơn thành công. ID: {hoadon.MaHoaDon}", Frm_Alert.enmType.Success);
+                        clean();
                     }
                     else
                     {
@@ -487,9 +501,10 @@ namespace _3.PL.View
         {
             _lstChitietHD.Clear();
             LoadGiohang();
-            clean();
+           
             totalCart();
             Flag=true;
+            clean();
         }
         void clean()
         {
@@ -499,11 +514,12 @@ namespace _3.PL.View
             txt_TenKh.Text = "";
             txt_ThanhTien.Text = "";
             dateTimePicker1 = new DateTimePicker();
-            rbtn_ChuaThanhToan.Checked= true;
-           
+            rbtn_ChuaThanhToan.Checked= true;         
             lbl_totalcart.Text = "";
-            txt_GiamGia.Text = "";
+            txt_GiamGia.Text ="";
             txt_MaHD.Text = "";
+            txt_Diem.Text = "";
+            txt_DiaChi2.Text="";
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -602,24 +618,27 @@ namespace _3.PL.View
 
         private void txt_Sdt_TextChanged(object sender, EventArgs e)
         {
-            if (txt_Sdt.Text == null)
+            if (txt_Sdt.Text == "")
             {
+                
                 return;
+               
             }
             var obj = _iKhachHangService.GetAll().FirstOrDefault(c => c.SoDienThoai == txt_Sdt.Text);
-            if (obj==null)
+            if (obj!=null)
             {
-                txt_TenKh.Enabled = true;
-               
+                txt_TenKh.Text = obj == null ? "" : obj.Ten;
+                txt_Diem.Text = obj == null ? "": obj.diemTieuDung.ToString();
+                txt_DiaChi2.Text = obj == null ? "" : obj.DiaChi;
+                txt_TenKh.Enabled = false;
+
             }
             else
             {
-                txt_TenKh.Enabled = false;
+                txt_TenKh.Enabled = true;
                 
             }
-            txt_TenKh.Text = obj == null ? txt_TenKh.Text : obj.Ten;         
-            txt_Diem.Text = obj == null ? "0" : obj.diemTieuDung.ToString();
-            txt_DiaChi2.Text = obj == null ? txt_TenKh.Text : obj.DiaChi;
+            
         }
 
         private void groupBox3_Enter(object sender, EventArgs e)
@@ -683,8 +702,13 @@ namespace _3.PL.View
             if(txt_Diem.Text!=""&&Convert.ToDouble(txt_Diem.Text) <Convert.ToDouble(txt_GiamGia.Text))
             {
                 MessageBox.Show("Điểm ko đủ nhập lại");
+                txt_GiamGia.Text = "";
                 return;
-            }          
+            }
+            else
+            {
+                txt_ThanhTien.Text=Convert.ToString(Convert.ToDouble(lbl_totalcart.Text) - Convert.ToDouble(txt_GiamGia.Text));
+            }         
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -794,9 +818,9 @@ namespace _3.PL.View
                     "Cá Shoes".ToUpper(), new Font("Courier New", 12, FontStyle.Bold), Brushes.Black,
                     new PointF(100, 20));
                 //Mã hóa đơn
-
+                
                 e.Graphics.DrawString(
-                    String.Format("{0}", txt_luu.Text),
+                    String.Format("{0}", txt_luu.Text+" "+_iQlNhanvienService.GetAll().FirstOrDefault(c=>c.Id== _iHoadonService.ShowHoadon().FirstOrDefault(c => c.MaHoaDon == txt_luu.Text).IdNhanVien).TenNhanVien),
                     new Font("Courier New", 12, FontStyle.Bold),
                     Brushes.Black, new PointF(w / 2 + 200, 20));
 
@@ -876,9 +900,9 @@ namespace _3.PL.View
                 //Mã hóa đơn
 
                 e.Graphics.DrawString(
-                    String.Format("{0}", txt_MaHD.Text),
-                    new Font("Courier New", 12, FontStyle.Bold),
-                    Brushes.Black, new PointF(w / 2 + 200, 20));
+                   String.Format("{0}", txt_MaHD.Text + " " + _iQlNhanvienService.GetAll().FirstOrDefault(c => c.Id == _iHoadonService.ShowHoadon().FirstOrDefault(c => c.MaHoaDon == txt_MaHD.Text).IdNhanVien).TenNhanVien),
+                   new Font("Courier New", 12, FontStyle.Bold),
+                   Brushes.Black, new PointF(w / 2 + 200, 20));
 
 
 

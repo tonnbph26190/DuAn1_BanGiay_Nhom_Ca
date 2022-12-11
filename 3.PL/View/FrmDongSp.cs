@@ -17,11 +17,13 @@ namespace _3.PL.View
     {
         private IDongSPService _dongSpService;
         private Guid _id;
-        public FrmDongSp()
+        Frm_ChiTietSanPham _form;
+        public FrmDongSp(Frm_ChiTietSanPham form)
         {
             InitializeComponent();
             _dongSpService = new DongSPService();
             LoadData();
+            _form = form;
         }
         public void LoadData()
         {
@@ -97,6 +99,7 @@ namespace _3.PL.View
                 {
                     _dongSpService.Add(GetDataFromGui());
                     MessageBox.Show("Thêm thành công");
+                    _form.updateData();
                     LoadData();
                 }
                 if (dialogResult == DialogResult.No) return;
@@ -130,6 +133,7 @@ namespace _3.PL.View
                 {
                     _dongSpService.Update(GetDataFromGui());
                     MessageBox.Show("Sửa Dòng sản phẩm thành công");
+                    _form.updateData();
                     LoadData();
                 }
                 if (dialogResult == DialogResult.No) return;

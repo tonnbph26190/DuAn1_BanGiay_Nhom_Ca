@@ -232,7 +232,7 @@ namespace _3.PL
             if (obj.GioiTinh == 0)
             {
                 rbtn_Nam.Checked = true;
-                return;
+                
             }
             else
             {
@@ -244,6 +244,7 @@ namespace _3.PL
             if (obj.TrangThai == 1)
             {
                 cbx_HoatDong.Checked = true;
+               
             }
             else cbx_KoHoatDong.Checked = true;
 
@@ -585,6 +586,11 @@ namespace _3.PL
         {
             FrmChucVu chucVu= new FrmChucVu(this);
             chucVu.Show();
+        }
+
+        private void dgrid_NV_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

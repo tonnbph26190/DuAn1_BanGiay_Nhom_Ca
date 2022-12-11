@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace _3.PL
 {
@@ -371,6 +372,16 @@ namespace _3.PL
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Sp này?", "Xác nhận", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
+                string path = @"C:\Users\nguye\Source\Repos\DuAn1_BanGiay_Nhom_Ca\3.PL\Qrcode\";
+                var dialog = new SaveFileDialog();
+                dialog.InitialDirectory = path;
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    pic_QR.Image.Save(dialog.FileName);
+                    pic_QR.SizeMode = PictureBoxSizeMode.StretchImage;
+                    linkQR = dialog.FileName;
+                    
+                }
                 if (_iQLSanPhamView.ADD(GetDataFromGui()))
                 {
                     MessageBox.Show("Thêm thành công");
@@ -450,13 +461,13 @@ namespace _3.PL
 
         private void btn_ThemSanPham_Click(object sender, EventArgs e)
         {
-            Frm_SanPham sp=new Frm_SanPham();
+            Frm_SanPham sp=new Frm_SanPham(this);
             sp.ShowDialog(this);
         }
 
         private void btn_ThemDSP_Click(object sender, EventArgs e)
         {
-            FrmDongSp dongSp= new FrmDongSp();
+            FrmDongSp dongSp= new FrmDongSp(this);
             dongSp.ShowDialog(this);
         }
 
