@@ -1,5 +1,6 @@
 ﻿using _2.BUS.IServices;
 using _2.BUS.Services;
+using _2.BUS.ViewModel;
 using _3.PL.View;
 using System;
 using System.Collections.Generic;
@@ -15,15 +16,19 @@ namespace _3.PL
 {
     public partial class Fm_HoaDon : Form
     {
+        private IChiTietSpServices _iQlSanphamSerivce;
         private IHoaDonService _iHoadonService;
         private IHoaDonChiTietServices _iHoadonChitietSerivce;
         Guid _idHoadon;
+        Guid _idSanpham;
         public Fm_HoaDon()
         {
             _iHoadonService = new HoaDonServices();
             _iHoadonChitietSerivce = new HoaDonChiTietServices();
+            _iQlSanphamSerivce = new ChiTIetSpServices();
             InitializeComponent();
             LoadHdCho();
+            loadSp();
         }
 
         private void Fm_HoaDon_Load(object sender, EventArgs e)
@@ -41,6 +46,7 @@ namespace _3.PL
             dgrid_HoaDon.Columns[4].Name = "NV bán";
             dgrid_HoaDon.Rows.Clear();
 
+
             foreach (var x in _iHoadonService.ShowHoadon().Where(c => c.TrangThai == 1))
             {
                 dgrid_HoaDon.Rows.Add(stt++, x.Id, x.MaHoaDon, x.TenKH,x.NV);
@@ -49,19 +55,29 @@ namespace _3.PL
         private void LoadGiohang(Guid id)
         {
             int stt = 1;
-            dgrid_HoaDonChiTiet.ColumnCount = 6;
+            dgrid_HoaDonChiTiet.ColumnCount = 8;
             dgrid_HoaDonChiTiet.Columns[0].Name = "STT";
             dgrid_HoaDonChiTiet.Columns[1].Name = "Id";
+            dgrid_HoaDonChiTiet.Columns[1].Visible=true;
             dgrid_HoaDonChiTiet.Columns[2].Name = "Mã sản phẩm";
             dgrid_HoaDonChiTiet.Columns[3].Name = "Tên sản phẩm";
             dgrid_HoaDonChiTiet.Columns[4].Name = "Số lượng";
             dgrid_HoaDonChiTiet.Columns[5].Name = "Đơn giá";
+            dgrid_HoaDonChiTiet.Columns[6].Name = "Idsp";
+            dgrid_HoaDonChiTiet.Columns[7].Name = "Ghi Chú";
+            dgrid_HoaDonChiTiet.Columns[6].Visible= true;
             dgrid_HoaDonChiTiet.Rows.Clear();
 
+            DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
+            
+            buttonColumn.Text = "Trả hàng";
+            buttonColumn.Name = "TraHang";
+            buttonColumn.UseColumnTextForButtonValue = true;
 
+            dgrid_HoaDonChiTiet.Columns.Add(buttonColumn);
             foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet(id))
             {
-                dgrid_HoaDonChiTiet.Rows.Add(stt++, x.IdChiTIetSp, x.MaSp, x.TenSp, x.SoLuong, x.DonGia);
+                dgrid_HoaDonChiTiet.Rows.Add(stt++, x.Id, x.MaSp, x.TenSp, x.SoLuong, x.DonGia,x.IdChiTIetSp,x.GhiChu);
             }
 
         }
@@ -79,6 +95,83 @@ namespace _3.PL
         private void btn_CLear_Click(object sender, EventArgs e)
         {
             LoadGiohang(Guid.Empty);
+        }
+
+        private void dgrid_HoaDonChiTiet_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                
+                
+
+            }
+        }
+        private void loadSp()
+        {
+            Fl_SanPhams.Controls.Clear();
+            foreach (var x in _iQlSanphamSerivce.GetAll().Where(c => c.SoLuong > 0 && c.TrangThai == 1))
+            {
+                Panel products = new Panel()
+                {
+                    Size = new System.Drawing.Size(160, 160),
+                    BackColor = Color.White
+                };
+
+                System.Windows.Forms.Button btn = new System.Windows.Forms.Button() { Width = 110, Height = 110 };
+                Label lb = new Label() { ForeColor = Color.Black, Location = new System.Drawing.Point(20, 120) };
+                btn.Tag = x;
+                btn.Image = Bitmap.FromFile(x.anh);
+                btn.Click += Btn_Click; ;
+                btn.BackColor = Color.Red;
+                btn.ForeColor = Color.Black;
+                lb.Text = x.TenSp + " " + x.LoaiSize;
+                products.Controls.Add(lb);
+                products.Controls.Add(btn);
+                Fl_SanPhams.Controls.Add(products);
+
+
+            }
+
+        }
+
+        private void Btn_Click(object? sender, EventArgs e)
+        {
+            _idSanpham = ((sender as System.Windows.Forms.Button).Tag as ChiTIetSpView).Id;
+        }
+
+        private void dgrid_HoaDonChiTiet_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                DataGridViewRow r = dgrid_HoaDonChiTiet.Rows[e.RowIndex];
+                if (dgrid_HoaDonChiTiet.Columns[e.ColumnIndex].Name== "TraHang")
+                {
+                    if (int.TryParse(dgrid_HoaDonChiTiet.Rows[r.Index].Cells[4].Value.ToString(), out int x))
+                    {                       
+                        var idHdct = Guid.Parse(dgrid_HoaDonChiTiet.Rows[e.RowIndex].Cells[1].Value.ToString());    
+                        var idSp = Guid.Parse(dgrid_HoaDonChiTiet.Rows[e.RowIndex].Cells[6].Value.ToString());
+                        var Hdct = _iHoadonChitietSerivce.ShowHoadonChitiet(_idHoadon).FirstOrDefault(c => c.Id == idHdct);
+                        var Sp = _iQlSanphamSerivce.GetAll().FirstOrDefault(c => c.Id == idSp);
+                        Hdct.SoLuong--;
+                        Sp.SoLuong++;
+                        if (Hdct.SoLuong==0)
+                        {
+                            Hdct.GhiChu = "Khách trả hàng";
+                        }
+                        if (Hdct.SoLuong<0||Hdct.SoLuong>Sp.SoLuong)
+                        {
+                            Frm_Alert fm = new Frm_Alert();
+                            fm.showAlert("Sản phẩm đã vượt quá số lượng cho phép", Frm_Alert.enmType.Warning);
+                        }
+                        _iHoadonChitietSerivce.Update(Hdct);
+                        _iQlSanphamSerivce.UPDATE(Sp);
+                        LoadGiohang(_idHoadon);
+
+                    }
+                }
+
+
+            }
         }
     }
 }

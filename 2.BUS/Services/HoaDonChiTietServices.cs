@@ -30,12 +30,13 @@ namespace _2.BUS.Services
             if (obj == null) return "thêm thất bại";
             var hoaDonChiTiet = new HoaDonChiTiet()
             {
-                Id = obj.Id,
+                Id = Guid.NewGuid(),
                 IdhoaDon = obj.IdhoaDon,
                 IdChiTIetSp = obj.IdChiTIetSp,
                 SoLuong = obj.SoLuong,
                 DonGia = obj.DonGia,
                 GiamGia = obj.GiamGia,
+                GhiChu=obj.GhiChu,
                
             };
             if (_iHoaDonChiTietRepository.Add(hoaDonChiTiet)) return "thêm thành công";
@@ -47,10 +48,11 @@ namespace _2.BUS.Services
         public string Update(HoaDonChiTIetView obj)
         {
             if (obj == null) return "sửa thất bại";
-            var hoaDonChiTiet = _iHoaDonChiTietRepository.GetAll().FirstOrDefault(c => c.IdhoaDon == obj.IdhoaDon && c.IdChiTIetSp == obj.IdChiTIetSp);
+            var hoaDonChiTiet = _iHoaDonChiTietRepository.GetAll().FirstOrDefault(c => c.IdhoaDon == obj.IdhoaDon && c.IdChiTIetSp == obj.IdChiTIetSp||c.Id==obj.Id);
             hoaDonChiTiet.SoLuong = obj.SoLuong;
             hoaDonChiTiet.GiamGia = obj.GiamGia;
             hoaDonChiTiet.DonGia = obj.DonGia;
+            hoaDonChiTiet.GhiChu= obj.GhiChu;
             if (_iHoaDonChiTietRepository.Update(hoaDonChiTiet)) return "sửa thành công";
             return "sửa thất bại";
         }
@@ -66,11 +68,13 @@ namespace _2.BUS.Services
                     
                     select new HoaDonChiTIetView()
                     {
+                        Id=a.Id,
                         IdChiTIetSp = c.Id,
                         MaSp = c.Ma,
                         TenSp = c.TenSp,
                         SoLuong = a.SoLuong.Value,
                         DonGia = a.DonGia.Value,
+                        GhiChu=a.GhiChu
                     }
                 ).ToList();
             return data;
@@ -94,6 +98,7 @@ namespace _2.BUS.Services
                     
                     select new HoaDonChiTIetView()
                     {
+                        Id=a.Id,
                         IdChiTIetSp = c.Id,
                         MaSp = c.Ma,
                         TenSp = c.TenSp,
@@ -103,7 +108,8 @@ namespace _2.BUS.Services
                         IdhoaDon=b.Id,
                         sdt=b.Sdt,
                         GiamGia=a.GiamGia.Value,
-                        ThanhTien = a.SoLuong.Value * a.DonGia.Value - a.GiamGia.Value
+                        ThanhTien = a.SoLuong.Value * a.DonGia.Value - a.GiamGia.Value,
+                        GhiChu=a.GhiChu
                     }
                 ).ToList();
             return data;
