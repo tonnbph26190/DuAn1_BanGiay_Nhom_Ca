@@ -29,7 +29,8 @@ namespace _3.PL
             int nHeightEllipse
             );
         private INhanVienService _NvService;
-        public FrmTrangChu(string user)
+        private IChucVuService _ChucVuService;
+        public FrmTrangChu(string user, string  tenChucVu)
         {
             InitializeComponent();
             Region = System.Drawing.Region.FromHrgn(CreateRoundRecRgn(0, 0, Width, Height, 25, 25));
@@ -43,7 +44,11 @@ namespace _3.PL
                 btn_SanPham.Enabled=false;
             }
             User.Text = user;
-            
+            lbl_TenChucVu.Text = tenChucVu;
+            if (tenChucVu == "Nhân Viên")
+            {
+                btn_NhanVien.Enabled = false;
+            }
         }
 
         private void FrmTrangChu_Load(object sender, EventArgs e)

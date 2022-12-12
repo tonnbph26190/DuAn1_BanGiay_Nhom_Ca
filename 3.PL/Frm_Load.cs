@@ -15,12 +15,14 @@ namespace _3.PL
     {
 
         string b;
-        public Frm_Load(string user)
+        private string c;
+        public Frm_Load(string user, string tenChucVu)
         {
             InitializeComponent();
             b = user;
+            this.c = tenChucVu;
         }
-        
+
         private void timer1_Tick(object sender, EventArgs e)
         {
             if (progressBar1.Value < 100)
@@ -32,7 +34,7 @@ namespace _3.PL
             {
                 timer1.Stop();
                 this.Hide();
-                FrmTrangChu trangChu = new FrmTrangChu(b);
+                FrmTrangChu trangChu = new FrmTrangChu(b,c);
                 trangChu.Show();
             }           
         }

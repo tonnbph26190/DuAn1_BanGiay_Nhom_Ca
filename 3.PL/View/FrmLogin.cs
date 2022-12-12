@@ -103,6 +103,8 @@ namespace _3.PL
                 {
                     
                     MessageBox.Show("Dăng nhập thành công");
+                    var chucVuNVlogin = _nhanVienService.GetAll().FirstOrDefault(c => c.Email == txt_TaiKhoan.Text);
+                    txt_ChuVu.Text = chucVuNVlogin.ChucVu.Ten;
                     break;
                 }           
 
@@ -111,7 +113,7 @@ namespace _3.PL
             {
                 saveInfor();
             }
-            Frm_Load load = new Frm_Load(txt_TaiKhoan.Text);
+            Frm_Load load = new Frm_Load(txt_TaiKhoan.Text,txt_ChuVu.Text);
             this.Hide();
             
             load.ShowDialog();
@@ -181,7 +183,7 @@ namespace _3.PL
                     }
                     else if (b == "001203014880")
                     {
-                        Frm_Load tc = new Frm_Load("Admin");
+                        Frm_Load tc = new Frm_Load("Admin","Admin");
                         this.Hide();
                         tc.Show();
                     }
