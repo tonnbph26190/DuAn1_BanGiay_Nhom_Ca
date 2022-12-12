@@ -94,20 +94,22 @@ namespace _3.PL
         {                               
             foreach (var x in _nhanVienService.GetAll())
             {              
-                if (x.PassWord==txt_MatKhau.Text&&x.Email==txt_TaiKhoan.Text&&x.TrangThai==1)
-                {
-                    MessageBox.Show("Dăng nhập thành công");                   
-                    break;
-                }
-                else
+                if (x.PassWord!=txt_MatKhau.Text&&x.Email!=txt_TaiKhoan.Text&&x.TrangThai==0)
                 {
                     MessageBox.Show("Tài khoản ko hợp lệ");
                     return;
+                }
+                else
+                {
+                    
+                    MessageBox.Show("Dăng nhập thành công");
+                    break;
                 }           
 
             }
             Frm_Load load = new Frm_Load(txt_TaiKhoan.Text);
             this.Hide();
+            
             load.ShowDialog();
             
         }
