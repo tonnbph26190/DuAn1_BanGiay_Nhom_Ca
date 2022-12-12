@@ -116,19 +116,6 @@ namespace _3.PL.View
             }
             else
             {
-                foreach (var x in _iSanPhamService.GetAll())
-                {
-                    if (x.Ma == txt_Ma.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == txt_Ten.Text)
-                    {
-                        MessageBox.Show("Sản phẩm này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                }
                 DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {

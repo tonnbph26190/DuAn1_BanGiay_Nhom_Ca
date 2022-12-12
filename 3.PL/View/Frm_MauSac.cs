@@ -114,19 +114,6 @@ namespace _3.PL.View
             }
             else
             {
-                foreach (var x in _iMauService.GetAll())
-                {
-                    if (x.Ma == MS_Ma.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == MS_Ten.Text)
-                    {
-                        MessageBox.Show("màu sắc này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                }
                 DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa màu này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {

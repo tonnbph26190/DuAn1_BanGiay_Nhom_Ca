@@ -118,15 +118,6 @@ namespace _3.PL.View
             }
             else
             {
-                foreach (var x in _chucVuService.GetAll())
-                {
-                   
-                    if (x.Ten == txt_TenCv.Text)
-                    {
-                        MessageBox.Show("Chức Vụ này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                }
                 DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Chức Vụ này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
