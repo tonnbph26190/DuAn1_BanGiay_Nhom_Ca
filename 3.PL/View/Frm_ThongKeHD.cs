@@ -880,7 +880,7 @@ namespace _3.PL.View
                 return;
             }
             byDay(Convert.ToDateTime(dtp_loc.Value.ToString("MM-dd-yyyy")));
-            string maNV = dgrid_Hd.Rows[1].Cells[4].Value.ToString();
+            string maNV = _NvService.GetAll().FirstOrDefault(c => c.Email == Properties.Settings.Default.TKdaLogin).MaNhanVien;
             string from, to, pass, content;
             MailMessage mess = new MailMessage();
             from = "ckuotga1997@gmail.com";

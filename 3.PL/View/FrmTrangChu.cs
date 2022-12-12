@@ -92,7 +92,7 @@ namespace _3.PL
 
         private void btn_HoaDon_Click_1(object sender, EventArgs e)
         {
-            lb_TrangChu.Text = "Doanh Thu";
+            lb_TrangChu.Text = "Hóa Đơn";
             this.pnlFromLoad.Controls.Clear();
             Fm_HoaDon frmDoanhThu = new Fm_HoaDon() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
             this.pnlFromLoad.Controls.Add(frmDoanhThu);
