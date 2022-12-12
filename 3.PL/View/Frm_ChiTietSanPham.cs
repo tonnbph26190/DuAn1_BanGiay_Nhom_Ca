@@ -432,7 +432,7 @@ namespace _3.PL
                     }
                     if ((_iQLSanPhamView.ADD(item)))
                     {                        
-                        break;
+                       
 
                     }                                    
                 }

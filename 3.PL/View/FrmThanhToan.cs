@@ -867,8 +867,7 @@ namespace _3.PL.View
                 int i = 1;
 
                 y += 20;
-                e.Graphics.DrawString(string.Format("{0:N0}", _iHoadonChitietSerivce.ShowHoadonChitiet().FirstOrDefault(c => c.IdhoaDon == _iHoadonService.GetID(txt_luu.Text)).GiamGia), new Font("Varial", 8, FontStyle.Bold),
-                       Brushes.Black, new Point(w / 2 + 170, y));
+               
 
                 foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => c.IdhoaDon == _iHoadonService.GetID(txt_luu.Text)))
                 {
@@ -884,7 +883,9 @@ namespace _3.PL.View
                     e.Graphics.DrawString(string.Format("{0:N0}", x.SoLuong), new Font("Varial", 8, FontStyle.Bold),
                         Brushes.Black, new Point(w / 2, y));
                     e.Graphics.DrawString(string.Format("{0:N0}", x.DonGia), new Font("Varial", 8, FontStyle.Bold),
-                        Brushes.Black, new Point(w / 2 + 100, y));                 
+                        Brushes.Black, new Point(w / 2 + 100, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
+                       Brushes.Black, new Point(w / 2 + 170, y));
                     e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia)) - x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
                         Brushes.Black, new Point(w - 200, y));
                     y += 20;
@@ -956,8 +957,7 @@ namespace _3.PL.View
                 int i = 1;
 
                 y += 30;
-                e.Graphics.DrawString(string.Format("{0:N0}", _iHoadonChitietSerivce.ShowHoadonChitiet().FirstOrDefault(c=>c.IdhoaDon== _iHoadonService.GetID(txt_MaHD.Text)).GiamGia), new Font("Varial", 8, FontStyle.Bold),
-                       Brushes.Black, new Point(w / 2 + 170, y));
+                
                 foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => c.IdhoaDon == _iHoadonService.GetID(txt_MaHD.Text)))
                 {
                     e.Graphics.DrawString(string.Format("{0}", i++), new Font("Varial", 8, FontStyle.Bold), Brushes.Black,
@@ -981,6 +981,8 @@ namespace _3.PL.View
                         new Point(tung + 40, hoanh+29));
                     e.Graphics.DrawString(_iHoadonService.ShowHoadon().FirstOrDefault(c=>c.Sdt==x.sdt).NguoiBan, new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                         new Point(tung + 60, hoanh));
+                    e.Graphics.DrawString(string.Format("{0:N0}", x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
+                       Brushes.Black, new Point(w / 2 + 170, y));
                     e.Graphics.DrawString(_iHoadonService.ShowHoadon().FirstOrDefault(c => c.Sdt == x.sdt).TenKH, new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                         new Point(tung + 115, hoanh+61));
                 }
