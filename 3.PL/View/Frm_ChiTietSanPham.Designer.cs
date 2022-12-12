@@ -78,6 +78,7 @@
             this.bnt_Sua = new System.Windows.Forms.Button();
             this.btn_ThemList = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.txt_ChucVu = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_sanpham)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pic_QR)).BeginInit();
@@ -125,6 +126,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txt_ChucVu);
             this.groupBox1.Controls.Add(this.txt_Ma);
             this.groupBox1.Controls.Add(this.cmb_SanPham);
             this.groupBox1.Controls.Add(this.richtxt_mota);
@@ -611,6 +613,15 @@
             this.groupBox2.TabIndex = 161;
             this.groupBox2.TabStop = false;
             // 
+            // txt_ChucVu
+            // 
+            this.txt_ChucVu.AutoSize = true;
+            this.txt_ChucVu.Location = new System.Drawing.Point(496, 35);
+            this.txt_ChucVu.Name = "txt_ChucVu";
+            this.txt_ChucVu.Size = new System.Drawing.Size(58, 20);
+            this.txt_ChucVu.TabIndex = 151;
+            this.txt_ChucVu.Text = "label17";
+            // 
             // Frm_ChiTietSanPham
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -694,5 +705,6 @@
         private System.Windows.Forms.Button bnt_Sua;
         private System.Windows.Forms.Button btn_ThemList;
         private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label txt_ChucVu;
     }
 }
