@@ -196,19 +196,9 @@ namespace _3.PL
             {
                 foreach (var x in _iKhachHangService.GetAll())
                 {
-                    if (x.Ma == txt_Ma.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == txt_Ten.Text)
-                    {
-                        MessageBox.Show("Tên này đã tồn tại", "Thông báo");
-                        return;
-                    }
                     if (x.Email == txt_Email.Text)
                     {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
+                        MessageBox.Show("Email này đã tồn tại", "Thông báo");
                         return;
                     }
                     if (x.SoDienThoai == txt_SDT.Text)

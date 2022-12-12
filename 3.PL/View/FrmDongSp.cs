@@ -114,20 +114,6 @@ namespace _3.PL.View
             }
             else
             {
-                foreach (var x in _dongSpService.GetAll())
-                {
-                    if (x.Ma == txt_MaDSP.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.Ten == txt_TenDSP.Text)
-                    {
-                        MessageBox.Show("Dòng sản phẩm này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    
-                }
                 DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Dòng sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {

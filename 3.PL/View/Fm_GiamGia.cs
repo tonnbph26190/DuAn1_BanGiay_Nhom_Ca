@@ -16,5 +16,10 @@ namespace _3.PL
         {
             InitializeComponent();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

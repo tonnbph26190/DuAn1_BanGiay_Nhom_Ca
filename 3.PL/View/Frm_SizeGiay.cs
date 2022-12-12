@@ -121,19 +121,6 @@ namespace _3.PL.View
             }
             else
             {
-                foreach (var x in _iSizeService.GetAll())
-                {
-                    if (x.Ma == SZ_Ma.Text)
-                    {
-                        MessageBox.Show("Mã này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                    if (x.SizeGiay == SZ_SizeGiay.Text)
-                    {
-                        MessageBox.Show("Size này đã tồn tại", "Thông báo");
-                        return;
-                    }
-                }
                 DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa size này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {

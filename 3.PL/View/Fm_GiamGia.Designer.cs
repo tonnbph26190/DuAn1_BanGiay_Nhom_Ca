@@ -272,6 +272,7 @@
             this.button6.Text = "Sửa";
             this.button6.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
             this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // Fm_GiamGia
             // 
