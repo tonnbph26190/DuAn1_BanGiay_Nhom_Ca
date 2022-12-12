@@ -33,7 +33,7 @@ namespace _2.BUS.Services
                  join b in _nvRepos.GetAll() on a.IdNhanVien equals b.Id
                  join c in _khRepos.GetAll() on a.IdKhachHang equals c.Id
                  join d in _hdctRepos.GetAll() on a.Id equals d.IdhoaDon
-                 select new { a.MaHoaDon, a.TrangThai, a.NgayLap, a.NgayThanhToan, a.NgayNhanHang, b.MaNhanVien, c.Ma, c.Ten, c.Email, c.SoDienThoai, c.DiaChi, d.ThanhTien }
+                 select new { a.MaHoaDon, a.TrangThai, a.NgayLap, a.NgayThanhToan, a.NgayNhanHang, b.MaNhanVien, c.Ma, c.Ten, c.Email, c.SoDienThoai, c.DiaChi, d.ThanhTien,d.SoLuong,d.DonGia }
                  ).ToList();
 
             var final = lst.OrderByDescending(c => c.ThanhTien).GroupBy(c => c.MaHoaDon).Select(g => new HdTestView(g.Key,
@@ -44,7 +44,9 @@ namespace _2.BUS.Services
                   g.Where(c => c.MaHoaDon == g.Key).Select(c => c.SoDienThoai).FirstOrDefault(),
                    g.Where(c => c.MaHoaDon == g.Key).Select(c => c.DiaChi).FirstOrDefault(),
                   g.Where(c => c.MaHoaDon == g.Key).Select(c => c.Email).FirstOrDefault(),
-                  g.Sum(c => c.ThanhTien),
+                  g.Where(c => c.MaHoaDon == g.Key).Select(c => c.SoLuong).FirstOrDefault(),
+                  g.Where(c => c.MaHoaDon == g.Key).Select(c => c.DonGia).FirstOrDefault(),
+                  
                  g.Where(c => c.MaHoaDon == g.Key).Select(c => c.TrangThai).FirstOrDefault(),
                   g.Where(c => c.MaHoaDon == g.Key).Select(c => c.NgayLap.ToString("MM-dd-yyyy")).FirstOrDefault(),
                   g.Where(c => c.MaHoaDon == g.Key).Select(c => c.NgayThanhToan.ToString("MM-dd-yyyy")).FirstOrDefault(),
@@ -53,6 +55,7 @@ namespace _2.BUS.Services
 
                   g.Count(c => c.TrangThai == 0),//chuwa thanh toasn
                   g.Count(c => c.TrangThai == 1),//đã thanh toán
+                  g.Count(c => c.TrangThai == 10),//đang giao
                   g.Count(c => c.TrangThai == 2)//đã hủy
                  )).ToList();
 

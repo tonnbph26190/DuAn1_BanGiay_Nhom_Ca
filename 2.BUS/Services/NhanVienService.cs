@@ -124,7 +124,7 @@ namespace _2.BUS.Services
                 (
                     from a in _iNhanVienRepos.GetAll()
                     join b in _iChucVuRepos.GetAll() on a.IdChucVu equals b.Id
-                    where b.Id == Guid.Parse("E5EE2A84-93CA-416A-8EE9-6FE7F9707A3B")
+                    where b.Id == Guid.Parse("2d85431a-264f-4f50-b242-e4b8990817c4")
                     select new NhanVienView()
                     {
                         IdChucVu = a.IdChucVu,

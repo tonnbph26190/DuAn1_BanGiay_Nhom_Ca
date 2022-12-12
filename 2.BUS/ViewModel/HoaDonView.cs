@@ -12,6 +12,7 @@ namespace _2.BUS.ViewModel
         public Guid Id { get; set; }
         
         public string MaHoaDon { get; set; }
+        public string NV { get; set; }
         public string TenKH { get; set; }
 
         public DateTime NgayLap { get; set; }

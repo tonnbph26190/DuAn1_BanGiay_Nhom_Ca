@@ -67,7 +67,7 @@ namespace _3.PL.View
             {
                 Panel products = new Panel()
                 {
-                    Size = new System.Drawing.Size(150, 150),
+                    Size = new System.Drawing.Size(160, 160),
                     BackColor = Color.White
                 };
 
@@ -78,7 +78,7 @@ namespace _3.PL.View
                 btn.Click += Btn_Click;             
                 btn.BackColor = Color.Red;
                 btn.ForeColor = Color.Black;
-                lb.Text = x.TenNsx +" "+ x.TenSp;                   
+                lb.Text = x.TenSp+" "+x.LoaiSize;                   
                 products.Controls.Add(lb);
                 products.Controls.Add(btn);
                 Fl_SanPhams.Controls.Add(products);
@@ -791,7 +791,10 @@ namespace _3.PL.View
             if (_idHoadon!=Guid.Empty)
             {
                 var obj = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.Id == _idHoadon);
-               
+                if (obj.TrangThai==0)
+                {
+                    inHoaDon();
+                }
                 obj.NgayNhanHang=DateTime.Now;
                 obj.TrangThai = 1;
                 Frm_Alert fm = new Frm_Alert();
@@ -857,12 +860,15 @@ namespace _3.PL.View
                     new Point(w / 2 + 170, y));
                 e.Graphics.DrawString("Thành tiền", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                     new Point(w - 200, y));
+
                 //var id = _lstHoaDonBans.Select(x => x.IdhoaDon).FirstOrDefault();
                 var list = _iHoadonService.ShowHoadon().Where(c => c.Id == _iHoadonService.GetID(txt_luu.Text));
 
                 int i = 1;
 
                 y += 20;
+                e.Graphics.DrawString(string.Format("{0:N0}", _iHoadonChitietSerivce.ShowHoadonChitiet().FirstOrDefault(c => c.IdhoaDon == _iHoadonService.GetID(txt_luu.Text)).GiamGia), new Font("Varial", 8, FontStyle.Bold),
+                       Brushes.Black, new Point(w / 2 + 170, y));
 
                 foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => c.IdhoaDon == _iHoadonService.GetID(txt_luu.Text)))
                 {
@@ -878,9 +884,7 @@ namespace _3.PL.View
                     e.Graphics.DrawString(string.Format("{0:N0}", x.SoLuong), new Font("Varial", 8, FontStyle.Bold),
                         Brushes.Black, new Point(w / 2, y));
                     e.Graphics.DrawString(string.Format("{0:N0}", x.DonGia), new Font("Varial", 8, FontStyle.Bold),
-                        Brushes.Black, new Point(w / 2 + 100, y));
-                    e.Graphics.DrawString(string.Format("{0:N0}", x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
-                        Brushes.Black, new Point(w / 2 + 170, y));
+                        Brushes.Black, new Point(w / 2 + 100, y));                 
                     e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia)) - x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
                         Brushes.Black, new Point(w - 200, y));
                     y += 20;
@@ -943,6 +947,7 @@ namespace _3.PL.View
                    new Point(w - 820, y + 110));
                 e.Graphics.DrawString("Tên khách hàng:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                    new Point(w - 820, y + 140));
+                
                 var tung = w - 820;
                 var hoanh = y + 80;
                 //var id = _lstHoaDonBans.Select(x => x.IdhoaDon).FirstOrDefault();
@@ -951,7 +956,8 @@ namespace _3.PL.View
                 int i = 1;
 
                 y += 30;
-
+                e.Graphics.DrawString(string.Format("{0:N0}", _iHoadonChitietSerivce.ShowHoadonChitiet().FirstOrDefault(c=>c.IdhoaDon== _iHoadonService.GetID(txt_MaHD.Text)).GiamGia), new Font("Varial", 8, FontStyle.Bold),
+                       Brushes.Black, new Point(w / 2 + 170, y));
                 foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => c.IdhoaDon == _iHoadonService.GetID(txt_MaHD.Text)))
                 {
                     e.Graphics.DrawString(string.Format("{0}", i++), new Font("Varial", 8, FontStyle.Bold), Brushes.Black,
@@ -967,8 +973,7 @@ namespace _3.PL.View
                         Brushes.Black, new Point(w / 2, y));
                     e.Graphics.DrawString(string.Format("{0:N0}", x.DonGia), new Font("Varial", 8, FontStyle.Bold),
                         Brushes.Black, new Point(w / 2 + 100, y));
-                    e.Graphics.DrawString(string.Format("{0:N0}", x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
-                        Brushes.Black, new Point(w / 2 + 170, y));
+                   
                     e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia)) - x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
                         Brushes.Black, new Point(w - 200, y));
                     y += 20;

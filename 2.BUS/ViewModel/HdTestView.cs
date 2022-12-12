@@ -16,6 +16,7 @@ namespace _2.BUS.ViewModel
         public string DiaChi { get; set; }
         public string Email { get; set; }
         public double? TongTien { get; set; }
+        public int? soLuong { get; set; }
         public int? TrangThai { get; set; }
         public string GhiChu { get; set; }
         public string NgayLap { get; set; }
@@ -24,27 +25,29 @@ namespace _2.BUS.ViewModel
         public int? DonHuy { get; set; }
         public int? DonThanhCong { get; set; }
         public int? DonChuaTT { get; set; }
+        public int? DangGiao { get; set; }
 
         public int Thang { get; set; }
-        public HdTestView(string maHD, string maNV, string maKH, string tenKH, string sDT,string diaChi, string email,double? tongTien, int? trangThai, string ngayLap, string ngayThanhToan, string ngayNhan, int? donHuy, int? donThanhCong, int? donChuaTT)
+        public HdTestView(string maHD, string maNV, string maKH, string tenKH, string sDT,string diaChi, string email, int? soLuong, double? donGia, int? trangThai, string ngayLap, string ngayThanhToan, string ngayNhan, int? donHuy, int? donThanhCong, int? donChuaTT, int? dangGiao)
         {
             MaHoaDon = maHD;
             MaNhanVien = maNV;
-            MaKhachHang=maKH;
+            MaKhachHang = maKH;
             TenKhachHang = tenKH;
-            SoDienThoai=sDT;
-            DiaChi=diaChi;
-            Email=email;
-            TongTien= tongTien;
-            TrangThai=trangThai;
-           // GhiChu= ghiChu;
-            NgayLap=ngayLap;
+            SoDienThoai = sDT;
+            DiaChi = diaChi;
+            Email = email;
+            TongTien = donGia*soLuong;
+            TrangThai = trangThai;
+            // GhiChu= ghiChu;
+            NgayLap = ngayLap;
             NgayThanhToan = ngayThanhToan;
-            NgayNhan= ngayNhan;
-            DonHuy=donHuy;
+            NgayNhan = ngayNhan;
+            DonHuy = donHuy;
             DonThanhCong = donThanhCong;
-            DonChuaTT= donChuaTT;
-            
+            DonChuaTT = donChuaTT;
+            DangGiao = dangGiao;
+            this.soLuong = soLuong;
         }
 
         public HdTestView(DateTime ngayss, double tongtien)
