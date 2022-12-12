@@ -23,6 +23,7 @@ namespace _3.PL
     {
         string linkavatar = "";
         string linkQR = "";
+        private string ChucVu;
         private IChiTietSpServices _iQLSanPhamView;
         private IDongSPService _iDongSpService;
         private IMauSacService _iMauSacService;
@@ -30,6 +31,7 @@ namespace _3.PL
         private ISanPhamService _iSanPhamService;
         private ISizeService _ISizeService;
         private IChatLieuService _IChatLieuService;
+        private INhanVienService _iNhanVienService;
         Guid _idWhenclick;
         Guid _idWhenclick2;
         int Flag = 1;
@@ -46,9 +48,26 @@ namespace _3.PL
             _ISizeService = new SizeService();
             _IChatLieuService = new ChatLieuService();
             _ChiTIetSpViews = new List<ChiTIetSpView>();
+            _iNhanVienService = new NhanVienService();
             LoadCmb();
            txt_Ma.Enabled= false;
-
+            ChucVu = txt_ChucVu.Text = _iNhanVienService.GetAll().FirstOrDefault(c => c.Email == Properties.Settings.Default.TKdaLogin).ChucVu.Ten;
+            txt_ChucVu.Hide();
+            if (txt_ChucVu.Text == "Nhân Viên")
+            {
+                btn_ThemSanPham.Enabled = false;
+                btn_ThemChatLieu.Enabled = false;
+                btn_ThemList.Enabled = false;
+                btn_ThemMauSac.Enabled = false;
+                btn_ThemSize.Enabled = false;
+                btn_ThenNsx.Enabled = false;
+                bnt_Sua.Enabled = false;
+                bnt_Them.Enabled = false;
+                btn_ThemDSP.Enabled = false;
+                btn_Xoa.Enabled = false;
+                btn_CLear.Enabled = false;
+                button1.Enabled = false;
+            }
         }
         public void LoadCmb()
         {
