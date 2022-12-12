@@ -103,7 +103,7 @@ namespace _2.BUS.Services
                         TrangThai = a.TrangThai,
                         TenKH=b.Ten,
                         Sdt=b.SoDienThoai,
-                        
+                        NV=c.MaNhanVien+"_"+c.TenNhanVien,
                         
                     }
                 ).ToList();

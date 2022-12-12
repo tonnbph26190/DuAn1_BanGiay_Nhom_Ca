@@ -47,8 +47,6 @@
             this.btn_Update = new System.Windows.Forms.Button();
             this.lbl_totalcart = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.btn_XoaSp = new System.Windows.Forms.Button();
             this.btn_TruSp = new System.Windows.Forms.Button();
@@ -255,8 +253,6 @@
             this.groupBox7.Controls.Add(this.btn_Update);
             this.groupBox7.Controls.Add(this.lbl_totalcart);
             this.groupBox7.Controls.Add(this.label9);
-            this.groupBox7.Controls.Add(this.button8);
-            this.groupBox7.Controls.Add(this.button7);
             this.groupBox7.Controls.Add(this.button6);
             this.groupBox7.Controls.Add(this.btn_XoaSp);
             this.groupBox7.Controls.Add(this.btn_TruSp);
@@ -287,7 +283,7 @@
             // 
             this.lbl_totalcart.AutoSize = true;
             this.lbl_totalcart.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.lbl_totalcart.Location = new System.Drawing.Point(617, 33);
+            this.lbl_totalcart.Location = new System.Drawing.Point(370, 33);
             this.lbl_totalcart.Name = "lbl_totalcart";
             this.lbl_totalcart.Size = new System.Drawing.Size(19, 21);
             this.lbl_totalcart.TabIndex = 17;
@@ -297,36 +293,15 @@
             // 
             this.label9.AutoSize = true;
             this.label9.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label9.Location = new System.Drawing.Point(534, 33);
+            this.label9.Location = new System.Drawing.Point(287, 33);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(87, 21);
             this.label9.TabIndex = 16;
             this.label9.Text = "Tổng tiền:";
             // 
-            // button8
-            // 
-            this.button8.Location = new System.Drawing.Point(415, 34);
-            this.button8.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(102, 22);
-            this.button8.TabIndex = 1;
-            this.button8.Text = "HĐ TT";
-            this.button8.UseVisualStyleBackColor = true;
-            // 
-            // button7
-            // 
-            this.button7.Location = new System.Drawing.Point(307, 34);
-            this.button7.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(102, 22);
-            this.button7.TabIndex = 1;
-            this.button7.Text = "HĐ giao hàng";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
-            // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(219, 34);
+            this.button6.Location = new System.Drawing.Point(199, 34);
             this.button6.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(82, 22);
@@ -710,7 +685,7 @@
             // pictureBox2
             // 
             this.pictureBox2.BackColor = System.Drawing.Color.DodgerBlue;
-            this.pictureBox2.Location = new System.Drawing.Point(540, 548);
+            this.pictureBox2.Location = new System.Drawing.Point(673, 548);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(21, 23);
             this.pictureBox2.TabIndex = 161;
@@ -719,7 +694,7 @@
             // pictureBox3
             // 
             this.pictureBox3.BackColor = System.Drawing.Color.Red;
-            this.pictureBox3.Location = new System.Drawing.Point(652, 548);
+            this.pictureBox3.Location = new System.Drawing.Point(785, 548);
             this.pictureBox3.Name = "pictureBox3";
             this.pictureBox3.Size = new System.Drawing.Size(20, 23);
             this.pictureBox3.TabIndex = 162;
@@ -728,7 +703,7 @@
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(567, 551);
+            this.label12.Location = new System.Drawing.Point(700, 551);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(79, 15);
             this.label12.TabIndex = 160;
@@ -737,7 +712,7 @@
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(678, 551);
+            this.label13.Location = new System.Drawing.Point(811, 551);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(61, 15);
             this.label13.TabIndex = 163;
@@ -746,7 +721,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(783, 551);
+            this.label14.Location = new System.Drawing.Point(916, 551);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(113, 15);
             this.label14.TabIndex = 164;
@@ -756,7 +731,7 @@
             // 
             this.pictureBox4.BackColor = System.Drawing.Color.White;
             this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(745, 542);
+            this.pictureBox4.Location = new System.Drawing.Point(878, 542);
             this.pictureBox4.Name = "pictureBox4";
             this.pictureBox4.Size = new System.Drawing.Size(32, 31);
             this.pictureBox4.TabIndex = 165;
@@ -829,8 +804,6 @@
         private System.Windows.Forms.FlowLayoutPanel FL_HoaDon;
         private System.Windows.Forms.Panel panel7;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.Button button8;
-        private System.Windows.Forms.Button button7;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button btn_XoaSp;
         private System.Windows.Forms.Button btn_TruSp;

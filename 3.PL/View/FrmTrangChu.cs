@@ -13,6 +13,7 @@ using _3.PL.View;
 using _2.BUS.IServices;
 using _2.BUS.Services;
 using _3.PL.Properties;
+using _1.DAL.Models;
 
 namespace _3.PL
 {
@@ -74,9 +75,10 @@ namespace _3.PL
         {
             lb_TrangChu.Text = "Doanh Thu";
             this.pnlFromLoad.Controls.Clear();
-            Fm_ThongKe frmDoanhThu = new Fm_ThongKe() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-            this.pnlFromLoad.Controls.Add(frmDoanhThu);
-            frmDoanhThu.Show();
+            Frm_ThongKeHD frm = new Frm_ThongKeHD() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            this.pnlFromLoad.Controls.Add(frm);
+            frm.Show();
+            
         }
 
         private void btn_NhanVien_Click(object sender, EventArgs e)
@@ -90,11 +92,11 @@ namespace _3.PL
 
         private void btn_HoaDon_Click_1(object sender, EventArgs e)
         {
-            lb_TrangChu.Text = "Hóa Đơn";
+            lb_TrangChu.Text = "Doanh Thu";
             this.pnlFromLoad.Controls.Clear();
-           Frm_ThongKeHD frm=new Frm_ThongKeHD() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
-            this.pnlFromLoad.Controls.Add(frm);
-            frm.Show();
+            Fm_HoaDon frmDoanhThu = new Fm_HoaDon() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            this.pnlFromLoad.Controls.Add(frmDoanhThu);
+            frmDoanhThu.Show();
         }
 
         

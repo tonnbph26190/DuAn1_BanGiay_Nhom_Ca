@@ -73,6 +73,7 @@ namespace _2.BUS.Services
             chiTietSp.MoTa = obj.MoTa;
             chiTietSp.TrangThai = obj.TrangThai;
             chiTietSp.Ma=obj.Ma;
+            chiTietSp.Anh = obj.anh;
             if (_iChiTietSpRepository.Update(chiTietSp)) return "sửa thành công";
             return "sửa thất bại";
         }
