@@ -34,8 +34,14 @@
             this.txt_MaHD = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btn_CLear = new System.Windows.Forms.Button();
+            this.panel4 = new System.Windows.Forms.Panel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.Fl_SanPhams = new System.Windows.Forms.FlowLayoutPanel();
+            this.label2 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_HoaDonChiTiet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_HoaDon)).BeginInit();
+            this.panel4.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgrid_HoaDonChiTiet
@@ -49,6 +55,8 @@
             this.dgrid_HoaDonChiTiet.RowTemplate.Height = 29;
             this.dgrid_HoaDonChiTiet.Size = new System.Drawing.Size(619, 425);
             this.dgrid_HoaDonChiTiet.TabIndex = 30;
+            this.dgrid_HoaDonChiTiet.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrid_HoaDonChiTiet_CellContentClick);
+            this.dgrid_HoaDonChiTiet.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrid_HoaDonChiTiet_CellValueChanged);
             // 
             // dgrid_HoaDon
             // 
@@ -81,7 +89,7 @@
             this.btn_CLear.BackColor = System.Drawing.SystemColors.Highlight;
             this.btn_CLear.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btn_CLear.Image = ((System.Drawing.Image)(resources.GetObject("btn_CLear.Image")));
-            this.btn_CLear.Location = new System.Drawing.Point(27, 495);
+            this.btn_CLear.Location = new System.Drawing.Point(528, 26);
             this.btn_CLear.Name = "btn_CLear";
             this.btn_CLear.Size = new System.Drawing.Size(88, 38);
             this.btn_CLear.TabIndex = 155;
@@ -90,12 +98,55 @@
             this.btn_CLear.UseVisualStyleBackColor = false;
             this.btn_CLear.Click += new System.EventHandler(this.btn_CLear_Click);
             // 
+            // panel4
+            // 
+            this.panel4.Controls.Add(this.groupBox4);
+            this.panel4.Location = new System.Drawing.Point(27, 507);
+            this.panel4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel4.Name = "panel4";
+            this.panel4.Size = new System.Drawing.Size(864, 186);
+            this.panel4.TabIndex = 156;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.Fl_SanPhams);
+            this.groupBox4.Location = new System.Drawing.Point(0, 0);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox4.Size = new System.Drawing.Size(861, 186);
+            this.groupBox4.TabIndex = 1;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Danh sách sản phẩm";
+            // 
+            // Fl_SanPhams
+            // 
+            this.Fl_SanPhams.AutoScroll = true;
+            this.Fl_SanPhams.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.Fl_SanPhams.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Fl_SanPhams.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Fl_SanPhams.Location = new System.Drawing.Point(3, 18);
+            this.Fl_SanPhams.Name = "Fl_SanPhams";
+            this.Fl_SanPhams.Size = new System.Drawing.Size(855, 166);
+            this.Fl_SanPhams.TabIndex = 0;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(684, 43);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(103, 15);
+            this.label2.TabIndex = 157;
+            this.label2.Text = "Sản phẩm đã mua";
+            // 
             // Fm_HoaDon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(1343, 575);
+            this.ClientSize = new System.Drawing.Size(1343, 704);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.panel4);
             this.Controls.Add(this.btn_CLear);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txt_MaHD);
@@ -107,6 +158,8 @@
             this.Load += new System.EventHandler(this.Fm_HoaDon_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_HoaDonChiTiet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_HoaDon)).EndInit();
+            this.panel4.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -118,5 +171,9 @@
         private System.Windows.Forms.TextBox txt_MaHD;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btn_CLear;
+        private System.Windows.Forms.Panel panel4;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.FlowLayoutPanel Fl_SanPhams;
+        private System.Windows.Forms.Label label2;
     }
 }

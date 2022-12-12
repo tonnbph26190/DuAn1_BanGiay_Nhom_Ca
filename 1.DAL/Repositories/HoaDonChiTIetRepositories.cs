@@ -18,8 +18,7 @@ namespace _1.DAL.Repositories
         }
         public bool Add(HoaDonChiTiet obj)
         {
-            if (obj == null) return false;
-            obj.Id= Guid.NewGuid(); 
+            if (obj == null) return false;         
             _dbContext.HoaDonChiTiets.Add(obj);
             _dbContext.SaveChanges();
             return true;
