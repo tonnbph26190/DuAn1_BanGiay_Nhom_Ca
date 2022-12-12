@@ -37,7 +37,7 @@ namespace _3.PL.View
             _NvService = new NhanVienService();
             _hdTest = new HDTest();
             _cthdService = new HoaDonChiTietServices();
-            LoadDgridHD();
+           // LoadDgridHD();
             lbl_start.Visible = false;
             lbl_end.Visible = false;
             dtp_start.Visible = false;
@@ -56,13 +56,16 @@ namespace _3.PL.View
             txt_dataemail.Visible = false;
             //pb_email.Image = Resources.txt;
             //pb_ex.Image = Resources.sheet;
+            reload();
+            pb_email.Image = Resources.txt;
+            pb_ex.Image = Resources.sheet;
         }
 
         public void LoadLoc()
         {
             List<string> lst = new List<string>()
             {
-                "0.Chưa thanh toán","1.Đã thanh toán","2.Đã hủy"
+                "0.Chưa thanh toán","1.Đã thanh toán","2.Đã hủy","3.Đang giao hàng"
 
             };
             foreach (var x in lst)
@@ -70,11 +73,21 @@ namespace _3.PL.View
                 cmb_LocTT.Items.Add(x);
 
             }
+
+            List<string> lst1 = new List<string>();
+            foreach (var x in _NvService.GetAllQuanLi())
+            {
+                lst1.Add(x.Email);
+            }
+            foreach (var x in lst1)
+            {
+                cmb_mailBC.Items.Add(x);
+            }
         }
         public void LoadDgridHD()
         {
             int stt = 1;
-            dgrid_Hd.ColumnCount = 11;
+            dgrid_Hd.ColumnCount = 15;
             dgrid_Hd.Columns[0].Name = "STT";
             dgrid_Hd.Columns[1].Name = "Mã hóa đơn";
             dgrid_Hd.Columns[2].Name = "Thông tin khách hàng";
@@ -86,6 +99,14 @@ namespace _3.PL.View
             dgrid_Hd.Columns[8].Name = "Tổng tiền";
             dgrid_Hd.Columns[9].Name = "Trạng thái";
             dgrid_Hd.Columns[10].Name = "Đơn thành công";
+            dgrid_Hd.Columns[10].Visible = false;
+            dgrid_Hd.Columns[11].Name = "Đơn chưa thanh toán";
+            dgrid_Hd.Columns[11].Visible = false;
+            dgrid_Hd.Columns[12].Name = "Đơn đã hủy";
+            dgrid_Hd.Columns[12].Visible = false;
+            dgrid_Hd.Columns[13].Name = "Đơn đang giao";
+            dgrid_Hd.Columns[13].Visible = false;
+            dgrid_Hd.Columns[14].Name = "Đơn đã lập";
 
 
             dgrid_Hd.Rows.Clear();
@@ -94,7 +115,7 @@ namespace _3.PL.View
             {
 
                 // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : "Đã hủy"), x.DonThanhCong);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" :(x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy") ), x.DonThanhCong,x.DonChuaTT,x.DonHuy,x.DangGiao,x.DonThanhCong+x.DonChuaTT+x.DangGiao+x.DonHuy);
             }
             //Tổng tiền
             int sum = 0;
@@ -106,9 +127,17 @@ namespace _3.PL.View
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
 
+            //số đơn đang giao
+            int sumdanggiao = 0;
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
+            {
+                sumdanggiao += 1;
+            }
+            lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
+
             //số đơn hủy
             int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1).Count(); i++)
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
             {
                 sumdonhuy += 1;
             }
@@ -131,7 +160,7 @@ namespace _3.PL.View
             }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
 
-            int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy;
+            int sumcounthd = sumdanggiao + sumdonthanhcong - sumdonhuy+sumchuathanhtoan;
             lbl_counthd.Text = Convert.ToString(sumcounthd);
 
         }
@@ -159,7 +188,7 @@ namespace _3.PL.View
             dgrid_Hd.Rows.Clear();
             dgrid_Hd.Columns.Clear();
             int stt = 1;
-            dgrid_Hd.ColumnCount = 11;
+            dgrid_Hd.ColumnCount = 15;
             dgrid_Hd.Columns[0].Name = "STT";
             dgrid_Hd.Columns[1].Name = "Mã hóa đơn";
             dgrid_Hd.Columns[2].Name = "Thông tin khách hàng";
@@ -171,15 +200,21 @@ namespace _3.PL.View
             dgrid_Hd.Columns[8].Name = "Tổng tiền";
             dgrid_Hd.Columns[9].Name = "Trạng thái";
             dgrid_Hd.Columns[10].Name = "Đơn thành công";
+            dgrid_Hd.Columns[10].Visible = false;
+            dgrid_Hd.Columns[11].Name = "Đơn chưa thanh toán";
+            dgrid_Hd.Columns[11].Visible = false;
+            dgrid_Hd.Columns[12].Name = "Đơn đã hủy";
+            dgrid_Hd.Columns[12].Visible = false;
+            dgrid_Hd.Columns[13].Name = "Đơn đang giao";
+            dgrid_Hd.Columns[13].Visible = false;
+            dgrid_Hd.Columns[14].Name = "Đơn đã lập";
 
 
             dgrid_Hd.Rows.Clear();
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => Convert.ToDateTime(c.NgayLap) == dt))
             {
-
-                // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : "Đã hủy"), x.DonThanhCong);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
 
             }
             //Tổng tiền
@@ -192,9 +227,17 @@ namespace _3.PL.View
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
 
+            //số đơn đang giao
+            int sumdanggiao = 0;
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
+            {
+                sumdanggiao += 1;
+            }
+            lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
+
             //số đơn hủy
             int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1).Count(); i++)
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
             {
                 sumdonhuy += 1;
             }
@@ -213,11 +256,11 @@ namespace _3.PL.View
             int sumdonthanhcong = 0;
             for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
             {
-                sumdonthanhcong += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[10].Value);
+                sumdonthanhcong += 1;
             }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
 
-            int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy;
+            int sumcounthd = sumdanggiao + sumdonthanhcong - sumdonhuy + sumchuathanhtoan;
             lbl_counthd.Text = Convert.ToString(sumcounthd);
         }
 
@@ -232,7 +275,7 @@ namespace _3.PL.View
         void byForDay(DateTime dtst, DateTime dte)
         {
             int stt = 1;
-            dgrid_Hd.ColumnCount = 11;
+            dgrid_Hd.ColumnCount = 15;
             dgrid_Hd.Columns[0].Name = "STT";
             dgrid_Hd.Columns[1].Name = "Mã hóa đơn";
             dgrid_Hd.Columns[2].Name = "Thông tin khách hàng";
@@ -244,13 +287,19 @@ namespace _3.PL.View
             dgrid_Hd.Columns[8].Name = "Tổng tiền";
             dgrid_Hd.Columns[9].Name = "Trạng thái";
             dgrid_Hd.Columns[10].Name = "Đơn thành công";
+            dgrid_Hd.Columns[10].Visible = false;
+            dgrid_Hd.Columns[11].Name = "Đơn chưa thanh toán";
+            dgrid_Hd.Columns[11].Visible = false;
+            dgrid_Hd.Columns[12].Name = "Đơn đã hủy";
+            dgrid_Hd.Columns[12].Visible = false;
+            dgrid_Hd.Columns[13].Name = "Đơn đang giao";
+            dgrid_Hd.Columns[13].Visible = false;
+            dgrid_Hd.Columns[14].Name = "Đơn đã lập";
             dgrid_Hd.Rows.Clear();
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => Convert.ToDateTime(c.NgayLap) >= dtst && Convert.ToDateTime(c.NgayLap) <= dte))
             {
-
-                // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : "Đã hủy"), x.DonThanhCong);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
 
             }
             //Tổng tiền
@@ -261,11 +310,19 @@ namespace _3.PL.View
             }
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             double tt = Convert.ToDouble(sum);
-            lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
+            lbl_DangGiao.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
+
+            //số đơn đang giao
+            int sumdanggiao = 0;
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
+            {
+                sumdanggiao += 1;
+            }
+            lbl_chuathanhtoan.Text = Convert.ToString(sumdanggiao);
 
             //số đơn hủy
             int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1).Count(); i++)
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
             {
                 sumdonhuy += 1;
             }
@@ -284,11 +341,11 @@ namespace _3.PL.View
             int sumdonthanhcong = 0;
             for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
             {
-                sumdonthanhcong += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[10].Value);
+                sumdonthanhcong += 1;
             }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
 
-            int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy;
+            int sumcounthd = sumdanggiao + sumdonthanhcong - sumdonhuy + sumchuathanhtoan;
             lbl_counthd.Text = Convert.ToString(sumcounthd);
         }
         private void btn_lockhoangtg_Click(object sender, EventArgs e)
@@ -306,6 +363,8 @@ namespace _3.PL.View
             lbl_chuathanhtoan.Text = "0";
             labl_sodonthanhcong.Text = "0";
             lbl_huydon.Text = "0";
+            lbl_tongtien.Text = "0";
+            lbl_DangGiao.Text = "0";
             btn_ss.Visible = true;
             lbl_ss.Visible = true;
             rightpanel.Visible = true;
@@ -370,7 +429,7 @@ namespace _3.PL.View
             dgrid_Hd.Rows.Clear();
             dgrid_Hd.Columns.Clear();
             int stt = 1;
-            dgrid_Hd.ColumnCount = 14;
+            dgrid_Hd.ColumnCount = 15;
             dgrid_Hd.Columns[0].Name = "STT";
             //dgrid_Hd.Columns[0].Visible = false;
             dgrid_Hd.Columns[1].Name = "Mã hóa đơn";
@@ -390,24 +449,24 @@ namespace _3.PL.View
             dgrid_Hd.Columns[8].Name = "Tổng tiền";
             // dgrid_Hd.Columns[8].Visible = false;
             dgrid_Hd.Columns[9].Name = "Trạng thái";
-            dgrid_Hd.Columns[9].Visible = false;
+            //dgrid_Hd.Columns[9].Visible = false;
             dgrid_Hd.Columns[10].Name = "Đơn thành công";
+            dgrid_Hd.Columns[10].Visible = false;
             dgrid_Hd.Columns[11].Name = "Đơn chưa thanh toán";
+            dgrid_Hd.Columns[11].Visible = false;
             dgrid_Hd.Columns[12].Name = "Đơn đã hủy";
-            dgrid_Hd.Columns[13].Name = "Đơn đã lập";
+            dgrid_Hd.Columns[12].Visible = false;
+            dgrid_Hd.Columns[13].Name = "Đơn đang giao";
+            dgrid_Hd.Columns[13].Visible = false;
+            dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+
 
 
             dgrid_Hd.Rows.Clear();
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay())
             {
-
-                // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : "Đã hủy"), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DonThanhCong + x.DonChuaTT + x.DonHuy);
-
-                // dgrid_Hd.Rows.Clear();
-
-
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
             }
             //Tổng tiền
             int sum = 0;
@@ -419,9 +478,17 @@ namespace _3.PL.View
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
 
+            //số đơn đang giao
+            int sumdanggiao = 0;
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
+            {
+                sumdanggiao += 1;
+            }
+            lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
+
             //số đơn hủy
             int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1).Count(); i++)
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
             {
                 sumdonhuy += 1;
             }
@@ -440,11 +507,11 @@ namespace _3.PL.View
             int sumdonthanhcong = 0;
             for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
             {
-                sumdonthanhcong += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[10].Value);
+                sumdonthanhcong += 1;
             }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
 
-            int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy;
+            int sumcounthd = sumdanggiao + sumdonthanhcong - sumdonhuy+sumchuathanhtoan;
             lbl_counthd.Text = Convert.ToString(sumcounthd);
 
         }
@@ -480,7 +547,7 @@ namespace _3.PL.View
             dgrid_Hd.Rows.Clear();
             dgrid_Hd.Columns.Clear();
             int stt = 1;
-            dgrid_Hd.ColumnCount = 11;
+            dgrid_Hd.ColumnCount = 15;
             dgrid_Hd.Columns[0].Name = "STT";
             dgrid_Hd.Columns[1].Name = "Mã hóa đơn";
             dgrid_Hd.Columns[2].Name = "Thông tin khách hàng";
@@ -492,16 +559,22 @@ namespace _3.PL.View
             dgrid_Hd.Columns[8].Name = "Tổng tiền";
             dgrid_Hd.Columns[9].Name = "Trạng thái";
             dgrid_Hd.Columns[10].Name = "Đơn thành công";
+            dgrid_Hd.Columns[10].Visible = false;
+            dgrid_Hd.Columns[11].Name = "Đơn chưa thanh toán";
+            dgrid_Hd.Columns[11].Visible = false;
+            dgrid_Hd.Columns[12].Name = "Đơn đã hủy";
+            dgrid_Hd.Columns[12].Visible = false;
+            dgrid_Hd.Columns[13].Name = "Đơn đang giao";
+            dgrid_Hd.Columns[13].Visible = false;
+            dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+
 
 
             dgrid_Hd.Rows.Clear();
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => c.TrangThai.ToString() == mess))
             {
-
-                // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : "Đã hủy"), x.DonThanhCong);
-
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
             }
             //Tổng tiền
             int sum = 0;
@@ -513,9 +586,17 @@ namespace _3.PL.View
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
 
+            //số đơn đang giao
+            int sumdanggiao = 0;
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
+            {
+                sumdanggiao += 1;
+            }
+            lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
+
             //số đơn hủy
             int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1).Count(); i++)
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
             {
                 sumdonhuy += 1;
             }
@@ -546,7 +627,7 @@ namespace _3.PL.View
             }
             if (dgrid_Hd.RowCount != 1)
             {
-                int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy;
+                int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy+sumdanggiao;
                 lbl_counthd.Text = Convert.ToString(sumcounthd);
             }
         }
@@ -554,7 +635,7 @@ namespace _3.PL.View
 
         private void cmb_LocTT_SelectedIndexChanged(object sender, EventArgs e)
         {
-            loc(cmb_LocTT.Text == "0.Chưa thanh toán" ? "0" : (cmb_LocTT.Text == "1.Đã thanh toán" ? "1" : "2"));
+            loc(cmb_LocTT.Text == "0.Chưa thanh toán" ? "0" : (cmb_LocTT.Text == "1.Đã thanh toán" ? "1" : (cmb_LocTT.Text== "3.Đang giao hàng"?"10" :"2") ));
         }
 
 
@@ -563,7 +644,7 @@ namespace _3.PL.View
             dgrid_Hd.Rows.Clear();
             dgrid_Hd.Columns.Clear();
             int stt = 1;
-            dgrid_Hd.ColumnCount = 11;
+            dgrid_Hd.ColumnCount = 15;
             dgrid_Hd.Columns[0].Name = "STT";
             dgrid_Hd.Columns[1].Name = "Mã hóa đơn";
             dgrid_Hd.Columns[2].Name = "Thông tin khách hàng";
@@ -575,16 +656,22 @@ namespace _3.PL.View
             dgrid_Hd.Columns[8].Name = "Tổng tiền";
             dgrid_Hd.Columns[9].Name = "Trạng thái";
             dgrid_Hd.Columns[10].Name = "Đơn thành công";
+            dgrid_Hd.Columns[10].Visible = false;
+            dgrid_Hd.Columns[11].Name = "Đơn chưa thanh toán";
+            dgrid_Hd.Columns[11].Visible = false;
+            dgrid_Hd.Columns[12].Name = "Đơn đã hủy";
+            dgrid_Hd.Columns[12].Visible = false;
+            dgrid_Hd.Columns[13].Name = "Đơn đang giao";
+            dgrid_Hd.Columns[13].Visible = false;
+            dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+
 
 
             dgrid_Hd.Rows.Clear();
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => c.MaNhanVien.ToLower().Contains(mess.ToLower()) || c.MaNhanVien.ToLower().Contains(mess.ToLower()) || c.SoDienThoai.Contains(mess.ToLower())))
             {
-
-                // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : "Đã hủy"), x.DonThanhCong);
-
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
             }
             //Tổng tiền
             int sum = 0;
@@ -596,9 +683,17 @@ namespace _3.PL.View
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
 
+            //số đơn đang giao
+            int sumdanggiao = 0;
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
+            {
+                sumdanggiao += 1;
+            }
+            lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
+
             //số đơn hủy
             int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1).Count(); i++)
+            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
             {
                 sumdonhuy += 1;
             }
@@ -629,7 +724,7 @@ namespace _3.PL.View
             }
             if (dgrid_Hd.RowCount != 1)
             {
-                int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy;
+                int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy+sumdanggiao;
                 lbl_counthd.Text = Convert.ToString(sumcounthd);
             }
         }
@@ -778,15 +873,23 @@ namespace _3.PL.View
 
         public void sendEmail()
         {
+           
+            if (cmb_mailBC.Text=="")
+            {
+                MessageBox.Show("Hãy chọn người gửi email báo cáo","Thông báo",MessageBoxButtons.OK);
+                return;
+            }
+            byDay(Convert.ToDateTime(dtp_loc.Value.ToString("MM-dd-yyyy")));
+            string maNV = dgrid_Hd.Rows[1].Cells[4].Value.ToString();
             string from, to, pass, content;
             MailMessage mess = new MailMessage();
             from = "ckuotga1997@gmail.com";
             pass = "rblzrnngambpsdoe";
-            to = "khanhnguyenduy1880@gmail.com";
+            to = cmb_mailBC.Text;
             mess.To.Add(to);
             mess.From = new MailAddress(from);
-            mess.Subject = "Báo cáo";
-            mess.Body = "aaaaaa";
+            mess.Subject = "Báo cáo doanh thu bán giày Sneaker";
+            mess.Body = "Báo cáo doanh thu ngày:" + dtp_loc.Value + "\n " + "Tổng doanh thu: " + lbl_tongtien.Text + " VND \n" + "Tổng hóa đơn: " + lbl_counthd.Text + "\n"+ "Tổng hóa đơn đã thanh toán: " + labl_sodonthanhcong.Text + "\n" + "Tổng hóa đang giao: " + lbl_DangGiao.Text + "\n" + "Tổng hoá đơn đã hủy: " + lbl_huydon.Text + "\n\n" +"Nhân viên: "+maNV;
             SmtpClient client = new SmtpClient("smtp.gmail.com", 587);
             client.EnableSsl = true;
             client.DeliveryMethod = SmtpDeliveryMethod.Network;
@@ -860,10 +963,9 @@ namespace _3.PL.View
             //    }
             #endregion
 
-            //dgrid_Hd.Rows.Clear();
-            dgrid_Hd.Columns.Clear();
+            dgrid_Hd.Rows.Clear();
             int stt = 1;
-            dgrid_Hd.ColumnCount = 14;
+            dgrid_Hd.ColumnCount = 15;
             dgrid_Hd.Columns[0].Name = "STT";
             //dgrid_Hd.Columns[0].Visible = false;
             dgrid_Hd.Columns[1].Name = "Mã hóa đơn";
@@ -885,23 +987,25 @@ namespace _3.PL.View
             dgrid_Hd.Columns[9].Name = "Trạng thái";
             //dgrid_Hd.Columns[9].Visible = false;
             dgrid_Hd.Columns[10].Name = "Đơn thành công";
+            dgrid_Hd.Columns[10].Visible = false;
             dgrid_Hd.Columns[11].Name = "Đơn chưa thanh toán";
+            dgrid_Hd.Columns[11].Visible = false;
             dgrid_Hd.Columns[12].Name = "Đơn đã hủy";
-            dgrid_Hd.Columns[13].Name = "Đơn đã lập";
+            dgrid_Hd.Columns[12].Visible = false;
+            dgrid_Hd.Columns[13].Name = "Đơn đang giao";
+            dgrid_Hd.Columns[13].Visible = false;
+            dgrid_Hd.Columns[14].Name = "Đơn đã lập";
             dgrid_Hd.Rows.Clear();
 
             
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c=>Convert.ToDateTime(c.NgayLap)==d1 || Convert.ToDateTime(c.NgayLap) == d2))
             {
-
-                // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : "Đã hủy"), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DonThanhCong + x.DonChuaTT + x.DonHuy);
-                 
-               // MessageBox.Show
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
+                // MessageBox.Show
             }
 
-            dgrid_t1.ColumnCount = 14;
+            dgrid_t1.ColumnCount = 15;
             dgrid_t1.Columns[0].Name = "STT";
             //dgrid_Hd.Columns[0].Visible = false;
             dgrid_t1.Columns[1].Name = "Mã hóa đơn";
@@ -923,23 +1027,25 @@ namespace _3.PL.View
             dgrid_t1.Columns[9].Name = "Trạng thái";
             //dgrid_Hd.Columns[9].Visible = false;
             dgrid_t1.Columns[10].Name = "Đơn thành công";
+            dgrid_t1.Columns[10].Visible = false;
             dgrid_t1.Columns[11].Name = "Đơn chưa thanh toán";
+            dgrid_t1.Columns[11].Visible = false;
             dgrid_t1.Columns[12].Name = "Đơn đã hủy";
-            dgrid_t1.Columns[13].Name = "Đơn đã lập";
+            dgrid_t1.Columns[12].Visible = false;
+            dgrid_t1.Columns[13].Name = "Đơn đang giao";
+            dgrid_t1.Columns[13].Visible = false;
+            dgrid_t1.Columns[14].Name = "Đơn đã lập";
+
             dgrid_t1.Rows.Clear();
 
 
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => Convert.ToDateTime(c.NgayLap) == d1))
             {
-
-                // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_t1.Rows.Add("1",x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : "Đã hủy"), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DonThanhCong + x.DonChuaTT + x.DonHuy);
-
-                // MessageBox.Show
+                dgrid_t1.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
             }
 
-            dgrid_t2.ColumnCount = 14;
+            dgrid_t2.ColumnCount = 15;
             dgrid_t2.Columns[0].Name = "STT";
             //dgrid_Hd.Columns[0].Visible = false;
             dgrid_t2.Columns[1].Name = "Mã hóa đơn";
@@ -961,20 +1067,22 @@ namespace _3.PL.View
             dgrid_t2.Columns[9].Name = "Trạng thái";
             //dgrid_Hd.Columns[9].Visible = false;
             dgrid_t2.Columns[10].Name = "Đơn thành công";
+            dgrid_t2.Columns[10].Visible = false;
             dgrid_t2.Columns[11].Name = "Đơn chưa thanh toán";
+            dgrid_t2.Columns[11].Visible = false;
             dgrid_t2.Columns[12].Name = "Đơn đã hủy";
-            dgrid_t2.Columns[13].Name = "Đơn đã lập";
+            dgrid_t2.Columns[12].Visible = false;
+            dgrid_t2.Columns[13].Name = "Đơn đang giao";
+            dgrid_t2.Columns[13].Visible = false;
+            dgrid_t2.Columns[14].Name = "Đơn đã lập";
+
             dgrid_t2.Rows.Clear();
 
 
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => Convert.ToDateTime(c.NgayLap) == d2))
             {
-
-                // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_t2.Rows.Add("1", x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : "Đã hủy"), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DonThanhCong + x.DonChuaTT + x.DonHuy);
-
-                // MessageBox.Show
+                dgrid_t2.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
             }
 
             //Tổng tiền
@@ -1001,14 +1109,14 @@ namespace _3.PL.View
             {
                 sumchuathanhtoan += 1;
             }
-            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
+            lbl_DangGiao.Text = Convert.ToString(sumchuathanhtoan);
 
 
             //số đơn thành công
             int sumdonthanhcong = 0;
             for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
             {
-                sumdonthanhcong += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[10].Value);
+                sumdonthanhcong += 1;
             }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
 
@@ -1019,28 +1127,34 @@ namespace _3.PL.View
 
 
             // lấy doanh thu và tháng
-
+            double dt1 = 0;
             for (int i = 0; i < dgrid_t1.RowCount; i++)
             {
-                lbl_dt1.Text += dgrid_t1.Rows[i].Cells[8].Value;
-                //MessageBox.Show(lbl_dt1.Text);
+                dt1 += Convert.ToDouble(dgrid_t1.Rows[i].Cells[8].Value);
+                
 
             }
+            lbl_dt1.Text = dt1.ToString();
+            //MessageBox.Show(lbl_dt1.Text);
             double[] lstTT1 = new double[1] { Convert.ToDouble(lbl_dt1.Text) };
-            //for (int i = 0; i < _hdTest.GetlstHDByDay().Count; i++)
-            //{
-            //    lstTT1[i] = Convert.ToDouble(dgrid_Hd.Rows[0].Cells[8].Value);
-            //}
+            CultureInfo cul2 = CultureInfo.GetCultureInfo("vi-VN");
+            double tt2 = Convert.ToDouble(dt1.ToString());
+            lbl_dt1.Text = Convert.ToInt32(tt2).ToString("#,###", cul2.NumberFormat);
 
-           
+            double dt2 = 0;
             for (int i = 0; i < dgrid_t2.RowCount; i++)
             {
-                lbl_dt2.Text += dgrid_t2.Rows[i].Cells[8].Value;
+                dt2 += Convert.ToDouble(dgrid_t2.Rows[i].Cells[8].Value);
 
-               //MessageBox.Show(lbl_dt2.Text);
+
             }
+            lbl_dt2.Text = dt2.ToString();
+            //MessageBox.Show(lbl_dt2.Text);
             double[] lstTT2 = new double[1] { Convert.ToDouble(lbl_dt2.Text) };
 
+            CultureInfo cul1 = CultureInfo.GetCultureInfo("vi-VN");
+            double tt1 = Convert.ToDouble(dt2.ToString());
+            lbl_dt2.Text = Convert.ToInt32(tt1).ToString("#,###", cul1.NumberFormat);
 
             //// MessageBox.Show("tong" +tongtien.ToString());
             double[] y1 = { 1 };
@@ -1049,14 +1163,14 @@ namespace _3.PL.View
 
 
             //plot data
-            zg_ss.GraphPane.AddBar(" ", y1, lstTT1, Color.Blue);
-            zg_ss.GraphPane.AddBar(" ", y2, lstTT2, Color.OrangeRed);
+            zg_ss.GraphPane.AddBar(dtp_n1ss.Value.ToString("MM-dd-yyyy"), y1, lstTT1, Color.Blue);
+            zg_ss.GraphPane.AddBar(dtp_n2ss.Value.ToString("MM-dd-yyyy"), y2, lstTT2, Color.OrangeRed);
 
             //maxmin
             zg_ss.GraphPane.XAxis.Scale.Min = 0;
-            zg_ss.GraphPane.XAxis.Scale.Max = _cthdService.GetAll().Count;
-            zg_ss.GraphPane.YAxis.Scale.Max = 10;
-            zg_ss.GraphPane.YAxis.Scale.Min = _cthdService.GetAll().Count;
+            //zg_ss.GraphPane.XAxis.Scale.Max = Convert.ToDouble(lbl_dt2.Text);
+            zg_ss.GraphPane.YAxis.Scale.Max = 3;
+            zg_ss.GraphPane.YAxis.Scale.Min = 0;
 
             zg_ss.GraphPane.Title.Text = "Bảng so sánh doanh thu";
             zg_ss.GraphPane.XAxis.Title.Text = "Tháng";
@@ -1072,8 +1186,8 @@ namespace _3.PL.View
         private void btn_ss_Click(object sender, EventArgs e)
         {
             zg_ss.GraphPane.CurveList.Clear();
-            lbl_t1.Text = dtp_n1ss.Value.ToString("mm-dd-yyyy");
-            lbl_t2.Text = dtp_n2ss.Value.ToString("mm-dd-yyyy");
+            lbl_t1.Text = dtp_n1ss.Value.ToString("MM-dd-yyyy");
+            lbl_t2.Text = dtp_n2ss.Value.ToString("MM-dd-yyyy");
             soSanh(Convert.ToDateTime(dtp_n1ss.Value.ToString("MM-dd-yyyy")), Convert.ToDateTime(dtp_n2ss.Value.ToString("MM-dd-yyyy")));
             //zg_ss.Visible = false;
             
@@ -1085,8 +1199,8 @@ namespace _3.PL.View
             //zg_ss.GraphPane.XAxis.Scale.Min = 0;
             //zg_ss.GraphPane.YAxis.Scale.Max = 10;
             ////zg_ss.GraphPane.GraphObjList.Clear();
-            lbl_t1.Text = dtp_n1ss.Value.ToString("mm-dd-yyyy");
-            lbl_t2.Text = dtp_n2ss.Value.ToString("mm-dd-yyyy");
+            lbl_t1.Text = dtp_n1ss.Value.ToString("MM-dd-yyyy");
+            lbl_t2.Text = dtp_n2ss.Value.ToString("MM-dd-yyyy");
             soSanh(Convert.ToDateTime(dtp_n1ss.Value.ToString("MM-dd-yyyy")), Convert.ToDateTime(dtp_n2ss.Value.ToString("MM-dd-yyyy")));
         }
 
@@ -1096,8 +1210,8 @@ namespace _3.PL.View
             //zg_ss.GraphPane.XAxis.Scale.Min = 0;
             //zg_ss.GraphPane.YAxis.Scale.Max = 10;
             //// zg_ss.GraphPane.GraphObjList.Clear();
-            lbl_t1.Text = dtp_n1ss.Value.ToString("mm-dd-yyyy");
-            lbl_t2.Text = dtp_n2ss.Value.ToString("mm-dd-yyyy");
+            lbl_t1.Text = dtp_n1ss.Value.ToString("MM-dd-yyyy");
+            lbl_t2.Text = dtp_n2ss.Value.ToString("MM-dd-yyyy");
             soSanh(Convert.ToDateTime(dtp_n1ss.Value.ToString("MM-dd-yyyy")), Convert.ToDateTime(dtp_n2ss.Value.ToString("MM-dd-yyyy")));
         }
 

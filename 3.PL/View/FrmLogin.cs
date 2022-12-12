@@ -113,6 +113,7 @@ namespace _3.PL
             }
             Frm_Load load = new Frm_Load(txt_TaiKhoan.Text);
             this.Hide();
+            
             load.ShowDialog();
             
         }

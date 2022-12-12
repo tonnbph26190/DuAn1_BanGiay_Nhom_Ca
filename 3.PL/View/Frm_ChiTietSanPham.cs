@@ -1,6 +1,7 @@
 ﻿using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
+using _3.PL.Properties;
 using _3.PL.Utilities;
 using _3.PL.View;
 using QRCoder;
@@ -364,6 +365,7 @@ namespace _3.PL
                     LoadDgridSP();
                 }
             }
+            clear();
             if (dialogResult == DialogResult.No) return;
         }
 
@@ -372,7 +374,7 @@ namespace _3.PL
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Sp này?", "Xác nhận", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                string path = @"C:\Users\nguye\Source\Repos\DuAn1_BanGiay_Nhom_Ca\3.PL\Qrcode\";
+                string path = @"D:\Desktop\Máy tính\Ki4\PRO_DuAn1\LanCuoiThat\3.PL\Qrcode\";
                 var dialog = new SaveFileDialog();
                 dialog.InitialDirectory = path;
                 if (dialog.ShowDialog() == DialogResult.OK)
@@ -387,7 +389,8 @@ namespace _3.PL
                     MessageBox.Show("Thêm thành công");
                 }
                 LoadDgridSP();
-                
+                clear();
+
             }
             if (dialogResult == DialogResult.No) return;
         }
@@ -397,7 +400,7 @@ namespace _3.PL
             DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm sản phẩn này?", "Xác nhận", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                string path = @"C:\Users\nguye\Source\Repos\DuAn1_BanGiay_Nhom_Ca\3.PL\Qrcode\";
+                string path = @"D:\Desktop\Máy tính\Ki4\PRO_DuAn1\LanCuoiThat\3.PL\Qrcode\";
                 var dialog = new SaveFileDialog();
                 dialog.InitialDirectory = path;
                 if (dialog.ShowDialog() == DialogResult.OK)
@@ -411,6 +414,7 @@ namespace _3.PL
 
                 loadFlSp();
             }
+            clear();
             if (dialogResult == DialogResult.No) return;
         }
 
@@ -438,6 +442,7 @@ namespace _3.PL
                 loadFlSp();
                 LoadDgridSP();
             }
+            clear();
             if (dialogResult == DialogResult.No) return;
         }
 
@@ -450,6 +455,7 @@ namespace _3.PL
                 _ChiTIetSpViews.Remove(temp);
                 loadFlSp();
             }
+            clear();
             if (dialogResult == DialogResult.No) return;
         }
 
@@ -498,6 +504,28 @@ namespace _3.PL
         private void Frm_ChiTietSanPham_Load(object sender, EventArgs e)
         {
 
+        }
+
+        void clear()
+        {
+            cmb_SanPham.Text = "";
+            txt_Ma.Text = "";
+            cmb_DongSp.Text = "";
+            cmb_NSX.Text = "";
+            cmb_ChatLieu.Text = "";
+            Cmb_MauSac.Text = "";
+            cmb_Size.Text = "";
+            txt_SoLuong.Text = "";
+            txt_giaban.Text = "";
+            txt_gianhap.Text = "";
+            rbtn_HoatDong.Checked = true;
+            richtxt_mota.Text = "";
+            pic_SanPham.Image = Resources.anhsanpham_frmSanPham;
+            pic_QR.Image = Resources.anhsanpham_frmSanPham;
+        }
+        private void btn_CLear_Click(object sender, EventArgs e)
+        {
+           clear();
         }
     }
 }
