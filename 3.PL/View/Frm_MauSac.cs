@@ -1,6 +1,7 @@
 ﻿using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
+using _3.PL.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace _3.PL.View
     {
         private IMauSacService _iMauService;
         Guid _idWhenclick;
+        int Flag = 1;
         Frm_ChiTietSanPham _form;
         public Frm_MauSac(Frm_ChiTietSanPham form)
         {
@@ -25,6 +27,7 @@ namespace _3.PL.View
             _iMauService = new MauSacService();
             LoadMau();
             Drg_mausac.Columns[1].Visible = false;
+            MS_Ma.Enabled = false;
         }
         private void LoadMau()
         {
@@ -101,6 +104,7 @@ namespace _3.PL.View
                     MessageBox.Show(_iMauService.Add(GetDataFromGui()));
                     LoadMau();
                     _form.updateData();
+                    Clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -122,6 +126,7 @@ namespace _3.PL.View
                     MessageBox.Show(_iMauService.Update(temp));
                     LoadMau();
                     _form.updateData();
+                    Clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -148,6 +153,37 @@ namespace _3.PL.View
                 MS_TTDC.Checked = true;
             }
             else MS_TTCC.Checked = true;
+        }
+        public void Clear()
+        {
+            MS_Ten.Text = null;
+            MS_Ma.Text = " ";
+            MS_TTCC.Checked = false;
+            MS_TTDC.Checked = false;
+        }
+        private void MS_Ten_TextChanged(object sender, EventArgs e)
+        {
+            if (!(_idWhenclick == Guid.Empty))
+            {
+                Flag = 0;
+            }
+            if (Flag == 0)
+            {
+                var temp = _iMauService.GetAll().FirstOrDefault(c => c.Id == _idWhenclick);
+
+                MS_Ma.Text = temp.Ma;
+                Flag = 1;
+
+            }
+            else
+            {
+                string ma = MS_Ma.Text;
+                do
+                {
+                    ma = "MS" + Utilitys.GetNumber(3);
+                } while (_iMauService.GetAll().Any(c => c.Ma.Equals(ma)));
+                MS_Ma.Text = ma;
+            }
         }
     }
 }

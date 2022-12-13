@@ -2,6 +2,7 @@
 using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
+using _3.PL.Utilities;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ namespace _3.PL.View
     {
         private IChucVuService _chucVuService;
         Guid _id;
+        int Flag = 1;
         Fm_NhanVien _form;
         public FrmChucVu(Fm_NhanVien form)
         {
@@ -27,7 +29,7 @@ namespace _3.PL.View
            _form= form;
             _chucVuService = new ChucVuService();
             LoadData();
-            
+            txt_MaCV.Enabled = false;
 
         }
         private void LoadData()
@@ -105,6 +107,7 @@ namespace _3.PL.View
                     MessageBox.Show("Thêm thành công");
                     LoadData();
                     _form.Change();
+                    clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -127,6 +130,7 @@ namespace _3.PL.View
                     MessageBox.Show("Sửa chức vụ thành công");
                     LoadData();
                     _form.Change();
+                    clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -151,6 +155,37 @@ namespace _3.PL.View
             }
 
             rbtn_KhongHoatDong.Checked = true;
+        }
+        public void clear()
+        {
+            txt_MaCV.Text = "";
+            txt_TenCv.Text = null;
+            rbtn_HoatDong.Checked = false;
+            rbtn_KhongHoatDong.Checked= false;
+        }
+        private void txt_TenCv_TextChanged(object sender, EventArgs e)
+        {
+            if (!(_id == Guid.Empty))
+            {
+                Flag = 0;
+            }
+            if (Flag == 0)
+            {
+                var temp = _chucVuService.GetAll().FirstOrDefault(c => c.Id == _id);
+
+                txt_MaCV.Text = temp.Ma;
+                Flag = 1;
+
+            }
+            else
+            {
+                string ma = txt_MaCV.Text;
+                do
+                {
+                    ma = "CV" + Utilitys.GetNumber(3);
+                } while (_chucVuService.GetAll().Any(c => c.Ma.Equals(ma)));
+                txt_MaCV.Text = ma;
+            }
         }
     }
 }

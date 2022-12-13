@@ -49,12 +49,11 @@
             // Drg_size
             // 
             this.Drg_size.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.Drg_size.Location = new System.Drawing.Point(480, 38);
-            this.Drg_size.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.Drg_size.Location = new System.Drawing.Point(549, 51);
             this.Drg_size.Name = "Drg_size";
             this.Drg_size.RowHeadersWidth = 51;
             this.Drg_size.RowTemplate.Height = 29;
-            this.Drg_size.Size = new System.Drawing.Size(366, 289);
+            this.Drg_size.Size = new System.Drawing.Size(418, 385);
             this.Drg_size.TabIndex = 11;
             this.Drg_size.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Drg_size_CellClick);
             // 
@@ -72,21 +71,18 @@
             this.groupBox1.Controls.Add(this.btn_AddSZ);
             this.groupBox1.Controls.Add(this.SZ_Ma);
             this.groupBox1.Controls.Add(this.SZ_SizeGiay);
-            this.groupBox1.Location = new System.Drawing.Point(3, 38);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Location = new System.Drawing.Point(3, 51);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(464, 289);
+            this.groupBox1.Size = new System.Drawing.Size(530, 385);
             this.groupBox1.TabIndex = 10;
             this.groupBox1.TabStop = false;
             // 
             // SZ_TTCC
             // 
             this.SZ_TTCC.AutoSize = true;
-            this.SZ_TTCC.Location = new System.Drawing.Point(176, 167);
-            this.SZ_TTCC.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.SZ_TTCC.Location = new System.Drawing.Point(201, 223);
             this.SZ_TTCC.Name = "SZ_TTCC";
-            this.SZ_TTCC.Size = new System.Drawing.Size(69, 19);
+            this.SZ_TTCC.Size = new System.Drawing.Size(84, 24);
             this.SZ_TTCC.TabIndex = 80;
             this.SZ_TTCC.TabStop = true;
             this.SZ_TTCC.Text = "Chưa có";
@@ -95,10 +91,9 @@
             // SZ_TTDC
             // 
             this.SZ_TTDC.AutoSize = true;
-            this.SZ_TTDC.Location = new System.Drawing.Point(110, 167);
-            this.SZ_TTDC.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.SZ_TTDC.Location = new System.Drawing.Point(126, 223);
             this.SZ_TTDC.Name = "SZ_TTDC";
-            this.SZ_TTDC.Size = new System.Drawing.Size(55, 19);
+            this.SZ_TTDC.Size = new System.Drawing.Size(69, 24);
             this.SZ_TTDC.TabIndex = 79;
             this.SZ_TTDC.TabStop = true;
             this.SZ_TTDC.Text = "Đã có";
@@ -109,9 +104,10 @@
             this.btn_ClearSZ.BackColor = System.Drawing.SystemColors.Highlight;
             this.btn_ClearSZ.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btn_ClearSZ.Image = ((System.Drawing.Image)(resources.GetObject("btn_ClearSZ.Image")));
-            this.btn_ClearSZ.Location = new System.Drawing.Point(298, 182);
+            this.btn_ClearSZ.Location = new System.Drawing.Point(341, 243);
+            this.btn_ClearSZ.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_ClearSZ.Name = "btn_ClearSZ";
-            this.btn_ClearSZ.Size = new System.Drawing.Size(88, 26);
+            this.btn_ClearSZ.Size = new System.Drawing.Size(101, 35);
             this.btn_ClearSZ.TabIndex = 73;
             this.btn_ClearSZ.Text = "Clear";
             this.btn_ClearSZ.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -121,9 +117,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(18, 61);
+            this.label1.Location = new System.Drawing.Point(21, 81);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(30, 15);
+            this.label1.Size = new System.Drawing.Size(37, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Mã :";
             // 
@@ -132,9 +128,10 @@
             this.btn_DeleteSZ.BackColor = System.Drawing.SystemColors.Highlight;
             this.btn_DeleteSZ.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btn_DeleteSZ.Image = ((System.Drawing.Image)(resources.GetObject("btn_DeleteSZ.Image")));
-            this.btn_DeleteSZ.Location = new System.Drawing.Point(296, 133);
+            this.btn_DeleteSZ.Location = new System.Drawing.Point(338, 177);
+            this.btn_DeleteSZ.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_DeleteSZ.Name = "btn_DeleteSZ";
-            this.btn_DeleteSZ.Size = new System.Drawing.Size(88, 26);
+            this.btn_DeleteSZ.Size = new System.Drawing.Size(101, 35);
             this.btn_DeleteSZ.TabIndex = 74;
             this.btn_DeleteSZ.Text = "Xóa";
             this.btn_DeleteSZ.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -143,9 +140,9 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(18, 167);
+            this.label2.Location = new System.Drawing.Point(21, 223);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(67, 15);
+            this.label2.Size = new System.Drawing.Size(85, 20);
             this.label2.TabIndex = 1;
             this.label2.Text = "Trạng Thái :";
             // 
@@ -154,9 +151,10 @@
             this.btn_UpdateSZ.BackColor = System.Drawing.SystemColors.Highlight;
             this.btn_UpdateSZ.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btn_UpdateSZ.Image = ((System.Drawing.Image)(resources.GetObject("btn_UpdateSZ.Image")));
-            this.btn_UpdateSZ.Location = new System.Drawing.Point(298, 81);
+            this.btn_UpdateSZ.Location = new System.Drawing.Point(341, 108);
+            this.btn_UpdateSZ.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_UpdateSZ.Name = "btn_UpdateSZ";
-            this.btn_UpdateSZ.Size = new System.Drawing.Size(88, 26);
+            this.btn_UpdateSZ.Size = new System.Drawing.Size(101, 35);
             this.btn_UpdateSZ.TabIndex = 75;
             this.btn_UpdateSZ.Text = "Sửa";
             this.btn_UpdateSZ.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -166,9 +164,9 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(18, 113);
+            this.label3.Location = new System.Drawing.Point(21, 151);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(59, 15);
+            this.label3.Size = new System.Drawing.Size(76, 20);
             this.label3.TabIndex = 2;
             this.label3.Text = "Size Giày :";
             // 
@@ -177,9 +175,10 @@
             this.btn_AddSZ.BackColor = System.Drawing.SystemColors.Highlight;
             this.btn_AddSZ.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btn_AddSZ.Image = ((System.Drawing.Image)(resources.GetObject("btn_AddSZ.Image")));
-            this.btn_AddSZ.Location = new System.Drawing.Point(298, 32);
+            this.btn_AddSZ.Location = new System.Drawing.Point(341, 43);
+            this.btn_AddSZ.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.btn_AddSZ.Name = "btn_AddSZ";
-            this.btn_AddSZ.Size = new System.Drawing.Size(86, 28);
+            this.btn_AddSZ.Size = new System.Drawing.Size(98, 37);
             this.btn_AddSZ.TabIndex = 72;
             this.btn_AddSZ.Text = "Thêm";
             this.btn_AddSZ.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -188,27 +187,27 @@
             // 
             // SZ_Ma
             // 
-            this.SZ_Ma.Location = new System.Drawing.Point(108, 59);
-            this.SZ_Ma.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.SZ_Ma.Location = new System.Drawing.Point(123, 79);
             this.SZ_Ma.Name = "SZ_Ma";
-            this.SZ_Ma.Size = new System.Drawing.Size(142, 23);
+            this.SZ_Ma.Size = new System.Drawing.Size(162, 27);
             this.SZ_Ma.TabIndex = 3;
             // 
             // SZ_SizeGiay
             // 
-            this.SZ_SizeGiay.Location = new System.Drawing.Point(108, 114);
-            this.SZ_SizeGiay.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.SZ_SizeGiay.Location = new System.Drawing.Point(123, 152);
             this.SZ_SizeGiay.Name = "SZ_SizeGiay";
-            this.SZ_SizeGiay.Size = new System.Drawing.Size(142, 23);
+            this.SZ_SizeGiay.Size = new System.Drawing.Size(162, 27);
             this.SZ_SizeGiay.TabIndex = 4;
+            this.SZ_SizeGiay.TextChanged += new System.EventHandler(this.SZ_SizeGiay_TextChanged);
             // 
             // Frm_SizeGiay
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(858, 358);
+            this.ClientSize = new System.Drawing.Size(981, 477);
             this.Controls.Add(this.Drg_size);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "Frm_SizeGiay";
             this.Text = "Frm_MauSac";
             ((System.ComponentModel.ISupportInitialize)(this.Drg_size)).EndInit();

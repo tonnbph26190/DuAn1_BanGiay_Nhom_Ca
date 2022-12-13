@@ -1,6 +1,7 @@
 ﻿
 using _2.BUS.IServices;
 using _2.BUS.Services;
+using _3.PL.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace _3.PL.View
     {
         private IDongSPService _dongSpService;
         private Guid _id;
+        int Flag = 1;
         Frm_ChiTietSanPham _form;
         public FrmDongSp(Frm_ChiTietSanPham form)
         {
@@ -24,6 +26,7 @@ namespace _3.PL.View
             _dongSpService = new DongSPService();
             LoadData();
             _form = form;
+            txt_MaDSP.Enabled = false;
         }
         public void LoadData()
         {
@@ -101,6 +104,7 @@ namespace _3.PL.View
                     MessageBox.Show("Thêm thành công");
                     _form.updateData();
                     LoadData();
+                    Clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -117,10 +121,12 @@ namespace _3.PL.View
                 DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Dòng sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
-                    _dongSpService.Update(GetDataFromGui());
-                    MessageBox.Show("Sửa Dòng sản phẩm thành công");
+                    var temp = GetDataFromGui();
+                    temp.Id = _id;
+                    MessageBox.Show(_dongSpService.Update(temp));
                     _form.updateData();
                     LoadData();
+                    Clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -146,6 +152,37 @@ namespace _3.PL.View
             }
 
             rbtn_KhongHoatDong.Checked = true;
+        }
+        public void Clear()
+        {
+            txt_MaDSP.Text = "";
+            txt_TenDSP.Text = null;
+            rbtn_HoatDong.Checked = false;
+            rbtn_KhongHoatDong.Checked = false;
+        }
+        private void txt_TenDSP_TextChanged(object sender, EventArgs e)
+        {
+            if (!(_id == Guid.Empty))
+            {
+                Flag = 0;
+            }
+            if (Flag == 0)
+            {
+                var temp = _dongSpService.GetAll().FirstOrDefault(c => c.Id == _id);
+
+                txt_MaDSP.Text = temp.Ma;
+                Flag = 1;
+
+            }
+            else
+            {
+                string ma = txt_MaDSP.Text;
+                do
+                {
+                    ma = "DSP" + Utilitys.GetNumber(3);
+                } while (_dongSpService.GetAll().Any(c => c.Ma.Equals(ma)));
+                txt_MaDSP.Text = ma;
+            }
         }
     }
 }

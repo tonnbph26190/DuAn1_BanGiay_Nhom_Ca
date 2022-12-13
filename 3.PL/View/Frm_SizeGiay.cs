@@ -1,6 +1,7 @@
 ﻿using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
+using _3.PL.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,6 +19,7 @@ namespace _3.PL.View
     {
         private ISizeService _iSizeService;
         Guid _idWhenclick;
+        int Flag = 1;
         Frm_ChiTietSanPham _form;
         public Frm_SizeGiay(Frm_ChiTietSanPham form)
         {
@@ -26,6 +28,8 @@ namespace _3.PL.View
             _form = form;
             LoadSize();
             Drg_size.Columns[1].Visible = false;
+            SZ_Ma.Enabled = false;
+
         }
         private void LoadSize()
         {
@@ -108,6 +112,7 @@ namespace _3.PL.View
                     MessageBox.Show(_iSizeService.Add(GetDataFromGui()));
                     LoadSize();
                     _form.updateData();
+                    Clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -155,6 +160,37 @@ namespace _3.PL.View
                 SZ_TTDC.Checked = true;
             }
             else SZ_TTCC.Checked = true;
+        }
+        public void Clear()
+        {
+            SZ_Ma.Text = "";
+            SZ_SizeGiay.Text = " ";
+            SZ_TTCC.Checked = false;
+            SZ_TTDC.Checked = false;
+        }
+        private void SZ_SizeGiay_TextChanged(object sender, EventArgs e)
+        {
+            if (!(_idWhenclick == Guid.Empty))
+            {
+                Flag = 0;
+            }
+            if (Flag == 0)
+            {
+                var temp = _iSizeService.GetAll().FirstOrDefault(c => c.Id == _idWhenclick);
+
+                SZ_Ma.Text = temp.Ma;
+                Flag = 1;
+
+            }
+            else
+            {
+                string ma = SZ_Ma.Text;
+                do
+                {
+                    ma = "SZ" + Utilitys.GetNumber(3);
+                } while (_iSizeService.GetAll().Any(c => c.Ma.Equals(ma)));
+                SZ_Ma.Text = ma;
+            }
         }
     }
 }
