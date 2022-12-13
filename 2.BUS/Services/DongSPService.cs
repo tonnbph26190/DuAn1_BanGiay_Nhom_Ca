@@ -26,10 +26,15 @@ namespace _2.BUS.Services
             return true;
         }
 
-        public bool Update(DongSP dsp)
+        public string Update(DongSP obj)
         {
-            _dongSpRepositories.Update(dsp);
-            return true;
+            if (obj == null) return "sửa thất bại";
+            var size = _dongSpRepositories.GetAll().FirstOrDefault(c => c.Id == obj.Id);
+            size.Ten = obj.Ten;
+            size.Ma = obj.Ma;
+            size.TrangThai = obj.TrangThai;
+            if (_dongSpRepositories.Update(size)) return "sửa thành công";
+            return "sửa thất bại";
         }
 
         public List<DongSP> GetAll()

@@ -1,6 +1,7 @@
 ﻿using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
+using _3.PL.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace _3.PL.View
     {
         private ISanPhamService _iSanPhamService;
         Guid _idWhenclick;
+        int Flag = 1;
         Frm_ChiTietSanPham _form;
         public Frm_SanPham(Frm_ChiTietSanPham form)
         {
@@ -24,6 +26,7 @@ namespace _3.PL.View
             _form= form;
             InitializeComponent();
             LoadDgridSp(null);
+            txt_Ma.Enabled = false;
         }
         private void LoadDgridSp(string input)
         {
@@ -96,12 +99,13 @@ namespace _3.PL.View
                         return;
                     }
                 }
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm size này?", "Xác nhận", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     MessageBox.Show(_iSanPhamService.Add(GetDataFromGui()));
                     _form.updateData();
                     LoadDgridSp(null);
+                    Clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -116,7 +120,7 @@ namespace _3.PL.View
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm Sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn Sửa Sản phẩm này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     var temp = GetDataFromGui();
@@ -124,6 +128,7 @@ namespace _3.PL.View
                     MessageBox.Show(_iSanPhamService.Update(temp));
                     _form.updateData();
                     LoadDgridSp(null);
+                    Clear();
                 }
                 if (dialogResult == DialogResult.No) return;
 
@@ -146,6 +151,37 @@ namespace _3.PL.View
             }
 
             rbtn_KhongHoatDong.Checked = true;
+        }
+        public void Clear()
+        {
+            txt_Ma.Text = "";
+            txt_Ten.Text = null;
+            rbtn_HoatDong.Checked = false;
+            rbtn_KhongHoatDong.Checked = false;
+        }
+        private void txt_Ten_TextChanged(object sender, EventArgs e)
+        {
+            if (!(_idWhenclick == Guid.Empty))
+            {
+                Flag = 0;
+            }
+            if (Flag == 0)
+            {
+                var temp = _iSanPhamService.GetAll().FirstOrDefault(c => c.Id == _idWhenclick);
+
+                txt_Ma.Text = temp.Ma;
+                Flag = 1;
+
+            }
+            else
+            {
+                string ma = txt_Ma.Text;
+                do
+                {
+                    ma = "SP" + Utilitys.GetNumber(3);
+                } while (_iSanPhamService.GetAll().Any(c => c.Ma.Equals(ma)));
+                txt_Ma.Text = ma;
+            }
         }
     }
 }

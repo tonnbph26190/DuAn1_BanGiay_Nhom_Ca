@@ -1,6 +1,7 @@
 ﻿using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
+using _3.PL.Utilities;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,6 +18,7 @@ namespace _3.PL.View
     {
         private INsxService _iMauService;
         Guid _idWhenclick;
+        int Flag = 1;
         Frm_ChiTietSanPham _form;
         public Frm_Nsx(Frm_ChiTietSanPham form)
         {
@@ -27,6 +29,7 @@ namespace _3.PL.View
             LoadMau();
             Drg_mausac.Columns[1].Visible = false;
             _form = form;
+            MS_Ma.Enabled = false;
         }
         private void LoadMau()
         {
@@ -97,12 +100,13 @@ namespace _3.PL.View
                         return;
                     }
                 }
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm màu này?", "Xác nhận", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn thêm NSX này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     MessageBox.Show(_iMauService.Add(GetDataFromGui()));
                     LoadMau();
                     _form.updateData();
+                    Clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -116,7 +120,7 @@ namespace _3.PL.View
             }
             else
             {
-                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa màu này?", "Xác nhận", MessageBoxButtons.YesNo);
+                DialogResult dialogResult = MessageBox.Show("Bạn có chắc muốn sửa NSX này?", "Xác nhận", MessageBoxButtons.YesNo);
                 if (dialogResult == DialogResult.Yes)
                 {
                     var temp = GetDataFromGui();
@@ -124,6 +128,7 @@ namespace _3.PL.View
                     MessageBox.Show(_iMauService.Update(temp));
                     LoadMau();
                     _form.updateData();
+                    Clear();
                 }
                 if (dialogResult == DialogResult.No) return;
             }
@@ -144,6 +149,37 @@ namespace _3.PL.View
                 MS_TTDC.Checked = true;
             }
             else MS_TTCC.Checked = true;
+        }
+        public void Clear()
+        {
+            MS_Ten.Text = null;
+            MS_Ma.Text = " ";
+            MS_TTCC.Checked = false;
+            MS_TTDC.Checked = false;
+        }
+        private void MS_Ten_TextChanged(object sender, EventArgs e)
+        {
+            if (!(_idWhenclick == Guid.Empty))
+            {
+                Flag = 0;
+            }
+            if (Flag == 0)
+            {
+                var temp = _iMauService.GetAll().FirstOrDefault(c => c.Id == _idWhenclick);
+
+                MS_Ma.Text = temp.Ma;
+                Flag = 1;
+
+            }
+            else
+            {
+                string ma = MS_Ma.Text;
+                do
+                {
+                    ma = "NSX" + Utilitys.GetNumber(3);
+                } while (_iMauService.GetAll().Any(c => c.Ma.Equals(ma)));
+                MS_Ma.Text = ma;
+            }
         }
     }
 }

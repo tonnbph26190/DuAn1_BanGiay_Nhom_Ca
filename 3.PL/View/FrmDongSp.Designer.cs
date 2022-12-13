@@ -48,12 +48,11 @@
             // dgrid_DataShow
             // 
             this.dgrid_DataShow.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgrid_DataShow.Location = new System.Drawing.Point(1, 181);
-            this.dgrid_DataShow.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.dgrid_DataShow.Location = new System.Drawing.Point(1, 241);
             this.dgrid_DataShow.Name = "dgrid_DataShow";
             this.dgrid_DataShow.RowHeadersWidth = 51;
             this.dgrid_DataShow.RowTemplate.Height = 29;
-            this.dgrid_DataShow.Size = new System.Drawing.Size(636, 141);
+            this.dgrid_DataShow.Size = new System.Drawing.Size(727, 188);
             this.dgrid_DataShow.TabIndex = 11;
             this.dgrid_DataShow.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrid_DataShow_CellClick);
             // 
@@ -61,21 +60,18 @@
             // 
             this.groupBox2.Controls.Add(this.btn_Update);
             this.groupBox2.Controls.Add(this.btn_Add);
-            this.groupBox2.Location = new System.Drawing.Point(385, 3);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox2.Location = new System.Drawing.Point(440, 4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox2.Size = new System.Drawing.Size(252, 173);
+            this.groupBox2.Size = new System.Drawing.Size(288, 231);
             this.groupBox2.TabIndex = 10;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Chức năng";
             // 
             // btn_Update
             // 
-            this.btn_Update.Location = new System.Drawing.Point(95, 98);
-            this.btn_Update.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_Update.Location = new System.Drawing.Point(109, 131);
             this.btn_Update.Name = "btn_Update";
-            this.btn_Update.Size = new System.Drawing.Size(82, 22);
+            this.btn_Update.Size = new System.Drawing.Size(94, 29);
             this.btn_Update.TabIndex = 0;
             this.btn_Update.Text = "Sửa";
             this.btn_Update.UseVisualStyleBackColor = true;
@@ -83,10 +79,9 @@
             // 
             // btn_Add
             // 
-            this.btn_Add.Location = new System.Drawing.Point(95, 50);
-            this.btn_Add.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_Add.Location = new System.Drawing.Point(109, 67);
             this.btn_Add.Name = "btn_Add";
-            this.btn_Add.Size = new System.Drawing.Size(82, 22);
+            this.btn_Add.Size = new System.Drawing.Size(94, 29);
             this.btn_Add.TabIndex = 0;
             this.btn_Add.Text = "Thêm";
             this.btn_Add.UseVisualStyleBackColor = true;
@@ -101,21 +96,18 @@
             this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(1, 3);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.groupBox1.Location = new System.Drawing.Point(1, 4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox1.Size = new System.Drawing.Size(379, 173);
+            this.groupBox1.Size = new System.Drawing.Size(433, 231);
             this.groupBox1.TabIndex = 9;
             this.groupBox1.TabStop = false;
             // 
             // rbtn_KhongHoatDong
             // 
             this.rbtn_KhongHoatDong.AutoSize = true;
-            this.rbtn_KhongHoatDong.Location = new System.Drawing.Point(214, 134);
-            this.rbtn_KhongHoatDong.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbtn_KhongHoatDong.Location = new System.Drawing.Point(245, 179);
             this.rbtn_KhongHoatDong.Name = "rbtn_KhongHoatDong";
-            this.rbtn_KhongHoatDong.Size = new System.Drawing.Size(118, 19);
+            this.rbtn_KhongHoatDong.Size = new System.Drawing.Size(146, 24);
             this.rbtn_KhongHoatDong.TabIndex = 7;
             this.rbtn_KhongHoatDong.TabStop = true;
             this.rbtn_KhongHoatDong.Text = "Không hoạt động";
@@ -124,10 +116,9 @@
             // rbtn_HoatDong
             // 
             this.rbtn_HoatDong.AutoSize = true;
-            this.rbtn_HoatDong.Location = new System.Drawing.Point(106, 134);
-            this.rbtn_HoatDong.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.rbtn_HoatDong.Location = new System.Drawing.Point(121, 179);
             this.rbtn_HoatDong.Name = "rbtn_HoatDong";
-            this.rbtn_HoatDong.Size = new System.Drawing.Size(82, 19);
+            this.rbtn_HoatDong.Size = new System.Drawing.Size(102, 24);
             this.rbtn_HoatDong.TabIndex = 7;
             this.rbtn_HoatDong.TabStop = true;
             this.rbtn_HoatDong.Text = "Hoạt động";
@@ -135,55 +126,55 @@
             // 
             // txt_TenDSP
             // 
-            this.txt_TenDSP.Location = new System.Drawing.Point(106, 99);
-            this.txt_TenDSP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txt_TenDSP.Location = new System.Drawing.Point(121, 132);
             this.txt_TenDSP.Name = "txt_TenDSP";
-            this.txt_TenDSP.Size = new System.Drawing.Size(256, 23);
+            this.txt_TenDSP.Size = new System.Drawing.Size(292, 27);
             this.txt_TenDSP.TabIndex = 5;
+            this.txt_TenDSP.TextChanged += new System.EventHandler(this.txt_TenDSP_TextChanged);
             // 
             // txt_MaDSP
             // 
-            this.txt_MaDSP.Location = new System.Drawing.Point(106, 52);
-            this.txt_MaDSP.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.txt_MaDSP.Location = new System.Drawing.Point(121, 69);
             this.txt_MaDSP.Name = "txt_MaDSP";
-            this.txt_MaDSP.Size = new System.Drawing.Size(256, 23);
+            this.txt_MaDSP.Size = new System.Drawing.Size(292, 27);
             this.txt_MaDSP.TabIndex = 6;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(16, 137);
+            this.label3.Location = new System.Drawing.Point(18, 183);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(61, 15);
+            this.label3.Size = new System.Drawing.Size(78, 20);
             this.label3.TabIndex = 4;
             this.label3.Text = "Trạng Thái";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(16, 103);
+            this.label2.Location = new System.Drawing.Point(18, 137);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(73, 15);
+            this.label2.Size = new System.Drawing.Size(93, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Tên Dòng SP";
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 56);
+            this.label1.Location = new System.Drawing.Point(18, 75);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(72, 15);
+            this.label1.Size = new System.Drawing.Size(91, 20);
             this.label1.TabIndex = 3;
             this.label1.Text = "Mã Dòng SP";
             // 
             // FrmDongSp
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(640, 325);
+            this.ClientSize = new System.Drawing.Size(731, 433);
             this.Controls.Add(this.dgrid_DataShow);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FrmDongSp";
             this.Text = "FrmDongSp";
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_DataShow)).EndInit();

@@ -10,7 +10,7 @@ namespace _2.BUS.IServices
    public interface IDongSPService
     {
         bool Add(DongSP dsp);
-        bool Update(DongSP dsp);
+        string Update(DongSP obj);
         DongSP GetById(Guid id);
         Guid GetIdByName(string input);
         List<DongSP> GetAll();

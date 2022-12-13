@@ -592,5 +592,10 @@ namespace _3.PL
         {
 
         }
+
+        private void txt_TenNV_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
