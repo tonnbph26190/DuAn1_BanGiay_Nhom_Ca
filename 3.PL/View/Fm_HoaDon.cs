@@ -21,11 +21,13 @@ namespace _3.PL
         private IHoaDonChiTietServices _iHoadonChitietSerivce;
         Guid _idHoadon;
         Guid _idSanpham;
+        List<HoaDonChiTIetView> _lstChitietHD;
         public Fm_HoaDon()
         {
             _iHoadonService = new HoaDonServices();
             _iHoadonChitietSerivce = new HoaDonChiTietServices();
             _iQlSanphamSerivce = new ChiTIetSpServices();
+            _lstChitietHD = new List<HoaDonChiTIetView>();
             InitializeComponent();
             LoadHdCho();
             loadSp();
@@ -46,7 +48,7 @@ namespace _3.PL
             dgrid_HoaDon.Columns[4].Name = "NV bán";
             dgrid_HoaDon.Rows.Clear();
 
-
+          
             foreach (var x in _iHoadonService.ShowHoadon().Where(c => c.TrangThai == 1))
             {
                 dgrid_HoaDon.Rows.Add(stt++, x.Id, x.MaHoaDon, x.TenKH,x.NV);
@@ -73,9 +75,9 @@ namespace _3.PL
             buttonColumn.Text = "Trả hàng";
             buttonColumn.Name = "TraHang";
             buttonColumn.UseColumnTextForButtonValue = true;
-
-            dgrid_HoaDonChiTiet.Columns.Add(buttonColumn);
-            foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet(id))
+            dgrid_HoaDonChiTiet.Columns.Add(buttonColumn);          
+                _lstChitietHD = _iHoadonChitietSerivce.ShowHoadonChitiet(id);   
+            foreach (var x in _lstChitietHD )
             {
                 dgrid_HoaDonChiTiet.Rows.Add(stt++, x.Id, x.MaSp, x.TenSp, x.SoLuong, x.DonGia,x.IdChiTIetSp,x.GhiChu);
             }
@@ -93,9 +95,11 @@ namespace _3.PL
         }
 
         private void btn_CLear_Click(object sender, EventArgs e)
-        {
+        {          
             LoadGiohang(Guid.Empty);
+            txt_MaHD.Text = "";
         }
+       
 
         private void dgrid_HoaDonChiTiet_CellValueChanged(object sender, DataGridViewCellEventArgs e)
         {
@@ -136,7 +140,10 @@ namespace _3.PL
 
         private void Btn_Click(object? sender, EventArgs e)
         {
-            _idSanpham = ((sender as System.Windows.Forms.Button).Tag as ChiTIetSpView).Id;
+            _idSanpham = ((sender as System.Windows.Forms.Button).Tag as ChiTIetSpView).Id;          
+           
+           
+
         }
 
         private void dgrid_HoaDonChiTiet_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -170,6 +177,14 @@ namespace _3.PL
                     }
                 }
 
+
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (_lstChitietHD.Count==0)
+            {
 
             }
         }

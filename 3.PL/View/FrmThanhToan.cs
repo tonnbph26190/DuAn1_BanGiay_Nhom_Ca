@@ -473,6 +473,10 @@ namespace _3.PL.View
                     
                     if (rbtn_DaTT.Checked)
                     {
+                        if (ck_in.Checked = true)
+                        {
+                            inHoaDon();
+                        }
                         frm_Alert2.showAlert($"Thanh toán hóa đơn thành công. ID: {hoadon.MaHoaDon}", Frm_Alert.enmType.Info);
                         clean();
                     }
