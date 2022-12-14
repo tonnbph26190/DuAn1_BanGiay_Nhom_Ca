@@ -30,8 +30,8 @@ namespace _3.PL
             InitializeComponent();
             _nhanVienService = new NhanVienService();
             int count = 1;
-            txt_MatKhau.Text = Properties.Settings.Default.Mk;
-            txt_TaiKhoan.Text = Properties.Settings.Default.Tk;
+            txt_TaiKhoan.Text= Properties.Settings.Default.Tk;
+            txt_MatKhau.Text=Properties.Settings.Default.Mk;
 
         }
 
@@ -89,35 +89,43 @@ namespace _3.PL
             }
 
         }
+         int check(string a,string b,int c)
+        {
+            foreach (var x in _nhanVienService.GetAll())
+            {             
+                if (a == txt_MatKhau.Text && b== txt_TaiKhoan.Text &&c  == 1)
+                {
+                    return 1;
+                  
+                }
+
+            }
+            return 0;
+        }
 
         private void btn_DangNhap_Click(object sender, EventArgs e)
         {                               
             foreach (var x in _nhanVienService.GetAll())
-            {              
-                if (x.PassWord!=txt_MatKhau.Text&&x.Email!=txt_TaiKhoan.Text&&x.TrangThai==0)
+            {
+                if (check(x.PassWord, x.Email, x.TrangThai)==1)
                 {
-                    MessageBox.Show("Tài khoản ko hợp lệ");
-                    return;
-                }
-
-                if (x.PassWord == txt_MatKhau.Text && x.Email == txt_TaiKhoan.Text && x.TrangThai==1)
-                {
-                    MessageBox.Show("Dăng nhập thành công");
                     var chucVuNVlogin = _nhanVienService.GetAll().FirstOrDefault(c => c.Email == txt_TaiKhoan.Text);
                     txt_ChuVu.Text = chucVuNVlogin.ChucVu.Ten;
-                    break;
-                }           
+                    saveInfor();
+                    Frm_Load load = new Frm_Load(txt_TaiKhoan.Text, txt_ChuVu.Text);
+                    this.Hide();
+                    load.ShowDialog();
+                    button1.Visible = false;
+                    button2.Visible = false;
+                }
+                else
+                {
+                    button1.Visible = true;
+                    button2.Visible=true;
+                }                  
 
-            }
-            if (checkBox1.Checked)
-            {
-                saveInfor();
-            }
-            Frm_Load load = new Frm_Load(txt_TaiKhoan.Text,txt_ChuVu.Text);
-            this.Hide();
-            
-            load.ShowDialog();
-            
+            }                      
+
         }
 
         private void label3_Click(object sender, EventArgs e)
