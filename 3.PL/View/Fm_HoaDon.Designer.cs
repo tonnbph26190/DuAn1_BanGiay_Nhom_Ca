@@ -38,6 +38,7 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.Fl_SanPhams = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_HoaDonChiTiet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_HoaDon)).BeginInit();
             this.panel4.SuspendLayout();
@@ -70,6 +71,7 @@
             // 
             // txt_MaHD
             // 
+            this.txt_MaHD.Enabled = false;
             this.txt_MaHD.Location = new System.Drawing.Point(131, 35);
             this.txt_MaHD.Name = "txt_MaHD";
             this.txt_MaHD.Size = new System.Drawing.Size(129, 23);
@@ -139,12 +141,27 @@
             this.label2.TabIndex = 157;
             this.label2.Text = "Sản phẩm đã mua";
             // 
+            // button1
+            // 
+            this.button1.BackColor = System.Drawing.SystemColors.Highlight;
+            this.button1.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
+            this.button1.Location = new System.Drawing.Point(1213, 494);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(90, 38);
+            this.button1.TabIndex = 158;
+            this.button1.Text = "Confirm";
+            this.button1.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // Fm_HoaDon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(1343, 704);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.btn_CLear);
@@ -175,5 +192,6 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.FlowLayoutPanel Fl_SanPhams;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button button1;
     }
 }
