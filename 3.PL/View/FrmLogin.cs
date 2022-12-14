@@ -99,9 +99,9 @@ namespace _3.PL
                     MessageBox.Show("Tài khoản ko hợp lệ");
                     return;
                 }
-                else
+
+                if (x.PassWord == txt_MatKhau.Text && x.Email == txt_TaiKhoan.Text && x.TrangThai==1)
                 {
-                    
                     MessageBox.Show("Dăng nhập thành công");
                     var chucVuNVlogin = _nhanVienService.GetAll().FirstOrDefault(c => c.Email == txt_TaiKhoan.Text);
                     txt_ChuVu.Text = chucVuNVlogin.ChucVu.Ten;
