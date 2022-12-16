@@ -63,14 +63,14 @@ namespace _3.PL
             dgrid_HoaDonChiTiet.ColumnCount = 8;
             dgrid_HoaDonChiTiet.Columns[0].Name = "STT";
             dgrid_HoaDonChiTiet.Columns[1].Name = "Id";
-            dgrid_HoaDonChiTiet.Columns[1].Visible=true;
+            dgrid_HoaDonChiTiet.Columns[1].Visible=false;
             dgrid_HoaDonChiTiet.Columns[2].Name = "Mã sản phẩm";
             dgrid_HoaDonChiTiet.Columns[3].Name = "Tên sản phẩm";
             dgrid_HoaDonChiTiet.Columns[4].Name = "Số lượng";
             dgrid_HoaDonChiTiet.Columns[5].Name = "Đơn giá";
             dgrid_HoaDonChiTiet.Columns[6].Name = "Idsp";
             dgrid_HoaDonChiTiet.Columns[7].Name = "Ghi Chú";
-            dgrid_HoaDonChiTiet.Columns[6].Visible= true;
+            dgrid_HoaDonChiTiet.Columns[6].Visible= false;
             dgrid_HoaDonChiTiet.Rows.Clear();
 
             DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();

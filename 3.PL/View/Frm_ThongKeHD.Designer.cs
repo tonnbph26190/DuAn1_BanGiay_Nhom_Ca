@@ -346,7 +346,7 @@
             // zg_ss
             // 
             this.zg_ss.Location = new System.Drawing.Point(18, 22);
-            this.zg_ss.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.zg_ss.Margin = new System.Windows.Forms.Padding(4);
             this.zg_ss.Name = "zg_ss";
             this.zg_ss.ScrollGrace = 0D;
             this.zg_ss.ScrollMaxX = 0D;
@@ -377,6 +377,7 @@
             // 
             // cmb_mailBC
             // 
+            this.cmb_mailBC.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_mailBC.FormattingEnabled = true;
             this.cmb_mailBC.Location = new System.Drawing.Point(180, 152);
             this.cmb_mailBC.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
@@ -650,6 +651,7 @@
             // 
             // cmb_LocTT
             // 
+            this.cmb_LocTT.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmb_LocTT.FormattingEnabled = true;
             this.cmb_LocTT.Location = new System.Drawing.Point(1114, 36);
             this.cmb_LocTT.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
