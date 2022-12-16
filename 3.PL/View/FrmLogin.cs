@@ -209,5 +209,10 @@ namespace _3.PL
 
             }
         }
+
+        private void label6_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
     }
 }
