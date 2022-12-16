@@ -435,11 +435,12 @@ namespace _3.PL.View
                     KhachHangView kh = new KhachHangView()
                     {
                         Id = Guid.NewGuid(),
-                        Ten = txt_TenKh.Text==""?"khach vang lai":txt_TenKh.Text,
+                        Ten = txt_TenKh.Text == "" ? "khach vang lai" : txt_TenKh.Text,
                         diemTieuDung = 0,
                         TrangThai = 1,
-                        SoDienThoai = txt_Sdt.Text,
-                        DiaChi=txt_DiaChi2.Text,
+                        SoDienThoai = txt_Sdt.Text.Trim()==""?"null":txt_Sdt.Text,
+                        DiaChi = txt_DiaChi2.Text,
+                        Email = "null",
                     };
                     _iKhachHangService.Add(kh);
 
