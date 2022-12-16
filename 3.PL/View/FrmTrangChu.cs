@@ -42,6 +42,7 @@ namespace _3.PL
                 btn_KhachHang.Enabled = false;  
                 btn_HoaDon.Enabled= false;
                 btn_SanPham.Enabled=false;
+                btn_ViewSP.Enabled=false;   
             }
             User.Text = user;
             lbl_TenChucVu.Text = tenChucVu;
