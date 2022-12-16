@@ -531,6 +531,7 @@
             this.txt_GiamGia.Name = "txt_GiamGia";
             this.txt_GiamGia.Size = new System.Drawing.Size(132, 23);
             this.txt_GiamGia.TabIndex = 156;
+            this.txt_GiamGia.Text = "0";
             this.txt_GiamGia.TextChanged += new System.EventHandler(this.txt_GiamGia_TextChanged);
             this.txt_GiamGia.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt_GiamGia_KeyPress);
             // 
