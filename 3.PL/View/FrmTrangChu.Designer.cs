@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTrangChu));
             this.pn_Menu = new System.Windows.Forms.Panel();
+            this.btn_Exit = new System.Windows.Forms.Button();
             this.btn_DangXuat = new System.Windows.Forms.Button();
             this.btn_NhanVien = new System.Windows.Forms.Button();
             this.btn_DoanhThu = new System.Windows.Forms.Button();
@@ -56,6 +57,7 @@
             // pn_Menu
             // 
             this.pn_Menu.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.pn_Menu.Controls.Add(this.btn_Exit);
             this.pn_Menu.Controls.Add(this.btn_DangXuat);
             this.pn_Menu.Controls.Add(this.btn_NhanVien);
             this.pn_Menu.Controls.Add(this.btn_DoanhThu);
@@ -66,10 +68,28 @@
             this.pn_Menu.Controls.Add(this.panel2);
             this.pn_Menu.Dock = System.Windows.Forms.DockStyle.Left;
             this.pn_Menu.Location = new System.Drawing.Point(0, 0);
-            this.pn_Menu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.pn_Menu.Name = "pn_Menu";
-            this.pn_Menu.Size = new System.Drawing.Size(238, 726);
+            this.pn_Menu.Size = new System.Drawing.Size(272, 968);
             this.pn_Menu.TabIndex = 0;
+            // 
+            // btn_Exit
+            // 
+            this.btn_Exit.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btn_Exit.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.btn_Exit.FlatAppearance.BorderSize = 0;
+            this.btn_Exit.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_Exit.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_Exit.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
+            this.btn_Exit.Image = ((System.Drawing.Image)(resources.GetObject("btn_Exit.Image")));
+            this.btn_Exit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_Exit.Location = new System.Drawing.Point(0, 862);
+            this.btn_Exit.Name = "btn_Exit";
+            this.btn_Exit.Size = new System.Drawing.Size(272, 53);
+            this.btn_Exit.TabIndex = 9;
+            this.btn_Exit.Text = "Thoát";
+            this.btn_Exit.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btn_Exit.UseVisualStyleBackColor = false;
+            this.btn_Exit.Click += new System.EventHandler(this.btn_Exit_Click);
             // 
             // btn_DangXuat
             // 
@@ -81,10 +101,9 @@
             this.btn_DangXuat.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
             this.btn_DangXuat.Image = ((System.Drawing.Image)(resources.GetObject("btn_DangXuat.Image")));
             this.btn_DangXuat.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_DangXuat.Location = new System.Drawing.Point(0, 668);
-            this.btn_DangXuat.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_DangXuat.Location = new System.Drawing.Point(0, 915);
             this.btn_DangXuat.Name = "btn_DangXuat";
-            this.btn_DangXuat.Size = new System.Drawing.Size(238, 58);
+            this.btn_DangXuat.Size = new System.Drawing.Size(272, 53);
             this.btn_DangXuat.TabIndex = 8;
             this.btn_DangXuat.Text = "Đăng xuất";
             this.btn_DangXuat.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -101,10 +120,9 @@
             this.btn_NhanVien.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
             this.btn_NhanVien.Image = ((System.Drawing.Image)(resources.GetObject("btn_NhanVien.Image")));
             this.btn_NhanVien.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_NhanVien.Location = new System.Drawing.Point(0, 422);
-            this.btn_NhanVien.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_NhanVien.Location = new System.Drawing.Point(0, 561);
             this.btn_NhanVien.Name = "btn_NhanVien";
-            this.btn_NhanVien.Size = new System.Drawing.Size(238, 55);
+            this.btn_NhanVien.Size = new System.Drawing.Size(272, 73);
             this.btn_NhanVien.TabIndex = 7;
             this.btn_NhanVien.Text = "Nhân viên";
             this.btn_NhanVien.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -120,10 +138,9 @@
             this.btn_DoanhThu.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
             this.btn_DoanhThu.Image = ((System.Drawing.Image)(resources.GetObject("btn_DoanhThu.Image")));
             this.btn_DoanhThu.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_DoanhThu.Location = new System.Drawing.Point(0, 367);
-            this.btn_DoanhThu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_DoanhThu.Location = new System.Drawing.Point(0, 488);
             this.btn_DoanhThu.Name = "btn_DoanhThu";
-            this.btn_DoanhThu.Size = new System.Drawing.Size(238, 55);
+            this.btn_DoanhThu.Size = new System.Drawing.Size(272, 73);
             this.btn_DoanhThu.TabIndex = 6;
             this.btn_DoanhThu.Text = "Doanh thu";
             this.btn_DoanhThu.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -139,10 +156,9 @@
             this.btn_KhachHang.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
             this.btn_KhachHang.Image = ((System.Drawing.Image)(resources.GetObject("btn_KhachHang.Image")));
             this.btn_KhachHang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_KhachHang.Location = new System.Drawing.Point(0, 312);
-            this.btn_KhachHang.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_KhachHang.Location = new System.Drawing.Point(0, 415);
             this.btn_KhachHang.Name = "btn_KhachHang";
-            this.btn_KhachHang.Size = new System.Drawing.Size(238, 55);
+            this.btn_KhachHang.Size = new System.Drawing.Size(272, 73);
             this.btn_KhachHang.TabIndex = 5;
             this.btn_KhachHang.Text = "Khách Hàng";
             this.btn_KhachHang.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -158,10 +174,9 @@
             this.btn_BanHang.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
             this.btn_BanHang.Image = ((System.Drawing.Image)(resources.GetObject("btn_BanHang.Image")));
             this.btn_BanHang.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_BanHang.Location = new System.Drawing.Point(0, 257);
-            this.btn_BanHang.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_BanHang.Location = new System.Drawing.Point(0, 342);
             this.btn_BanHang.Name = "btn_BanHang";
-            this.btn_BanHang.Size = new System.Drawing.Size(238, 55);
+            this.btn_BanHang.Size = new System.Drawing.Size(272, 73);
             this.btn_BanHang.TabIndex = 4;
             this.btn_BanHang.Text = "Bán Hàng";
             this.btn_BanHang.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -177,10 +192,9 @@
             this.btn_HoaDon.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
             this.btn_HoaDon.Image = ((System.Drawing.Image)(resources.GetObject("btn_HoaDon.Image")));
             this.btn_HoaDon.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_HoaDon.Location = new System.Drawing.Point(0, 202);
-            this.btn_HoaDon.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_HoaDon.Location = new System.Drawing.Point(0, 269);
             this.btn_HoaDon.Name = "btn_HoaDon";
-            this.btn_HoaDon.Size = new System.Drawing.Size(238, 55);
+            this.btn_HoaDon.Size = new System.Drawing.Size(272, 73);
             this.btn_HoaDon.TabIndex = 3;
             this.btn_HoaDon.Text = "Hóa đơn";
             this.btn_HoaDon.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -197,10 +211,9 @@
             this.btn_SanPham.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
             this.btn_SanPham.Image = ((System.Drawing.Image)(resources.GetObject("btn_SanPham.Image")));
             this.btn_SanPham.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btn_SanPham.Location = new System.Drawing.Point(0, 147);
-            this.btn_SanPham.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.btn_SanPham.Location = new System.Drawing.Point(0, 196);
             this.btn_SanPham.Name = "btn_SanPham";
-            this.btn_SanPham.Size = new System.Drawing.Size(238, 55);
+            this.btn_SanPham.Size = new System.Drawing.Size(272, 73);
             this.btn_SanPham.TabIndex = 2;
             this.btn_SanPham.Text = "Sản Phẩm";
             this.btn_SanPham.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -218,9 +231,8 @@
             this.panel2.Controls.Add(this.pictureBox1);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel2.Location = new System.Drawing.Point(0, 0);
-            this.panel2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(238, 147);
+            this.panel2.Size = new System.Drawing.Size(272, 196);
             this.panel2.TabIndex = 0;
             // 
             // lbl_TenChucVu
@@ -228,9 +240,9 @@
             this.lbl_TenChucVu.AutoSize = true;
             this.lbl_TenChucVu.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lbl_TenChucVu.ForeColor = System.Drawing.Color.Blue;
-            this.lbl_TenChucVu.Location = new System.Drawing.Point(95, 118);
+            this.lbl_TenChucVu.Location = new System.Drawing.Point(109, 157);
             this.lbl_TenChucVu.Name = "lbl_TenChucVu";
-            this.lbl_TenChucVu.Size = new System.Drawing.Size(102, 17);
+            this.lbl_TenChucVu.Size = new System.Drawing.Size(118, 20);
             this.lbl_TenChucVu.TabIndex = 4;
             this.lbl_TenChucVu.Text = "tên  chức  vụ";
             // 
@@ -239,27 +251,25 @@
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label3.ForeColor = System.Drawing.Color.Blue;
-            this.label3.Location = new System.Drawing.Point(12, 118);
+            this.label3.Location = new System.Drawing.Point(14, 157);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(76, 17);
+            this.label3.Size = new System.Drawing.Size(89, 20);
             this.label3.TabIndex = 3;
             this.label3.Text = "Chức vụ: ";
             // 
             // panel3
             // 
-            this.panel3.Location = new System.Drawing.Point(238, 0);
-            this.panel3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.panel3.Location = new System.Drawing.Point(272, 0);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(1164, 52);
+            this.panel3.Size = new System.Drawing.Size(1330, 69);
             this.panel3.TabIndex = 2;
             // 
             // pnlNav
             // 
             this.pnlNav.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(126)))), ((int)(((byte)(249)))));
-            this.pnlNav.Location = new System.Drawing.Point(0, 145);
-            this.pnlNav.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlNav.Location = new System.Drawing.Point(0, 193);
             this.pnlNav.Name = "pnlNav";
-            this.pnlNav.Size = new System.Drawing.Size(3, 75);
+            this.pnlNav.Size = new System.Drawing.Size(3, 100);
             this.pnlNav.TabIndex = 2;
             // 
             // User
@@ -267,19 +277,18 @@
             this.User.AutoSize = true;
             this.User.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.User.ForeColor = System.Drawing.Color.Blue;
-            this.User.Location = new System.Drawing.Point(12, 103);
+            this.User.Location = new System.Drawing.Point(14, 137);
             this.User.Name = "User";
-            this.User.Size = new System.Drawing.Size(88, 17);
+            this.User.Size = new System.Drawing.Size(103, 20);
             this.User.TabIndex = 1;
             this.User.Text = "User Name";
             // 
             // pictureBox1
             // 
             this.pictureBox1.Image = global::_3.PL.Properties.Resources.icons8_account_96;
-            this.pictureBox1.Location = new System.Drawing.Point(33, 17);
-            this.pictureBox1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pictureBox1.Location = new System.Drawing.Point(66, 23);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(141, 84);
+            this.pictureBox1.Size = new System.Drawing.Size(161, 112);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -287,20 +296,22 @@
             // 
             // pnlFromLoad
             // 
+            this.pnlFromLoad.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.pnlFromLoad.BackColor = System.Drawing.Color.White;
             this.pnlFromLoad.Controls.Add(this.label2);
-            this.pnlFromLoad.Location = new System.Drawing.Point(238, 48);
-            this.pnlFromLoad.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+            this.pnlFromLoad.Location = new System.Drawing.Point(272, 64);
             this.pnlFromLoad.Name = "pnlFromLoad";
-            this.pnlFromLoad.Size = new System.Drawing.Size(1307, 676);
+            this.pnlFromLoad.Size = new System.Drawing.Size(1494, 901);
             this.pnlFromLoad.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(256, 190);
+            this.label2.Location = new System.Drawing.Point(293, 253);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 15);
+            this.label2.Size = new System.Drawing.Size(0, 20);
             this.label2.TabIndex = 0;
             // 
             // lb_TrangChu
@@ -308,22 +319,21 @@
             this.lb_TrangChu.AutoSize = true;
             this.lb_TrangChu.Font = new System.Drawing.Font("Modern No. 20", 19.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.lb_TrangChu.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.lb_TrangChu.Location = new System.Drawing.Point(815, 17);
+            this.lb_TrangChu.Location = new System.Drawing.Point(931, 23);
             this.lb_TrangChu.Name = "lb_TrangChu";
-            this.lb_TrangChu.Size = new System.Drawing.Size(140, 29);
+            this.lb_TrangChu.Size = new System.Drawing.Size(165, 34);
             this.lb_TrangChu.TabIndex = 2;
             this.lb_TrangChu.Text = "Trang Chủ";
             // 
             // FrmTrangChu
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.MenuHighlight;
-            this.ClientSize = new System.Drawing.Size(1548, 726);
+            this.ClientSize = new System.Drawing.Size(1769, 968);
             this.Controls.Add(this.lb_TrangChu);
             this.Controls.Add(this.pnlFromLoad);
             this.Controls.Add(this.pn_Menu);
-            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FrmTrangChu";
             this.Text = "FrmTrangChu";
             this.Load += new System.EventHandler(this.FrmTrangChu_Load);
@@ -359,5 +369,6 @@
         private System.Windows.Forms.Button btn_DangXuat;
         private System.Windows.Forms.Label lbl_TenChucVu;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Button btn_Exit;
     }
 }
