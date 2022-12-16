@@ -51,6 +51,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.txt_ChuVu = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.txt_TenNVLogin = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
@@ -285,12 +286,22 @@
             this.label6.Text = "X";
             this.label6.Click += new System.EventHandler(this.label6_Click);
             // 
+            // txt_TenNVLogin
+            // 
+            this.txt_TenNVLogin.AutoSize = true;
+            this.txt_TenNVLogin.Location = new System.Drawing.Point(610, 509);
+            this.txt_TenNVLogin.Name = "txt_TenNVLogin";
+            this.txt_TenNVLogin.Size = new System.Drawing.Size(50, 20);
+            this.txt_TenNVLogin.TabIndex = 7;
+            this.txt_TenNVLogin.Text = "label7";
+            // 
             // FrmLogin
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.Black;
             this.ClientSize = new System.Drawing.Size(950, 575);
+            this.Controls.Add(this.txt_TenNVLogin);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.txt_ChuVu);
             this.Controls.Add(this.comboBox1);
@@ -335,5 +346,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label txt_TenNVLogin;
     }
 }

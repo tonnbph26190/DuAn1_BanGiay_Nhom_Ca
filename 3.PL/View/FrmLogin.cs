@@ -111,8 +111,9 @@ namespace _3.PL
                 {
                     var chucVuNVlogin = _nhanVienService.GetAll().FirstOrDefault(c => c.Email == txt_TaiKhoan.Text);
                     txt_ChuVu.Text = chucVuNVlogin.ChucVu.Ten;
+                    txt_TenNVLogin.Text = chucVuNVlogin.TenNhanVien;
                     saveInfor();
-                    Frm_Load load = new Frm_Load(txt_TaiKhoan.Text, txt_ChuVu.Text);
+                    Frm_Load load = new Frm_Load(txt_TenNVLogin.Text, txt_ChuVu.Text);
                     this.Hide();
                     load.ShowDialog();
                     button1.Visible = false;
