@@ -90,6 +90,10 @@ namespace _3.PL
         {
             if (e.RowIndex>=0)
             {
+                if (e.RowIndex==_iHoadonService.ShowHoadon().Where(c=>c.TrangThai==1).ToList().Count)
+                {
+                    return;
+                }             
                 DataGridViewRow r = dgrid_HoaDon.Rows[e.RowIndex];
                 _idHoadon = Guid.Parse(r.Cells[1].Value.ToString());
                 txt_MaHD.Text= r.Cells[2].Value.ToString();

@@ -65,7 +65,7 @@ namespace _3.PL.View
         {
             List<string> lst = new List<string>()
             {
-                "0.Chưa thanh toán","1.Đã thanh toán","2.Đã hủy","3.Đang giao hàng"
+                "0.Chưa thanh toán","1.Đã thanh toán","2.Đang giao hàng"
 
             };
             foreach (var x in lst)
@@ -115,7 +115,7 @@ namespace _3.PL.View
             {
 
                 // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" :(x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy") ), x.DonThanhCong,x.DonChuaTT,x.DonHuy,x.DangGiao,x.DonThanhCong+x.DonChuaTT+x.DangGiao+x.DonHuy);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" :(x.TrangThai == 2 ? "Đang giao hàng" : "Đã hủy") ), x.DonThanhCong,x.DonChuaTT,x.DonHuy,x.DangGiao,x.DonThanhCong+x.DonChuaTT+x.DangGiao+x.DonHuy);
             }
             //Tổng tiền
             int sum = 0;
