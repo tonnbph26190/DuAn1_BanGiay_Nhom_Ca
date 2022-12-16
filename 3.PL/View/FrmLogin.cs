@@ -189,7 +189,7 @@ namespace _3.PL
                         txt_TaiKhoan.Text = obj == null ? "" : obj.Email.Trim();
                         txt_MatKhau.Text = obj == null ? "" : obj.PassWord.Trim();
                     }
-                    else if (b == "001203014880")
+                    else if (b == "001303047071")
                     {
                         Frm_Load tc = new Frm_Load("Admin","Admin");
                         this.Hide();

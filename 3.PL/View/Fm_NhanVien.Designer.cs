@@ -42,7 +42,6 @@
             this.label16 = new System.Windows.Forms.Label();
             this.txt_MaNV = new System.Windows.Forms.TextBox();
             this.txt_TenNV = new System.Windows.Forms.TextBox();
-            this.txt_QueQuanNV = new System.Windows.Forms.TextBox();
             this.txt_CmNV = new System.Windows.Forms.TextBox();
             this.txt_SdtNV = new System.Windows.Forms.TextBox();
             this.rbtn_Nam = new System.Windows.Forms.RadioButton();
@@ -68,6 +67,7 @@
             this.cmb_LocNV = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txt_TimKiemNV = new System.Windows.Forms.TextBox();
+            this.cmb_GT = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pb_AnhNV)).BeginInit();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_NV)).BeginInit();
@@ -188,14 +188,6 @@
             this.txt_TenNV.TabIndex = 17;
             this.txt_TenNV.TextChanged += new System.EventHandler(this.txt_TenNV_TextChanged);
             // 
-            // txt_QueQuanNV
-            // 
-            this.txt_QueQuanNV.Location = new System.Drawing.Point(183, 195);
-            this.txt_QueQuanNV.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
-            this.txt_QueQuanNV.Name = "txt_QueQuanNV";
-            this.txt_QueQuanNV.Size = new System.Drawing.Size(173, 27);
-            this.txt_QueQuanNV.TabIndex = 18;
-            // 
             // txt_CmNV
             // 
             this.txt_CmNV.Location = new System.Drawing.Point(183, 237);
@@ -297,6 +289,7 @@
             // groupBox1
             // 
             this.groupBox1.BackColor = System.Drawing.SystemColors.Info;
+            this.groupBox1.Controls.Add(this.cmb_GT);
             this.groupBox1.Controls.Add(this.button3);
             this.groupBox1.Controls.Add(this.cbx_KoHoatDong);
             this.groupBox1.Controls.Add(this.cbx_HoatDong);
@@ -329,7 +322,6 @@
             this.groupBox1.Controls.Add(this.txt_MaNV);
             this.groupBox1.Controls.Add(this.txt_CmNV);
             this.groupBox1.Controls.Add(this.txt_TenNV);
-            this.groupBox1.Controls.Add(this.txt_QueQuanNV);
             this.groupBox1.Location = new System.Drawing.Point(11, 40);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(639, 597);
@@ -500,6 +492,14 @@
             this.txt_TimKiemNV.MouseDown += new System.Windows.Forms.MouseEventHandler(this.txt_TimKiemNV_MouseDown);
             this.txt_TimKiemNV.MouseHover += new System.EventHandler(this.txt_TimKiemNV_MouseHover);
             // 
+            // cmb_GT
+            // 
+            this.cmb_GT.FormattingEnabled = true;
+            this.cmb_GT.Location = new System.Drawing.Point(183, 199);
+            this.cmb_GT.Name = "cmb_GT";
+            this.cmb_GT.Size = new System.Drawing.Size(173, 28);
+            this.cmb_GT.TabIndex = 86;
+            // 
             // Fm_NhanVien
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
@@ -540,7 +540,6 @@
         private System.Windows.Forms.Label label16;
         private System.Windows.Forms.TextBox txt_MaNV;
         private System.Windows.Forms.TextBox txt_TenNV;
-        private System.Windows.Forms.TextBox txt_QueQuanNV;
         private System.Windows.Forms.TextBox txt_CmNV;
         private System.Windows.Forms.TextBox txt_SdtNV;
         private System.Windows.Forms.RadioButton rbtn_Nam;
@@ -566,5 +565,6 @@
         private System.Windows.Forms.CheckBox cbx_KoHoatDong;
         private System.Windows.Forms.CheckBox cbx_HoatDong;
         private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.ComboBox cmb_GT;
     }
 }

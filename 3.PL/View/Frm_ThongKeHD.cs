@@ -14,6 +14,7 @@ using System.Net;
 using System.Net.Mail;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Threading.Channels;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZedGraph;
@@ -43,13 +44,13 @@ namespace _3.PL.View
             dtp_start.Visible = false;
             dtp_end.Visible = false;
             // btn_lockhoangtg.Enabled = false;
-            lab_closedetail.Visible = true;
-            btn_reload.Visible = false;
-            btn_ss.Visible = false;
+           // lab_closedetail.Visible = true;
+           // btn_reload.Visible = false;
+            //btn_ss.Visible = false;
             grb_ss.Visible = false;
-            rightpanel.Visible = false;
-            lab_closedetail.Visible = false;
-            lbl_ss.Visible = false;
+            //rightpanel.Visible = false;
+            //lab_closedetail.Visible = false;
+           // lbl_ss.Visible = false;
             LoadLoc();
             dgrid_t1.Visible = false;
             dgrid_t2.Visible = false;
@@ -107,6 +108,7 @@ namespace _3.PL.View
             dgrid_Hd.Columns[13].Name = "Đơn đang giao";
             dgrid_Hd.Columns[13].Visible = false;
             dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+            dgrid_Hd.Columns[14].Visible = false;
 
 
             dgrid_Hd.Rows.Clear();
@@ -115,54 +117,41 @@ namespace _3.PL.View
             {
 
                 // MessageBox.Show(x.NgayLap + "..." + dtp_loc.Value);
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" :(x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy") ), x.DonThanhCong,x.DonChuaTT,x.DonHuy,x.DangGiao,x.DonThanhCong+x.DonChuaTT+x.DangGiao+x.DonHuy);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" :(x.TrangThai == 2 ? "Đang giao hàng" : "Đã hủy") ), x.DonThanhCong,x.DonChuaTT,x.DonHuy,x.DangGiao,x.DonThanhCong+x.DonChuaTT+x.DangGiao+x.DonHuy);
             }
             //Tổng tiền
-            int sum = 0;
-            for (int i = 0; i < dgrid_Hd.Rows.Count; ++i)
+            int sum = 0, sumdanggiao = 0, sumdonhuy = 0, sumchuathanhtoan = 0, sumdonthanhcong = 0;
+            for (int i = 0; i < dgrid_Hd.Rows.Count - 1; ++i)
             {
                 sum += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[8].Value);
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã thanh toán")
+                {
+                    sumdonthanhcong += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Chưa thanh toán")
+                {
+                    sumchuathanhtoan += 1;
+                }
+
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đang giao hàng")
+                {
+                    sumdanggiao += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã hủy")
+                {
+                    sumdonhuy += 1;
+                }
+
+
             }
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
-
-            //số đơn đang giao
-            int sumdanggiao = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
-            {
-                sumdanggiao += 1;
-            }
             lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
-
-            //số đơn hủy
-            int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
-            {
-                sumdonhuy += 1;
-            }
-            lbl_huydon.Text = Convert.ToString(sumdonhuy);
-
-            //số đơn chưa thanh toán
-            int sumchuathanhtoan = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 0).Count(); i++)
-            {
-                sumchuathanhtoan += 1;
-            }
-            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
-
-
-            //số đơn thành công
-            int sumdonthanhcong = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
-            {
-                sumdonthanhcong += 1;
-            }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
-
-            int sumcounthd = sumdanggiao + sumdonthanhcong - sumdonhuy+sumchuathanhtoan;
-            lbl_counthd.Text = Convert.ToString(sumcounthd);
-
+            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
+            lbl_huydon.Text = Convert.ToString(sumdonhuy);
+            lbl_counthd.Text= Convert.ToString(sumdanggiao + sumdonthanhcong+sumchuathanhtoan-sumdonhuy);
         }
 
         //private void dgrid_Hd_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -208,60 +197,50 @@ namespace _3.PL.View
             dgrid_Hd.Columns[13].Name = "Đơn đang giao";
             dgrid_Hd.Columns[13].Visible = false;
             dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+            dgrid_Hd.Columns[14].Visible=false;
 
 
             dgrid_Hd.Rows.Clear();
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => Convert.ToDateTime(c.NgayLap) == dt))
             {
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 2 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
 
             }
             //Tổng tiền
-            int sum = 0;
-            for (int i = 0; i < dgrid_Hd.Rows.Count; ++i)
+            int sum = 0, sumdanggiao = 0, sumdonhuy = 0, sumchuathanhtoan = 0, sumdonthanhcong = 0;
+            for (int i = 0; i < dgrid_Hd.Rows.Count - 1; ++i)
             {
                 sum += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[8].Value);
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã thanh toán")
+                {
+                    sumdonthanhcong += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Chưa thanh toán")
+                {
+                    sumchuathanhtoan += 1;
+                }
+
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đang giao hàng")
+                {
+                    sumdanggiao += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã hủy")
+                {
+                    sumdonhuy += 1;
+                }
+
+
             }
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
-
-            //số đơn đang giao
-            int sumdanggiao = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
-            {
-                sumdanggiao += 1;
-            }
             lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
-
-            //số đơn hủy
-            int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
-            {
-                sumdonhuy += 1;
-            }
-            lbl_huydon.Text = Convert.ToString(sumdonhuy);
-
-            //số đơn chưa thanh toán
-            int sumchuathanhtoan = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 0).Count(); i++)
-            {
-                sumchuathanhtoan += 1;
-            }
-            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
-
-
-            //số đơn thành công
-            int sumdonthanhcong = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
-            {
-                sumdonthanhcong += 1;
-            }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
+            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
+            lbl_huydon.Text = Convert.ToString(sumdonhuy);
+            lbl_counthd.Text = Convert.ToString(sumdanggiao + sumdonthanhcong + sumchuathanhtoan - sumdonhuy);
 
-            int sumcounthd = sumdanggiao + sumdonthanhcong - sumdonhuy + sumchuathanhtoan;
-            lbl_counthd.Text = Convert.ToString(sumcounthd);
         }
 
         private void dtp_loc_ValueChanged(object sender, EventArgs e)
@@ -295,58 +274,48 @@ namespace _3.PL.View
             dgrid_Hd.Columns[13].Name = "Đơn đang giao";
             dgrid_Hd.Columns[13].Visible = false;
             dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+            dgrid_Hd.Columns[14].Visible= false;
             dgrid_Hd.Rows.Clear();
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => Convert.ToDateTime(c.NgayLap) >= dtst && Convert.ToDateTime(c.NgayLap) <= dte))
             {
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 2 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
 
             }
             //Tổng tiền
-            int sum = 0;
-            for (int i = 0; i < dgrid_Hd.Rows.Count; ++i)
+            int sum = 0, sumdanggiao = 0, sumdonhuy = 0, sumchuathanhtoan = 0, sumdonthanhcong = 0;
+            for (int i = 0; i < dgrid_Hd.Rows.Count - 1; ++i)
             {
                 sum += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[8].Value);
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã thanh toán")
+                {
+                    sumdonthanhcong += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Chưa thanh toán")
+                {
+                    sumchuathanhtoan += 1;
+                }
+
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đang giao hàng")
+                {
+                    sumdanggiao += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã hủy")
+                {
+                    sumdonhuy += 1;
+                }
+
+
             }
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             double tt = Convert.ToDouble(sum);
-            lbl_DangGiao.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
-
-            //số đơn đang giao
-            int sumdanggiao = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
-            {
-                sumdanggiao += 1;
-            }
-            lbl_chuathanhtoan.Text = Convert.ToString(sumdanggiao);
-
-            //số đơn hủy
-            int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
-            {
-                sumdonhuy += 1;
-            }
-            lbl_huydon.Text = Convert.ToString(sumdonhuy);
-
-            //số đơn chưa thanh toán
-            int sumchuathanhtoan = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 0).Count(); i++)
-            {
-                sumchuathanhtoan += 1;
-            }
-            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
-
-
-            //số đơn thành công
-            int sumdonthanhcong = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
-            {
-                sumdonthanhcong += 1;
-            }
+            lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
+            lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
+            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
+            lbl_huydon.Text = Convert.ToString(sumdonhuy);
+            lbl_counthd.Text = Convert.ToString(sumdanggiao + sumdonthanhcong + sumchuathanhtoan - sumdonhuy);
 
-            int sumcounthd = sumdanggiao + sumdonthanhcong - sumdonhuy + sumchuathanhtoan;
-            lbl_counthd.Text = Convert.ToString(sumcounthd);
         }
         private void btn_lockhoangtg_Click(object sender, EventArgs e)
         {
@@ -416,7 +385,7 @@ namespace _3.PL.View
                             //"Thông tin khách hàng
                         }
                         textWriter.Close();
-
+                        MessageBox.Show("Xuất thông tin khách hàng thành công");
                     }
                 }
 
@@ -459,6 +428,7 @@ namespace _3.PL.View
             dgrid_Hd.Columns[13].Name = "Đơn đang giao";
             dgrid_Hd.Columns[13].Visible = false;
             dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+            dgrid_Hd.Columns[14].Visible=false;
 
 
 
@@ -466,53 +436,41 @@ namespace _3.PL.View
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay())
             {
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 2 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
             }
             //Tổng tiền
-            int sum = 0;
-            for (int i = 0; i < dgrid_Hd.Rows.Count; ++i)
+            int sum = 0, sumdanggiao = 0, sumdonhuy = 0, sumchuathanhtoan = 0, sumdonthanhcong = 0;
+            for (int i = 0; i < dgrid_Hd.Rows.Count - 1; ++i)
             {
                 sum += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[8].Value);
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã thanh toán")
+                {
+                    sumdonthanhcong += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Chưa thanh toán")
+                {
+                    sumchuathanhtoan += 1;
+                }
+
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đang giao hàng")
+                {
+                    sumdanggiao += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã hủy")
+                {
+                    sumdonhuy += 1;
+                }
+
+
             }
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
-
-            //số đơn đang giao
-            int sumdanggiao = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
-            {
-                sumdanggiao += 1;
-            }
             lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
-
-            //số đơn hủy
-            int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
-            {
-                sumdonhuy += 1;
-            }
-            lbl_huydon.Text = Convert.ToString(sumdonhuy);
-
-            //số đơn chưa thanh toán
-            int sumchuathanhtoan = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 0).Count(); i++)
-            {
-                sumchuathanhtoan += 1;
-            }
-            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
-
-
-            //số đơn thành công
-            int sumdonthanhcong = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
-            {
-                sumdonthanhcong += 1;
-            }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
-
-            int sumcounthd = sumdanggiao + sumdonthanhcong - sumdonhuy+sumchuathanhtoan;
-            lbl_counthd.Text = Convert.ToString(sumcounthd);
+            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
+            lbl_huydon.Text = Convert.ToString(sumdonhuy);
+            lbl_counthd.Text = Convert.ToString(sumdanggiao + sumdonthanhcong + sumchuathanhtoan - sumdonhuy);
 
         }
         private void btn_reload_Click(object sender, EventArgs e)
@@ -520,19 +478,19 @@ namespace _3.PL.View
             DialogResult dialogResult = MessageBox.Show("Bạn Có Muốn ReLoad Hay Không?", "Thông Báo", MessageBoxButtons.YesNo);
             if (dialogResult == DialogResult.Yes)
             {
-                lab_closedetail.Visible = false;
+                //lab_closedetail.Visible = false;
                 lbl_start.Visible = false;
                 lbl_end.Visible = false;
                 dtp_end.Visible = false;
                 dtp_start.Visible = false;
-                btn_reload.Visible = false;
+                //btn_reload.Visible = false;
 
                 //
-                lbl_ss.Visible = false;
-                btn_ss.Visible = false;
-                grb_ss.Visible = false;
-                dtp_loc.Enabled = true;
-                rightpanel.Visible = false;
+                //lbl_ss.Visible = false;
+                //btn_ss.Visible = false;
+                //grb_ss.Visible = false;
+                //dtp_loc.Enabled = true;
+                //rightpanel.Visible = false;
 
                 reload();
             }
@@ -567,6 +525,7 @@ namespace _3.PL.View
             dgrid_Hd.Columns[13].Name = "Đơn đang giao";
             dgrid_Hd.Columns[13].Visible = false;
             dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+            dgrid_Hd.Columns[14].Visible=false;
 
 
 
@@ -574,62 +533,42 @@ namespace _3.PL.View
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => c.TrangThai.ToString() == mess))
             {
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 2 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
             }
             //Tổng tiền
-            int sum = 0;
-            for (int i = 0; i < dgrid_Hd.Rows.Count; ++i)
+            int sum = 0, sumdanggiao = 0, sumdonhuy = 0, sumchuathanhtoan = 0, sumdonthanhcong = 0;
+            for (int i = 0; i < dgrid_Hd.Rows.Count - 1; ++i)
             {
                 sum += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[8].Value);
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã thanh toán")
+                {
+                    sumdonthanhcong += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Chưa thanh toán")
+                {
+                    sumchuathanhtoan += 1;
+                }
+
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đang giao hàng")
+                {
+                    sumdanggiao += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã hủy")
+                {
+                    sumdonhuy += 1;
+                }
+
+
             }
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
-
-            //số đơn đang giao
-            int sumdanggiao = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
-            {
-                sumdanggiao += 1;
-            }
             lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
-
-            //số đơn hủy
-            int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
-            {
-                sumdonhuy += 1;
-            }
-            lbl_huydon.Text = Convert.ToString(sumdonhuy);
-
-            //số đơn chưa thanh toán
-            int sumchuathanhtoan = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 0).Count(); i++)
-            {
-                sumchuathanhtoan += 1;
-            }
-            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
-
-
-            //số đơn thành công
-            int sumdonthanhcong = 0;
-            for (int i = 0; i < dgrid_Hd.Rows.Count; i++)
-            {
-                sumdonthanhcong += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[10].Value);
-            }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
+            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
+            lbl_huydon.Text = Convert.ToString(sumdonhuy);
+            lbl_counthd.Text = Convert.ToString(sumdanggiao + sumdonthanhcong + sumchuathanhtoan - sumdonhuy);
 
-
-            if (dgrid_Hd.RowCount == 1)
-            {
-                lbl_tongtien.Text = Convert.ToString("0");
-                lbl_counthd.Text = Convert.ToString("0");
-            }
-            if (dgrid_Hd.RowCount != 1)
-            {
-                int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy+sumdanggiao;
-                lbl_counthd.Text = Convert.ToString(sumcounthd);
-            }
         }
 
 
@@ -664,6 +603,7 @@ namespace _3.PL.View
             dgrid_Hd.Columns[13].Name = "Đơn đang giao";
             dgrid_Hd.Columns[13].Visible = false;
             dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+            dgrid_Hd.Columns[14].Visible = false;
 
 
 
@@ -671,62 +611,42 @@ namespace _3.PL.View
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => c.MaNhanVien.ToLower().Contains(mess.ToLower()) || c.MaNhanVien.ToLower().Contains(mess.ToLower()) || c.SoDienThoai.Contains(mess.ToLower())))
             {
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 2 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
             }
             //Tổng tiền
-            int sum = 0;
-            for (int i = 0; i < dgrid_Hd.Rows.Count; ++i)
+            int sum = 0, sumdanggiao = 0, sumdonhuy = 0, sumchuathanhtoan = 0, sumdonthanhcong = 0;
+            for (int i = 0; i < dgrid_Hd.Rows.Count - 1; ++i)
             {
                 sum += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[8].Value);
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã thanh toán")
+                {
+                    sumdonthanhcong += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Chưa thanh toán")
+                {
+                    sumchuathanhtoan += 1;
+                }
+
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đang giao hàng")
+                {
+                    sumdanggiao += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã hủy")
+                {
+                    sumdonhuy += 1;
+                }
+
+
             }
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
-
-            //số đơn đang giao
-            int sumdanggiao = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 10).Count(); i++)
-            {
-                sumdanggiao += 1;
-            }
             lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
-
-            //số đơn hủy
-            int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1 && c.TrangThai != 10).Count(); i++)
-            {
-                sumdonhuy += 1;
-            }
-            lbl_huydon.Text = Convert.ToString(sumdonhuy);
-
-            //số đơn chưa thanh toán
-            int sumchuathanhtoan = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 0).Count(); i++)
-            {
-                sumchuathanhtoan += 1;
-            }
-            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
-
-
-            //số đơn thành công
-            int sumdonthanhcong = 0;
-            for (int i = 0; i < dgrid_Hd.Rows.Count; i++)
-            {
-                sumdonthanhcong += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[10].Value);
-            }
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
+            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
+            lbl_huydon.Text = Convert.ToString(sumdonhuy);
+            lbl_counthd.Text = Convert.ToString(sumdanggiao + sumdonthanhcong + sumchuathanhtoan - sumdonhuy);
 
-
-            if (dgrid_Hd.RowCount == 1)
-            {
-                lbl_tongtien.Text = Convert.ToString("0");
-                lbl_counthd.Text = Convert.ToString("0");
-            }
-            if (dgrid_Hd.RowCount != 1)
-            {
-                int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy+sumdanggiao;
-                lbl_counthd.Text = Convert.ToString(sumcounthd);
-            }
         }
         private void txt_TimKiem_MouseLeave(object sender, EventArgs e)
         {
@@ -810,7 +730,7 @@ namespace _3.PL.View
         {
             try
             {
-
+                LoadDgridHD();
 
                 string filePath = "";
                 // tạo SaveFileDialog để lưu file excel
@@ -995,13 +915,14 @@ namespace _3.PL.View
             dgrid_Hd.Columns[13].Name = "Đơn đang giao";
             dgrid_Hd.Columns[13].Visible = false;
             dgrid_Hd.Columns[14].Name = "Đơn đã lập";
+            dgrid_Hd.Columns[14].Visible = false;
             dgrid_Hd.Rows.Clear();
 
             
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c=>Convert.ToDateTime(c.NgayLap)==d1 || Convert.ToDateTime(c.NgayLap) == d2))
             {
-                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
+                dgrid_Hd.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 2 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
                 // MessageBox.Show
             }
 
@@ -1042,7 +963,7 @@ namespace _3.PL.View
             // MessageBox.Show(_HdService.ShowHoadon().Count.ToString());
             foreach (var x in _hdTest.GetlstHDByDay().Where(c => Convert.ToDateTime(c.NgayLap) == d1))
             {
-                dgrid_t1.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 10 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
+                dgrid_t1.Rows.Add(stt++, x.MaHoaDon, x.MaKhachHang + ", " + x.TenKhachHang + ", " + x.SoDienThoai + ", " + x.DiaChi, x.Email, x.MaNhanVien, x.NgayLap, x.NgayThanhToan, x.NgayNhan, x.TongTien, x.TrangThai == 0 ? "Chưa thanh toán" : (x.TrangThai == 1 ? "Đã thanh toán" : (x.TrangThai == 2 ? "Đang giao hàng" : "Đã hủy")), x.DonThanhCong, x.DonChuaTT, x.DonHuy, x.DangGiao, x.DonThanhCong + x.DonChuaTT + x.DangGiao + x.DonHuy);
             }
 
             dgrid_t2.ColumnCount = 15;
@@ -1086,42 +1007,38 @@ namespace _3.PL.View
             }
 
             //Tổng tiền
-            int sum = 0;
-            for (int i = 0; i < dgrid_Hd.Rows.Count; ++i)
+            int sum = 0, sumdanggiao = 0, sumdonhuy = 0, sumchuathanhtoan = 0, sumdonthanhcong = 0;
+            for (int i = 0; i < dgrid_Hd.Rows.Count - 1; ++i)
             {
                 sum += Convert.ToInt32(dgrid_Hd.Rows[i].Cells[8].Value);
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã thanh toán")
+                {
+                    sumdonthanhcong += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Chưa thanh toán")
+                {
+                    sumchuathanhtoan += 1;
+                }
+
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đang giao hàng")
+                {
+                    sumdanggiao += 1;
+                }
+                if (dgrid_Hd.Rows[i].Cells[9].Value.ToString() == "Đã hủy")
+                {
+                    sumdonhuy += 1;
+                }
+
+
             }
             CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
             double tt = Convert.ToDouble(sum);
             lbl_tongtien.Text = Convert.ToInt32(tt).ToString("#,###", cul.NumberFormat);
-
-            //số đơn hủy
-            int sumdonhuy = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai != 0 && c.TrangThai != 1).Count(); i++)
-            {
-                sumdonhuy += 1;
-            }
-            lbl_huydon.Text = Convert.ToString(sumdonhuy);
-
-            //số đơn chưa thanh toán
-            int sumchuathanhtoan = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 0).Count(); i++)
-            {
-                sumchuathanhtoan += 1;
-            }
-            lbl_DangGiao.Text = Convert.ToString(sumchuathanhtoan);
-
-
-            //số đơn thành công
-            int sumdonthanhcong = 0;
-            for (int i = 0; i < _hdTest.GetlstHDByDay().Where(c => c.TrangThai == 1).Count(); i++)
-            {
-                sumdonthanhcong += 1;
-            }
+            lbl_DangGiao.Text = Convert.ToString(sumdanggiao);
             labl_sodonthanhcong.Text = Convert.ToString(sumdonthanhcong);
-
-            int sumcounthd = sumchuathanhtoan + sumdonthanhcong - sumdonhuy;
-            lbl_counthd.Text = Convert.ToString(sumcounthd);
+            lbl_chuathanhtoan.Text = Convert.ToString(sumchuathanhtoan);
+            lbl_huydon.Text = Convert.ToString(sumdonhuy);
+            lbl_counthd.Text = Convert.ToString(sumdanggiao + sumdonthanhcong + sumchuathanhtoan - sumdonhuy);
 
 
 
