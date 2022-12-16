@@ -2,6 +2,7 @@
 using _2.BUS.IServices;
 using _2.BUS.Services;
 using _2.BUS.ViewModel;
+using _3.PL.Properties;
 using _3.PL.View;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using System;
@@ -32,9 +33,18 @@ namespace _3.PL
             _CvService = new ChucVuService();
             LoadDGridNV(null);
             LoadLstChucVu();
-           
-           
+
+            LoadGT();
             LoadLoc();
+        }
+        public void LoadGT()
+        {
+            List<string> lst = new List<string>() { "Bà Rịa", "Bạc Liêu", "Bảo Lộc", "Bắc Giang", "Bắc Kạn", "Bắc Ninh", "Bến Tre", " BIên Hòa", "Buôn Ma Thuật", "Cà Mau", "Cam Ranh", "Cao Bằng", "Cao Lãnh", "Cần Thơ", "Cẩm Phả", "Châu Đốc", "Đà Nẵng", "Đà Lạt", "Điện Biên Phủ", "Đồng Hới", "Hà Giang", "Hạ Long", "Hà Nội", "Hà Tiên", "Hạ Tĩnh", "Hải Dương", "Hải Phòng", "Hòa Bình", "Hội An", "Huế", "Hưng Yên", "Kon Tum", "Lai Châu", "Lạng Sơn", "Lào Cai", "Long Xuyên", "Móng Cái", "Mỹ Tho", "Nam Định", "Nha Trang", "Ninh Bình", "Phan Rang", "Phan Thiết", "Phủ Lý", "Phúc Yên", "Pleiku", "Quảng Ngãi", "Quy Nhơn", "Sầm Sơn", "Sóc Trăng", "Sơn La", "Tam Kỳ", "Tây An", "Tây Ninh", "Thái Bình", "Thái Nguyên", "Thanh Hóa", "Thủ Dầu Một", "TP Hồ Chí Minh", "Trà Vinh", "Tuy Hòa", "Tuyên Quang", "Uông Bí", "Việt Trì", "Vinh", "Vĩnh Long", "Vĩnh Yên", "Vũng Tàu", "Yên Bái", "Phú Quốc" };
+
+            foreach (var x in lst)
+            {
+                cmb_tt.Items.Add(x);
+            }
         }
         public bool check()
         {
@@ -60,7 +70,7 @@ namespace _3.PL
                 MessageBox.Show("Ngày sinh phải được chọn", "Thông báo");
                 return false;
             }
-            if (string.IsNullOrEmpty(txt_QueQuanNV.Text))
+            if (string.IsNullOrEmpty(cmb_tt.Text))
             {
                 MessageBox.Show("Quê quán không được bỏ trống", "Thông báo");
                 return false;
@@ -189,7 +199,7 @@ namespace _3.PL
                 TenNhanVien = txt_TenNV.Text,
                 GioiTinh = (rbtn_Nam.Checked ? 0 : 1),
                 NamSinh = dateTimePicker1.Value,
-                QueQuan = txt_QueQuanNV.Text,
+                QueQuan = cmb_tt.Text,
                 SoCmnd = txt_CmNV.Text,
                 DienThoai = txt_SdtNV.Text,
                 TrangThai = cbx_HoatDong.Checked ? 1 : 0,
@@ -212,17 +222,27 @@ namespace _3.PL
             txt_MaNV.Text = obj.MaNhanVien;
             txt_TenNV.Text = obj.TenNhanVien;
             dateTimePicker1.Value = obj.NamSinh;
-            txt_QueQuanNV.Text = obj.QueQuan;
+            cmb_tt.Text = obj.QueQuan;
             txt_CmNV.Text = obj.SoCmnd;
             txt_SdtNV.Text = obj.DienThoai;
             txt_EmailNV.Text = obj.Email;
             txt_PassNV.Text = obj.PassWord;
             cmb_ChucVuNV.Text = obj.ChucVu.Ma + "-" + _CvService.GetNameByID(obj.IdChucVu);
-           //cmb_BaoCao.Text = _CvService.GetNameByID();
-            if (obj.Anh != null)
+            //cmb_BaoCao.Text = _CvService.GetNameByID();
+            if (obj.Anh == "")
             {
+                //MessageBox.Show(obj.Anh);
                 txt_Anh.Text = obj.Anh;
-                Image img =Image.FromFile(obj.Anh);
+                pb_AnhNV.Image = Resources.icons8_account_96;
+                pb_AnhNV.SizeMode = PictureBoxSizeMode.StretchImage;
+
+                // Bitmap bm = new Bitmap(txt_Anh.Text);
+            }
+            if (obj.Anh != "")
+            {
+                //MessageBox.Show(obj.Anh);
+                txt_Anh.Text = obj.Anh;
+                Image img = Image.FromFile(obj.Anh);
                 pb_AnhNV.Image = img;
                 pb_AnhNV.SizeMode = PictureBoxSizeMode.StretchImage;
 
@@ -342,7 +362,7 @@ namespace _3.PL
             txt_MaNV.Text = "";
             txt_TenNV.Text = "";
             dateTimePicker1= new DateTimePicker();
-            txt_QueQuanNV.Text = "";
+            cmb_tt.Text = "";
             txt_CmNV.Text = "";
             txt_SdtNV.Text = "";
             txt_EmailNV.Text = "";
