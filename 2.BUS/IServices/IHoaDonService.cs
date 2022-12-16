@@ -14,6 +14,8 @@ namespace _2.BUS.IServices
         string Delete(HoaDonView obj);
         List<string> TrangThai();
         List<HoaDonView> ShowHoadon();
+        List<HoaDonView> ShowHoadon(string input);
+       
         string? GetMabyID(Guid? id);
         Guid GetID(string? id);
         

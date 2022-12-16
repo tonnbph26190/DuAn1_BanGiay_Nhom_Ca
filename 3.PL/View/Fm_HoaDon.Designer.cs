@@ -39,6 +39,7 @@
             this.Fl_SanPhams = new System.Windows.Forms.FlowLayoutPanel();
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_HoaDonChiTiet)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dgrid_HoaDon)).BeginInit();
             this.panel4.SuspendLayout();
@@ -72,7 +73,7 @@
             // txt_MaHD
             // 
             this.txt_MaHD.Enabled = false;
-            this.txt_MaHD.Location = new System.Drawing.Point(131, 35);
+            this.txt_MaHD.Location = new System.Drawing.Point(106, 36);
             this.txt_MaHD.Name = "txt_MaHD";
             this.txt_MaHD.Size = new System.Drawing.Size(129, 23);
             this.txt_MaHD.TabIndex = 32;
@@ -80,7 +81,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(48, 43);
+            this.label1.Location = new System.Drawing.Point(23, 44);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(77, 15);
             this.label1.TabIndex = 33;
@@ -91,9 +92,9 @@
             this.btn_CLear.BackColor = System.Drawing.SystemColors.Highlight;
             this.btn_CLear.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.btn_CLear.Image = ((System.Drawing.Image)(resources.GetObject("btn_CLear.Image")));
-            this.btn_CLear.Location = new System.Drawing.Point(528, 26);
+            this.btn_CLear.Location = new System.Drawing.Point(528, 27);
             this.btn_CLear.Name = "btn_CLear";
-            this.btn_CLear.Size = new System.Drawing.Size(88, 38);
+            this.btn_CLear.Size = new System.Drawing.Size(88, 36);
             this.btn_CLear.TabIndex = 155;
             this.btn_CLear.Text = "Reset";
             this.btn_CLear.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
@@ -155,12 +156,24 @@
             this.button1.UseVisualStyleBackColor = false;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
+            // textBox1
+            // 
+            this.textBox1.Location = new System.Drawing.Point(250, 35);
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(259, 23);
+            this.textBox1.TabIndex = 159;
+            this.textBox1.Text = "Tìm Kiếm.....";
+            this.textBox1.Click += new System.EventHandler(this.textBox1_Click);
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            // 
             // Fm_HoaDon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.ClientSize = new System.Drawing.Size(1343, 704);
+            this.Controls.Add(this.textBox1);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.panel4);
@@ -193,5 +206,6 @@
         private System.Windows.Forms.FlowLayoutPanel Fl_SanPhams;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.TextBox textBox1;
     }
 }

@@ -119,5 +119,38 @@ namespace _2.BUS.Services
         {
             return ShowHoadon().FirstOrDefault(c => c.MaHoaDon == id).Id;
         }
+
+        public List<HoaDonView> ShowHoadon(string input)
+        {
+            if (input.Trim()!=null &&input!= "Tìm Kiếm.....")
+            {
+                var data =
+                (
+                    from a in _iHoaDonRepository.GetAll()
+                    join b in _iKhachhangRepository.GetAll() on a.IdKhachHang equals b.Id
+                    join c in _iQlNhanvienSerivce.GetAll() on a.IdNhanVien equals c.Id
+                    where a.MaHoaDon.Contains(input)
+                    select new HoaDonView()
+                    {
+                        Id = a.Id,
+                        MaHoaDon = a.MaHoaDon,
+                        NgayLap = a.NgayLap == null ? nullDateTime.Value : a.NgayLap,
+                        NgayNhanHang = a.NgayNhanHang == null ? nullDateTime.Value : a.NgayNhanHang,
+                        NgayShipHang = a.NgayShipHang == null ? nullDateTime.Value : a.NgayShipHang.Value,
+                        NgayThanhToan = a.NgayThanhToan == null ? nullDateTime.Value : a.NgayThanhToan,
+                        IdNhanVien = c.Id,
+                        IdKhachHang = b.Id == Guid.Empty ? Guid.Empty : b.Id,
+                        NguoiBan = a.NguoiBan,
+                        TrangThai = a.TrangThai,
+                        TenKH = b.Ten,
+                        Sdt = b.SoDienThoai,
+                        NV = c.MaNhanVien + "_" + c.TenNhanVien,
+
+                    }
+                ).ToList();
+                return data;
+            }
+            return ShowHoadon();
+        }
     }
 }

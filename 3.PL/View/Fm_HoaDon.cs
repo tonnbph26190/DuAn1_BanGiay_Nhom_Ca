@@ -22,6 +22,7 @@ namespace _3.PL
         Guid _idHoadon;
         Guid _idSanpham;
         List<HoaDonChiTIetView> _lstChitietHD;
+        List<HoaDonView> _lstHoaDon;
         public Fm_HoaDon()
         {
             _iHoadonService = new HoaDonServices();
@@ -29,7 +30,7 @@ namespace _3.PL
             _iQlSanphamSerivce = new ChiTIetSpServices();
             _lstChitietHD = new List<HoaDonChiTIetView>();
             InitializeComponent();
-            LoadHdCho();
+            LoadHdCho("");
             loadSp();
         }
 
@@ -37,19 +38,21 @@ namespace _3.PL
         {
 
         }
-        private void LoadHdCho()
+        private void LoadHdCho(string input)
         {
             int stt = 1;
             dgrid_HoaDon.ColumnCount = 5;
             dgrid_HoaDon.Columns[0].Name = "STT";
             dgrid_HoaDon.Columns[1].Name = "Id";
+            dgrid_HoaDon.Columns[1].Visible= false;
             dgrid_HoaDon.Columns[2].Name = "Mã hóa đơn";
             dgrid_HoaDon.Columns[3].Name = "Tên khách hàng";
             dgrid_HoaDon.Columns[4].Name = "NV bán";
             dgrid_HoaDon.Rows.Clear();
-
+            _lstHoaDon = _iHoadonService.ShowHoadon(input).Where(c => c.TrangThai == 1).ToList();
           
-            foreach (var x in _iHoadonService.ShowHoadon().Where(c => c.TrangThai == 1))
+
+            foreach (var x in _lstHoaDon)
             {
                 dgrid_HoaDon.Rows.Add(stt++, x.Id, x.MaHoaDon, x.TenKH,x.NV);
             }
@@ -160,15 +163,15 @@ namespace _3.PL
                         var Hdct = _iHoadonChitietSerivce.ShowHoadonChitiet(_idHoadon).FirstOrDefault(c => c.Id == idHdct);
                         var Sp = _iQlSanphamSerivce.GetAll().FirstOrDefault(c => c.Id == idSp);
                         Hdct.SoLuong--;
+                        Hdct.GhiChu = "Khách trả hàng";
                         Sp.SoLuong++;
                         if (Hdct.SoLuong==0)
                         {
-                            Hdct.GhiChu = "Khách trả hàng";
+                            Hdct.GhiChu = "Khách toàn bộ hàng trả hàng";
                         }
-                        if (Hdct.SoLuong<0||Hdct.SoLuong>Sp.SoLuong)
+                        if (Hdct.SoLuong<0)
                         {
-                            Frm_Alert fm = new Frm_Alert();
-                            fm.showAlert("Sản phẩm đã vượt quá số lượng cho phép", Frm_Alert.enmType.Warning);
+                            return;
                         }
                         _iHoadonChitietSerivce.Update(Hdct);
                         _iQlSanphamSerivce.UPDATE(Sp);
@@ -187,6 +190,21 @@ namespace _3.PL
             {
 
             }
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            LoadHdCho(textBox1.Text);
+        }
+
+        private void textBox1_Click(object sender, EventArgs e)
+        {
+            textBox1.Text = "";
+        }
+
+        private void textBox1_Leave(object sender, EventArgs e)
+        {
+            textBox1.Text= "Tìm Kiếm.....";
         }
     }
 }
