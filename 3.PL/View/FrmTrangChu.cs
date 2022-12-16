@@ -156,5 +156,10 @@ namespace _3.PL
             }
             return;
         }
+
+        private void btn_ViewSP_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

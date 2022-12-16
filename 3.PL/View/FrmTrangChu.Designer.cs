@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmTrangChu));
             this.pn_Menu = new System.Windows.Forms.Panel();
+            this.btn_ViewSP = new System.Windows.Forms.Button();
             this.btn_Exit = new System.Windows.Forms.Button();
             this.btn_DangXuat = new System.Windows.Forms.Button();
             this.btn_NhanVien = new System.Windows.Forms.Button();
@@ -48,6 +49,7 @@
             this.pnlFromLoad = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.lb_TrangChu = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.pn_Menu.SuspendLayout();
             this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -57,6 +59,7 @@
             // pn_Menu
             // 
             this.pn_Menu.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.pn_Menu.Controls.Add(this.btn_ViewSP);
             this.pn_Menu.Controls.Add(this.btn_Exit);
             this.pn_Menu.Controls.Add(this.btn_DangXuat);
             this.pn_Menu.Controls.Add(this.btn_NhanVien);
@@ -71,6 +74,25 @@
             this.pn_Menu.Name = "pn_Menu";
             this.pn_Menu.Size = new System.Drawing.Size(272, 968);
             this.pn_Menu.TabIndex = 0;
+            // 
+            // btn_ViewSP
+            // 
+            this.btn_ViewSP.BackColor = System.Drawing.SystemColors.MenuHighlight;
+            this.btn_ViewSP.Dock = System.Windows.Forms.DockStyle.Top;
+            this.btn_ViewSP.FlatAppearance.BorderSize = 0;
+            this.btn_ViewSP.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btn_ViewSP.Font = new System.Drawing.Font("Times New Roman", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.btn_ViewSP.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(253)))), ((int)(((byte)(254)))), ((int)(((byte)(254)))));
+            this.btn_ViewSP.Image = ((System.Drawing.Image)(resources.GetObject("btn_ViewSP.Image")));
+            this.btn_ViewSP.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btn_ViewSP.Location = new System.Drawing.Point(0, 634);
+            this.btn_ViewSP.Name = "btn_ViewSP";
+            this.btn_ViewSP.Size = new System.Drawing.Size(272, 73);
+            this.btn_ViewSP.TabIndex = 10;
+            this.btn_ViewSP.Text = "Danh mục sản phẩm";
+            this.btn_ViewSP.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btn_ViewSP.UseVisualStyleBackColor = false;
+            this.btn_ViewSP.Click += new System.EventHandler(this.btn_ViewSP_Click);
             // 
             // btn_Exit
             // 
@@ -223,6 +245,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.Beige;
+            this.panel2.Controls.Add(this.label4);
             this.panel2.Controls.Add(this.lbl_TenChucVu);
             this.panel2.Controls.Add(this.label3);
             this.panel2.Controls.Add(this.panel3);
@@ -277,7 +300,7 @@
             this.User.AutoSize = true;
             this.User.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.User.ForeColor = System.Drawing.Color.Blue;
-            this.User.Location = new System.Drawing.Point(14, 137);
+            this.User.Location = new System.Drawing.Point(109, 137);
             this.User.Name = "User";
             this.User.Size = new System.Drawing.Size(103, 20);
             this.User.TabIndex = 1;
@@ -324,6 +347,17 @@
             this.lb_TrangChu.Size = new System.Drawing.Size(165, 34);
             this.lb_TrangChu.TabIndex = 2;
             this.lb_TrangChu.Text = "Trang Chủ";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.2F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label4.ForeColor = System.Drawing.Color.Blue;
+            this.label4.Location = new System.Drawing.Point(14, 137);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(46, 20);
+            this.label4.TabIndex = 5;
+            this.label4.Text = "Tên:";
             // 
             // FrmTrangChu
             // 
@@ -372,5 +406,7 @@
         private System.Windows.Forms.Label lbl_TenChucVu;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Button btn_Exit;
+        private System.Windows.Forms.Button btn_ViewSP;
+        private System.Windows.Forms.Label label4;
     }
 }
