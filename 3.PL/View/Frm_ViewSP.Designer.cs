@@ -703,6 +703,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel4);
             this.Controls.Add(this.menuStrip1);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "Frm_ViewSP";
             this.Text = "Frm_ViewSP";
             this.panel4.ResumeLayout(false);

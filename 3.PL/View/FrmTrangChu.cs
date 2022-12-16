@@ -159,7 +159,11 @@ namespace _3.PL
 
         private void btn_ViewSP_Click(object sender, EventArgs e)
         {
-
+            lb_TrangChu.Text = "Danh mục sản phẩm";
+            this.pnlFromLoad.Controls.Clear();
+            Frm_ViewSP frmViewSp = new Frm_ViewSP() { Dock = DockStyle.Fill, TopLevel = false, TopMost = true };
+            this.pnlFromLoad.Controls.Add(frmViewSp);
+            frmViewSp.Show();
         }
     }
 }
