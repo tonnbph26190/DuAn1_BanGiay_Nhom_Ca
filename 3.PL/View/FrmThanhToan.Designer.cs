@@ -178,6 +178,7 @@
             this.txt_Sdt.Name = "txt_Sdt";
             this.txt_Sdt.Size = new System.Drawing.Size(172, 23);
             this.txt_Sdt.TabIndex = 1;
+            this.txt_Sdt.TextAlignChanged += new System.EventHandler(this.txt_Sdt_TextAlignChanged);
             this.txt_Sdt.TextChanged += new System.EventHandler(this.txt_Sdt_TextChanged);
             // 
             // panel5
@@ -388,6 +389,7 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox1.FormattingEnabled = true;
             this.comboBox1.Location = new System.Drawing.Point(7, 5);
             this.comboBox1.Name = "comboBox1";
@@ -500,7 +502,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(3, 2, 3, 2);
-            this.groupBox3.Size = new System.Drawing.Size(300, 289);
+            this.groupBox3.Size = new System.Drawing.Size(303, 289);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Giao hàng";

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace _3.PL.Utilities
@@ -49,6 +50,14 @@ namespace _3.PL.Utilities
         {
             if (string.IsNullOrEmpty(value)) return "";
             return Convert.ToString(value[0]);
+        }
+        public static bool checkSDT(string input)
+        {
+            if (Regex.IsMatch(input, @"((09|03|07|08|05)+([0-9]{8})\b)"))
+            {
+                return true;
+            }
+            return false;
         }
 
         private static string GetVietHoaChuCaiDau(string value)

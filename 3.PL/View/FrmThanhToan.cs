@@ -391,6 +391,7 @@ namespace _3.PL.View
                             item.SoLuong= item.SoLuong;
                             item.GiamGia =Convert.ToDouble(txt_GiamGia.Text);
                             item.DonGia = sp.DonGiaBan;
+                            break;
                                                     
                         }
                         _iQlSanphamSerivce.UPDATE(sp);
@@ -622,7 +623,7 @@ namespace _3.PL.View
 
         private void txt_Sdt_TextChanged(object sender, EventArgs e)
         {
-            if (txt_Sdt.Text == "")
+            if (txt_Sdt.Text.Trim() == ""||Utilitys.checkSDT(txt_Sdt.Text)==false)
             {
                 
                 return;
@@ -717,7 +718,7 @@ namespace _3.PL.View
 
         private void button2_Click(object sender, EventArgs e)
         {
-            if (txt_DiaChi.Text==""||txt_Sdt.Text==""||txt_TenKh.Text=="")
+            if (txt_DiaChi.Text.Trim() ==""||txt_Sdt.Text.Trim()==""||txt_TenKh.Text.Trim()==""|| Utilitys.checkSDT(txt_Sdt.Text)==false)
             {
                 Frm_Alert fm = new Frm_Alert();
                 fm.showAlert("Mời bạn nhập đầy đủ thông tin để sử dụng tính năng giao hàng ", Frm_Alert.enmType.Warning);
@@ -859,15 +860,21 @@ namespace _3.PL.View
                 e.Graphics.DrawString("Số lượng", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                     new Point(w / 2, y));
                 e.Graphics.DrawString("Đơn giá", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                    new Point(w / 2 + 100, y));
-                e.Graphics.DrawString("Giam", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                    new Point(w / 2 + 170, y));
+                    new Point(w / 2 + 100, y));              
                 e.Graphics.DrawString("Thành tiền", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                    new Point(w - 200, y));
+                    new Point(w - 200, y)); 
+               
 
                 //var id = _lstHoaDonBans.Select(x => x.IdhoaDon).FirstOrDefault();
                 var list = _iHoadonService.ShowHoadon().Where(c => c.Id == _iHoadonService.GetID(txt_luu.Text));
-
+                e.Graphics.DrawString("Giảm:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                   new Point(w - 200, y + 80));
+                e.Graphics.DrawString(string.Format("{0:N0}", txt_GiamGia.Text), new Font("Varial", 8, FontStyle.Bold),
+                       Brushes.Black, new Point(w - 155, y + 82));
+                e.Graphics.DrawString("Tổng đơn:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                   new Point(w - 200, y + 100));
+                e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToDouble(lbl_totalcart.Text) - Convert.ToDouble(txt_GiamGia.Text)), new Font("Varial", 8, FontStyle.Bold),
+                       Brushes.Black, new Point(w - 120, y + 105));
                 int i = 1;
 
                 y += 20;
@@ -887,10 +894,8 @@ namespace _3.PL.View
                     e.Graphics.DrawString(string.Format("{0:N0}", x.SoLuong), new Font("Varial", 8, FontStyle.Bold),
                         Brushes.Black, new Point(w / 2, y));
                     e.Graphics.DrawString(string.Format("{0:N0}", x.DonGia), new Font("Varial", 8, FontStyle.Bold),
-                        Brushes.Black, new Point(w / 2 + 100, y));
-                    e.Graphics.DrawString(string.Format("{0:N0}", x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
-                       Brushes.Black, new Point(w / 2 + 170, y));
-                    e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia)) - x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w / 2 + 100, y));                  
+                    e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia))), new Font("Varial", 8, FontStyle.Bold),
                         Brushes.Black, new Point(w - 200, y));
                     y += 20;
                 }
@@ -941,9 +946,7 @@ namespace _3.PL.View
                 e.Graphics.DrawString("Số lượng", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                     new Point(w / 2, y));
                 e.Graphics.DrawString("Đơn giá", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                    new Point(w / 2 + 100, y));
-                e.Graphics.DrawString("Giam", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                    new Point(w / 2 + 170, y));
+                    new Point(w / 2 + 100, y));               
                 e.Graphics.DrawString("Thành tiền", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                     new Point(w - 200, y)); 
                 e.Graphics.DrawString("Địa chỉ:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
@@ -957,13 +960,22 @@ namespace _3.PL.View
                 var hoanh = y + 80;
                 //var id = _lstHoaDonBans.Select(x => x.IdhoaDon).FirstOrDefault();
                 var list = _iHoadonService.ShowHoadon().Where(c => c.MaHoaDon.Trim().Equals(txt_MaHD.Text.Trim()));
-
+                e.Graphics.DrawString("Giảm:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                   new Point(w -200, y+80));
+                e.Graphics.DrawString(string.Format("{0:N0}", txt_GiamGia.Text), new Font("Varial", 8, FontStyle.Bold),
+                       Brushes.Black, new Point(w - 155, y +82));
+                e.Graphics.DrawString("Tổng đơn:", new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
+                   new Point(w - 200, y +100));
+                e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToDouble(lbl_totalcart.Text) - Convert.ToDouble(txt_GiamGia.Text)), new Font("Varial", 8, FontStyle.Bold),
+                       Brushes.Black, new Point(w - 120, y + 105));
                 int i = 1;
 
                 y += 30;
                 
                 foreach (var x in _iHoadonChitietSerivce.ShowHoadonChitiet().Where(c => c.IdhoaDon == _iHoadonService.GetID(txt_MaHD.Text)))
                 {
+                    double sum = x.SoLuong*x.DonGia;
+                    sum += x.ThanhTien;
                     e.Graphics.DrawString(string.Format("{0}", i++), new Font("Varial", 8, FontStyle.Bold), Brushes.Black,
                         new Point(10, y));
                     e.Graphics.DrawString("" + _iQlSanphamSerivce.GetAll()
@@ -978,15 +990,13 @@ namespace _3.PL.View
                     e.Graphics.DrawString(string.Format("{0:N0}", x.DonGia), new Font("Varial", 8, FontStyle.Bold),
                         Brushes.Black, new Point(w / 2 + 100, y));
                    
-                    e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia)) - x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
-                        Brushes.Black, new Point(w - 200, y));
+                    e.Graphics.DrawString(string.Format("{0:N0}", Convert.ToInt32(Convert.ToInt32(x.SoLuong) * Convert.ToInt32(x.DonGia))), new Font("Varial", 8, FontStyle.Bold),
+                        Brushes.Black, new Point(w - 200, y));                  
                     y += 20;
                     e.Graphics.DrawString(x.sdt, new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                         new Point(tung + 40, hoanh+29));
                     e.Graphics.DrawString(_iHoadonService.ShowHoadon().FirstOrDefault(c=>c.Sdt==x.sdt).NguoiBan, new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
-                        new Point(tung + 60, hoanh));
-                    e.Graphics.DrawString(string.Format("{0:N0}", x.GiamGia), new Font("Varial", 8, FontStyle.Bold),
-                       Brushes.Black, new Point(w / 2 + 170, y));
+                        new Point(tung + 60, hoanh));                   
                     e.Graphics.DrawString(_iHoadonService.ShowHoadon().FirstOrDefault(c => c.Sdt == x.sdt).TenKH, new Font("Varial", 10, FontStyle.Bold), Brushes.Black,
                         new Point(tung + 115, hoanh+61));
                 }
@@ -1005,6 +1015,11 @@ namespace _3.PL.View
             {
                 rbtn_ChuaThanhToan.Checked = true;
             }
+        }
+
+        private void txt_Sdt_TextAlignChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
