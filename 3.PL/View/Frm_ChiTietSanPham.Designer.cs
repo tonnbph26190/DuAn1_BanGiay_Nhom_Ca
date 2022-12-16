@@ -34,7 +34,6 @@
             this.dgrid_sanpham = new System.Windows.Forms.DataGridView();
             this.Fl_SanPham = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.txt_ChucVu = new System.Windows.Forms.Label();
             this.txt_Ma = new System.Windows.Forms.TextBox();
             this.cmb_SanPham = new System.Windows.Forms.ComboBox();
             this.richtxt_mota = new System.Windows.Forms.RichTextBox();
@@ -72,6 +71,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.txt_ChucVu = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.bnt_Them = new System.Windows.Forms.Button();
             this.btn_Xoa = new System.Windows.Forms.Button();
@@ -110,7 +110,7 @@
             this.dgrid_sanpham.Name = "dgrid_sanpham";
             this.dgrid_sanpham.RowHeadersWidth = 51;
             this.dgrid_sanpham.RowTemplate.Height = 25;
-            this.dgrid_sanpham.Size = new System.Drawing.Size(578, 560);
+            this.dgrid_sanpham.Size = new System.Drawing.Size(692, 560);
             this.dgrid_sanpham.TabIndex = 158;
             this.dgrid_sanpham.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgrid_sanpham_CellClick);
             // 
@@ -171,15 +171,6 @@
             this.groupBox1.Size = new System.Drawing.Size(556, 546);
             this.groupBox1.TabIndex = 150;
             this.groupBox1.TabStop = false;
-            // 
-            // txt_ChucVu
-            // 
-            this.txt_ChucVu.AutoSize = true;
-            this.txt_ChucVu.Location = new System.Drawing.Point(1212, 9);
-            this.txt_ChucVu.Name = "txt_ChucVu";
-            this.txt_ChucVu.Size = new System.Drawing.Size(44, 15);
-            this.txt_ChucVu.TabIndex = 151;
-            this.txt_ChucVu.Text = "label17";
             // 
             // txt_Ma
             // 
@@ -536,6 +527,15 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Mã";
             // 
+            // txt_ChucVu
+            // 
+            this.txt_ChucVu.AutoSize = true;
+            this.txt_ChucVu.Location = new System.Drawing.Point(1212, 9);
+            this.txt_ChucVu.Name = "txt_ChucVu";
+            this.txt_ChucVu.Size = new System.Drawing.Size(44, 15);
+            this.txt_ChucVu.TabIndex = 151;
+            this.txt_ChucVu.Text = "label17";
+            // 
             // button1
             // 
             this.button1.BackColor = System.Drawing.SystemColors.Highlight;
@@ -634,7 +634,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(1268, 606);
+            this.ClientSize = new System.Drawing.Size(1376, 606);
             this.Controls.Add(this.txt_ChucVu);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.label12);

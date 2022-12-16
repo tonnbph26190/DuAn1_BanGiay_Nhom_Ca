@@ -16,6 +16,7 @@ namespace _3.PL
         [STAThread]
         static void Main()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("NRAiBiAaIQQuGjN/V0Z+X09EaFpEVmJWf1ZpR2NbfE51flFPalhWVAciSV9jS3xSdERlWXpbcnVVR2VeUQ==");
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
