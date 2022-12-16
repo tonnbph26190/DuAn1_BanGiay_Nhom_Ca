@@ -517,13 +517,13 @@ namespace _3.PL.View
             txt_Sdt.Text = "";
             txt_DiaChi.Text = "";
             txt_TenKh.Text = "";
-            txt_ThanhTien.Text = "";
+            txt_ThanhTien.Text ="0";
             dateTimePicker1 = new DateTimePicker();
             rbtn_ChuaThanhToan.Checked= true;         
             lbl_totalcart.Text = "";
-            txt_GiamGia.Text ="";
+            txt_GiamGia.Text ="0";
             txt_MaHD.Text = "";
-            txt_Diem.Text = "";
+            txt_Diem.Text = "0";
             txt_DiaChi2.Text="";
         }
 
@@ -704,13 +704,19 @@ namespace _3.PL.View
             {
                 return;
             }
+            if (Convert.ToDouble(txt_GiamGia.Text)<0)
+            {
+                MessageBox.Show(" Nhập lại");
+                txt_GiamGia.Text = "0";
+                return;
+            }
             if(txt_Diem.Text!=""&&Convert.ToDouble(txt_Diem.Text) <Convert.ToDouble(txt_GiamGia.Text))
             {
                 MessageBox.Show("Điểm ko đủ nhập lại");
                 txt_GiamGia.Text = "";
                 return;
             }
-            else
+            if(Convert.ToDouble(txt_ThanhTien.Text)>Convert.ToDouble(txt_GiamGia.Text))
             {
                 txt_ThanhTien.Text=Convert.ToString(Convert.ToDouble(lbl_totalcart.Text) - Convert.ToDouble(txt_GiamGia.Text));
             }         
