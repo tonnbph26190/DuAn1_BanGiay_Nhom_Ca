@@ -96,7 +96,7 @@ namespace _3.PL.View
             _idSanpham = ((sender as System.Windows.Forms.Button).Tag as ChiTIetSpView).Id;
             if (Flag)
             {
-                ThemSpVaoGiohang(_idSanpham);
+                ThemSpVaoGiohang(_idSanpham);              
             }
             else
             {
@@ -354,6 +354,11 @@ namespace _3.PL.View
                 KhachHang = _iKhachHangService.GetAll().FirstOrDefault(c => c.SoDienThoai == txt_Sdt.Text.Trim());
                 if (KhachHang != null)
                 {
+                    string ma= "HD" + Utilitys.GetNumber(3);
+                    do
+                    {
+                        ma = "HD" + Utilitys.GetNumber(3);
+                    } while (_iHoadonService.ShowHoadon().Any(c => c.MaHoaDon == ma));
                     if (_iHoadonService.ShowHoadon().Any(c=>c.MaHoaDon==txt_MaHD.Text))
                     {
                         var obj = _iHoadonService.ShowHoadon().FirstOrDefault(c => c.MaHoaDon == txt_MaHD.Text);
@@ -361,9 +366,11 @@ namespace _3.PL.View
                         obj.NgayThanhToan=DateTime.Now;
                         _iHoadonService.Update(obj);
                     }
+                    
                     HoaDonView hoadon = new HoaDonView()
                     {
-                        MaHoaDon ="HD" + Utilitys.GetNumber(3),
+                        
+                        MaHoaDon =ma,
                         NgayLap = DateTime.Today,
                         NgayNhanHang=DateTime.Today,
                         NgayShipHang=DateTime.Today,
@@ -391,11 +398,10 @@ namespace _3.PL.View
                             item.SoLuong= item.SoLuong;
                             item.GiamGia =Convert.ToDouble(txt_GiamGia.Text);
                             item.DonGia = sp.DonGiaBan;
-                            break;
+                           
                                                     
                         }
-                        _iQlSanphamSerivce.UPDATE(sp);
-                        _iHoadonChitietSerivce.Update(item);
+                        _iQlSanphamSerivce.UPDATE(sp);                       
                         _iKhachHangService.Update(KhachHang);
                     }
                     loadHDCho();
@@ -521,11 +527,12 @@ namespace _3.PL.View
             txt_ThanhTien.Text ="0";
             dateTimePicker1 = new DateTimePicker();
             rbtn_ChuaThanhToan.Checked= true;         
-            lbl_totalcart.Text = "";
+            lbl_totalcart.Text = "0";
             txt_GiamGia.Text ="0";
             txt_MaHD.Text = "";
             txt_Diem.Text = "0";
             txt_DiaChi2.Text="";
+            _idSanpham = Guid.Empty;
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -624,7 +631,7 @@ namespace _3.PL.View
 
         private void txt_Sdt_TextChanged(object sender, EventArgs e)
         {
-            if (txt_Sdt.Text.Trim() == ""||Utilitys.checkSDT(txt_Sdt.Text)==false)
+            if (txt_Sdt.Text =="")
             {
                 
                 return;
@@ -705,19 +712,13 @@ namespace _3.PL.View
             {
                 return;
             }
-            if (Convert.ToDouble(txt_GiamGia.Text)<0)
-            {
-                MessageBox.Show(" Nhập lại");
-                txt_GiamGia.Text = "0";
-                return;
-            }
             if(txt_Diem.Text!=""&&Convert.ToDouble(txt_Diem.Text) <Convert.ToDouble(txt_GiamGia.Text))
             {
                 MessageBox.Show("Điểm ko đủ nhập lại");
                 txt_GiamGia.Text = "";
                 return;
             }
-            if(Convert.ToDouble(txt_ThanhTien.Text)>Convert.ToDouble(txt_GiamGia.Text))
+            if(Convert.ToDouble(txt_Diem.Text)>Convert.ToDouble(txt_GiamGia.Text))
             {
                 txt_ThanhTien.Text=Convert.ToString(Convert.ToDouble(lbl_totalcart.Text) - Convert.ToDouble(txt_GiamGia.Text));
             }         
